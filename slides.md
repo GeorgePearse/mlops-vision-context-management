@@ -7,6 +7,7 @@ color: #eee
 style: |
   section {
     font-family: 'Segoe UI', sans-serif;
+    padding-left: 220px;
   }
   h1, h2, h3 {
     color: #e94560;
@@ -19,7 +20,7 @@ style: |
     color: #e94560;
   }
   table {
-    font-size: 0.8em;
+    font-size: 0.75em;
   }
   th {
     background: #16213e;
@@ -35,13 +36,71 @@ style: |
     border-left: 4px solid #e94560;
     color: #ccc;
   }
+  .nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 190px;
+    height: 100%;
+    background: #0f3460;
+    padding: 30px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    z-index: 10;
+    border-right: 2px solid #e94560;
+  }
+  .nav span {
+    display: block;
+    padding: 6px 14px;
+    font-size: 0.48em;
+    color: #7a8ba6;
+    line-height: 1.3;
+  }
+  .nav span.active {
+    color: #fff;
+    background: rgba(233, 69, 96, 0.25);
+    border-left: 3px solid #e94560;
+    font-weight: bold;
+  }
 ---
+
+<div class="nav">
+<span class="active">Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
 
 # Dataset Compilation
 
 ### Treating annotation as a build system problem
 
 ---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span class="active">The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
 
 ## The Problem
 
@@ -57,6 +116,21 @@ But how do you **assemble, validate, and version** the dataset itself?
 
 ---
 
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span class="active">The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
 ## The Gap
 
 Most teams build datasets by:
@@ -70,6 +144,21 @@ There's no **build system** for datasets.
 
 ---
 
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span class="active">The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
 ## The Compile Analogy
 
 Building a dataset is like compiling a large codebase:
@@ -79,6 +168,21 @@ Building a dataset is like compiling a large codebase:
 Not a sequential pipeline.
 
 ---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span class="active">The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
 
 ## The Model Cascade
 
@@ -99,6 +203,21 @@ Raw Images
 
 ---
 
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span class="active">Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
 ## Why This Works
 
 Each stage is **independent per-image**
@@ -113,6 +232,21 @@ Like `make -j16` for your dataset.
 
 ---
 
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span class="active">The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
 ## The Analogy
 
 | Concept | Code Compilation | Dataset Compilation |
@@ -124,6 +258,21 @@ Like `make -j16` for your dataset.
 | Cost optimization | Optimize hot paths | Expensive models only where needed |
 
 ---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span class="active">The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
 
 ## The Annotation CLI
 
@@ -145,6 +294,21 @@ CLI-first → fits into CI/CD and automation
 
 ---
 
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span class="active">Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
 ## Visual Validation
 
 ### Segmentation vs Outline
@@ -160,6 +324,21 @@ Hard to catch in aggregate stats.
 **Obvious** when rendered side-by-side.
 
 ---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span class="active">The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
 
 ## The Pipeline Config
 
@@ -189,6 +368,21 @@ Declarative. Version-controlled. Reproducible.
 
 ---
 
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span class="active">Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
 ## Key Takeaways
 
 1. **Dataset assembly is the missing build system** in MLOps
@@ -199,6 +393,21 @@ Declarative. Version-controlled. Reproducible.
 6. **CLI-first** — automation and CI/CD from day one
 
 ---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span class="active">Thank You</span>
+</div>
 
 ## Thank You
 
