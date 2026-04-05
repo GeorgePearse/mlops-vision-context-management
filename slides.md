@@ -70,6 +70,7 @@ style: |
 <span class="active">About Me</span>
 <span>Visia</span>
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -98,6 +99,7 @@ style: |
 <span>About Me</span>
 <span class="active">Visia</span>
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -124,6 +126,7 @@ style: |
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -142,10 +145,47 @@ style: |
 
 ### Treating annotation as a build system problem
 
+<!-- What is context? It's anything carried along with the agent from the initial prompt. It can be retrieved from existing data (RAG), it can be a history of previous interactions. Context is the cookies of agents. In a vision application it can be a carefully crafted image with both the predicted segmentation and the real segmentation presented to a second model for feedback. -->
+
+> *"Context is the friends made along the way."*
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>Dataset Compilation</span>
+<span class="active">Types of Context</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
+## Types of Context
+
+- **Prompt context** — system instructions and framing baked into the initial call
+- **Retrieved context (RAG)** — information pulled from external stores at query time
+- **Conversational context** — the history of the current interaction
+- **Tool/observation context** — results from tool calls and API responses the agent generates for itself
+- **Visual context** — composite images encoding predictions, ground truth, or crops for a downstream model
+- **Persistent context** — memories and session state carried across conversations (the cookies of agents)
+
+<!-- The core tension: context management is compression and selection. Finite window, right information, right time. Too little → hallucination. Too much → noise. -->
+
 ---
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span class="active">The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -176,6 +216,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span class="active">The Gap</span>
 <span>The Compile Analogy</span>
@@ -205,6 +246,7 @@ There's no **build system** for datasets.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span class="active">The Compile Analogy</span>
@@ -231,6 +273,7 @@ Not a sequential pipeline.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -271,6 +314,7 @@ Raw Images
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -301,6 +345,7 @@ Like `make -j16` for your dataset.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -328,6 +373,7 @@ Like `make -j16` for your dataset.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -356,6 +402,7 @@ Like `make -j16` for your dataset.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -392,6 +439,7 @@ CLI-first → fits into CI/CD and automation
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -424,6 +472,7 @@ Hard to catch in aggregate stats.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -468,6 +517,7 @@ Declarative. Version-controlled. Reproducible.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -495,6 +545,7 @@ Declarative. Version-controlled. Reproducible.
 
 <div class="nav">
 <span>Dataset Compilation</span>
+<span>Types of Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
