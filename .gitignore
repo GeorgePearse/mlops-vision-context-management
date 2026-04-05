@@ -7,3 +7,7 @@ build/
 *.egg-info/
 experiment_results/
 synthetic_experiment_results/
+node_modules/
+.next/
+*.tsbuildinfo
+.env

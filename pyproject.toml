@@ -21,10 +21,16 @@ dependencies = [
     "transformers>=4.55.0",
     "torch>=2.8.0",
     "matplotlib>=3.9.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic-settings>=2.6.0",
 ]
 
+[project.scripts]
+agentic-vision-viewer-api = "viewer_api.app:run"
+
 [tool.setuptools.packages.find]
-include = ["agentic_vision*"]
+include = ["agentic_vision*", "viewer_api*"]
 
 [dependency-groups]
 dev = [

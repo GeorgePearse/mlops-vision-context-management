@@ -2045,7 +2045,15 @@ class InstanceSegmentationToolkit:
 
         try:
             from sam3_inference.sam3_prod_inference import segment_boxes
+        except ModuleNotFoundError:
+            message = (
+                "Error: SAM3 backend is not installed in this standalone repo. "
+                "Install or vendor a `sam3_inference.sam3_prod_inference` module to enable live segmentation."
+            )
+            logger.warning(message)
+            return message
 
+        try:
             results = segment_boxes.remote(
                 frame_uri=self._frame_uri,
                 boxes=normalized_boxes,
@@ -2933,7 +2941,15 @@ class InstanceSegmentationToolkit:
         try:
             import api.db_gen.masks as masks_db
             from api.services.sqlc_db import run_in_db, run_sync
+        except ModuleNotFoundError:
+            message = (
+                "Error: camera-mask SQL bindings are not available in this standalone repo. "
+                "Port the sqlc-generated mask query layer to enable mask filtering."
+            )
+            logger.warning(message)
+            return message
 
+        try:
             async def _query(conn):
                 return list(await masks_db.get_masks_for_camera(conn, camera_id=camera_id))
 
