@@ -67,12 +67,69 @@ style: |
 ---
 
 <div class="nav">
+<span class="active">About Me</span>
+<span>Visia</span>
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
+# George Pearse
+
+### Machine vision, data quality, and annotation systems
+
+- Working on practical vision workflows where dataset quality is often the bottleneck
+- Interested in reproducible annotation, validation, and dataset compilation
+- This talk is about making data preparation feel more like engineering
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span class="active">Visia</span>
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
+## Visia
+
+- Computer vision work makes label quality, review loops, and data iteration core product concerns
+- The hard part is often not training one more model but building confidence in the dataset
+- The rest of this deck frames that problem as infrastructure: compile, validate, version, and diff the data
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span class="active">Dataset Compilation</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -94,6 +151,7 @@ style: |
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -123,6 +181,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -151,6 +210,7 @@ There's no **build system** for datasets.
 <span class="active">The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -201,6 +261,12 @@ Raw Images
               expensive, targeted
 ```
 
+<!-- Note: optimize for bandwidth and communication between stages, especially across the Segment Anything family. Ask what the downstream model can be prompted with cheaply and reliably: boxes, inside/outside points, sparse clicks, prior masks. Prefer upstream steps that emit the most useful prompt signal with the least communication cost. -->
+
+<!-- Note: compress context into dynamic retrieval between stages. Instead of passing full state forward, distill it into retrievable signals and only fetch richer context when confidence is too low or when a human confirmation step is required. -->
+
+<!-- Note: there is a large test-time inference / chain-of-thought tuning space here. Two main axes are how specific each question is and how small a crop you inspect. Narrower questions over tighter crops can often improve results. -->
+
 ---
 
 <div class="nav">
@@ -210,6 +276,7 @@ Raw Images
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span class="active">Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -239,6 +306,34 @@ Like `make -j16` for your dataset.
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span class="active">Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
+## What Are Your Degrees of Freedom?
+
+- Where is the capacity in the agent to actually adapt at inference time?
+- The main knobs are prompt structure, retrieved context, question specificity, and crop size
+- Prefer **knowledge consolidation**: pull things out of the active prompt, but keep them accessible via retrieval or search
+- Contrast that with **compaction**: just shrinking the prompt and losing access to the underlying information
+- For segmentation, learning through prompts and context is only just about possible right now
+- So be explicit about what must come from the base model versus what you can steer at test time
+
+---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span class="active">The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -266,6 +361,7 @@ Like `make -j16` for your dataset.
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span class="active">The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -301,6 +397,7 @@ CLI-first → fits into CI/CD and automation
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span class="active">Visual Validation</span>
@@ -332,6 +429,7 @@ Hard to catch in aggregate stats.
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -375,6 +473,7 @@ Declarative. Version-controlled. Reproducible.
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -412,3 +511,5 @@ Declarative. Version-controlled. Reproducible.
 ## Thank You
 
 **github.com/GeorgePearse/mlops-vision-context-management**
+
+<!-- Add a link at the end to the DSPy article: if you don't use DSPy, you build DSPy, and you should only build it if you first know and understand DSPy. -->
