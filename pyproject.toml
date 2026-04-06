@@ -34,5 +34,34 @@ include = ["agentic_vision*", "viewer_api*"]
 
 [dependency-groups]
 dev = [
+    "prek==0.3.8",
     "pytest==8.3.3",
+    "ty==0.0.29",
 ]
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.src]
+include = ["agentic_vision", "viewer_api", "scripts", "tests"]
+exclude = [
+    "agentic_vision/instance_segmentation/tools.py",
+    "tests/test_instance_segmentation_refinement.py",
+    "tests/test_standalone_instance_segmentation_tools.py",
+]
+
+[tool.ty.analysis]
+allowed-unresolved-imports = [
+    "sam3_inference.**",
+    "api.db_gen.**",
+    "api.services.**",
+]
+replace-imports-with-any = [
+    "cv2",
+    "cv2.**",
+    "turbopuffer",
+    "turbopuffer.**",
+]
+
+[tool.ty.rules]
+unused-type-ignore-comment = "warn"

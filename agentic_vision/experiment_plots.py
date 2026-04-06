@@ -87,7 +87,7 @@ class EfficiencyCurve:
             return
 
         # Area under curve (trapezoidal rule)
-        self.area_under_curve = np.trapz(self.y_values, self.x_values)
+        self.area_under_curve = float(np.trapezoid(self.y_values, self.x_values))
 
         # Annotations to reach target threshold
         for i, (x, y) in enumerate(zip(self.x_values, self.y_values)):
@@ -131,7 +131,7 @@ def plot_efficiency_curves(
     fig, ax = plt.subplots(figsize=figsize)
 
     # Color palette
-    colors = plt.cm.tab10(np.linspace(0, 1, len(curves)))
+    colors = plt.get_cmap("tab10")(np.linspace(0, 1, len(curves)))
 
     for i, curve in enumerate(curves):
         if not curve.x_values or not curve.y_values:

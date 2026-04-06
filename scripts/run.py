@@ -233,7 +233,7 @@ def load_annotations_from_file(filepath: str) -> list[dict[str, Any]]:
 def prepare_images_for_experiment(
     images_data: list[dict[str, Any]],
     max_images: int | None = None,
-) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str]]:
+) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str | None]]:
     """Convert database/file data to format needed for experiments.
 
     Returns:
@@ -244,7 +244,7 @@ def prepare_images_for_experiment(
 
     images: list[dspy.Image] = []
     ground_truths: list[list[dict[str, Any]]] = []
-    frame_uris: list[str] = []
+    frame_uris: list[str | None] = []
 
     for img_data in images_data:
         # For now, create placeholder dspy.Image

@@ -51,7 +51,7 @@ from agentic_vision.experiment_runner import (
 def load_ground_truth_from_db(
     dataset_name: str,
     num_images: int,
-) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str]]:
+) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str | None]]:
     """Load images and ground truth from database.
 
     Returns:
@@ -72,7 +72,7 @@ def load_ground_truth_from_db(
 
 def load_ground_truth_from_file(
     annotations_file: str,
-) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str]]:
+) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str | None]]:
     """Load images and ground truth from a JSON file.
 
     Expected format:
@@ -292,9 +292,10 @@ def main():
     print("=" * 60)
 
     for name, result in results.items():
+        final_performance = result.final_metrics.get(result.config.primary_metric, 0.0)
         print(f"\n{name}:")
         print(f"  Annotations used: {result.total_annotations_used}/{result.config.annotation_budget}")
-        print(f"  Final performance: {result.final_performance:.3f} IoU")
+        print(f"  Final performance: {final_performance:.3f} IoU")
         print(f"  Stopped because: {result.stopped_reason}")
 
     print("\n" + "=" * 60)

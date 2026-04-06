@@ -150,7 +150,7 @@ def _optimize_modules_if_possible(
     trainset: list[dspy.Example],
 ) -> tuple[CriticModule, QueryPolicyModule]:
     try:
-        from dspy.teleprompt import BootstrapFewShot  # type: ignore
+        from dspy.teleprompt import BootstrapFewShot
     except Exception:
         return critic, policy
     if dspy.settings.lm is None or not trainset:

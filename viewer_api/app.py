@@ -12,6 +12,7 @@ import uvicorn
 from agentic_vision.instance_segmentation import InstanceSegmentationAnnotator
 from agentic_vision.viewer_runtime import (
     AgenticVisionRunRecorder,
+    JsonObject,
     get_viewer_artifact_path,
     list_viewer_runs,
     load_viewer_events,
@@ -44,7 +45,7 @@ def _get_runs_dir() -> str:
     return get_settings().agentic_vision_viewer_runs_dir
 
 
-def _get_run_or_404(run_id: str) -> dict[str, object]:
+def _get_run_or_404(run_id: str) -> JsonObject:
     """Load run metadata or raise 404."""
     try:
         return load_viewer_run(_get_runs_dir(), run_id)
@@ -137,7 +138,7 @@ def get_agentic_vision_viewer_runs() -> dict[str, object]:
 
 
 @router.get("/runs/{run_id}")
-def get_agentic_vision_viewer_run(run_id: str) -> dict[str, object]:
+def get_agentic_vision_viewer_run(run_id: str) -> JsonObject:
     """Fetch run metadata for one viewer run."""
     return _get_run_or_404(run_id)
 
