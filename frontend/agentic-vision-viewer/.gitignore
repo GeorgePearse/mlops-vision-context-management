@@ -1,0 +1,5 @@
+.next/
+.svelte-kit/
+build/
+dist/
+node_modules/

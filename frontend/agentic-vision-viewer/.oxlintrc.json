@@ -4,15 +4,16 @@
     "eslint",
     "typescript",
     "unicorn",
-    "oxc",
-    "react",
-    "jsx-a11y"
+    "oxc"
   ],
   "categories": {
     "correctness": "error",
     "suspicious": "warn"
   },
-  "rules": {
-    "react/react-in-jsx-scope": "off"
-  }
+  "ignorePatterns": [
+    ".svelte-kit/**",
+    "build/**",
+    "dist/**",
+    "**/*.svelte"
+  ]
 }

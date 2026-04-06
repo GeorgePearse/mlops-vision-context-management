@@ -12,9 +12,17 @@ files = "^(agentic_vision|viewer_api|scripts|tests)/|^pyproject\\.toml$"
 pass_filenames = false
 
 [[repos.hooks]]
-id = "oxlint"
-name = "oxlint"
+id = "viewer-lint"
+name = "viewer-lint"
 language = "system"
-entry = "npm --prefix frontend/agentic-vision-viewer run oxlint"
+entry = "npm --prefix frontend/agentic-vision-viewer run lint"
+files = "^frontend/agentic-vision-viewer/"
+pass_filenames = false
+
+[[repos.hooks]]
+id = "viewer-typecheck"
+name = "viewer-typecheck"
+language = "system"
+entry = "npm --prefix frontend/agentic-vision-viewer run typecheck"
 files = "^frontend/agentic-vision-viewer/"
 pass_filenames = false
