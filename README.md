@@ -1,65 +1,120 @@
 # mlops-vision-context-management
 
-## Core Idea
+Standalone Python package for agentic vision context management, active-learning simulation, and instance-segmentation orchestration.
 
-Treat dataset creation as **compilation** — a repeatable, versioned build step rather than a one-off manual process.
+This repo currently contains the `agentic_vision` package extracted from the larger Visia monorepo. The main surfaces are:
 
-## Focus: Annotation CLI
+- `agentic_vision.gemini_agentic_vision`: Gemini code-execution vision client
+- `agentic_vision.instance_segmentation`: DSPy ReAct segmentation program with Qwen, Gemini, SAM3, mask refinement, zoom, and human-input hooks
+- `agentic_vision.object_memory`: object/background memory retrieval and persistence
+- `agentic_vision.viewer_runtime`: file-backed run/event/artifact recorder for live or replay visualization
+- `viewer_api`: minimal FastAPI layer for live/replay viewer access
+- `frontend/agentic-vision-viewer`: standalone React/Next.js viewer app
+- `scripts/run_active_learning_curve.py`: offline Critic + QueryPolicy budget simulation
+- `scripts/build_active_learning_jsonl.py`: DB-to-JSONL builder for the simulation harness
 
-A command-line tool for managing the full lifecycle of vision annotation datasets:
+## Install
 
-- **Define** annotation schemas and label taxonomies from config
-- **Ingest** raw images and existing annotations from multiple sources/formats (COCO, YOLO, Pascal VOC, etc.)
-- **Transform** — filter, split, merge, remap labels, augment
-- **Validate** — check annotation consistency, coverage, class balance
-- **Compile** — produce a single, versioned, reproducible dataset artifact ready for training
-- **Diff** — compare dataset versions, track what changed and why
-
-## Why "Compile"?
-
-Building a dataset is like compiling a large codebase — it's a **DAG of specialized steps that can run in parallel**, not a sequential pipeline.
-
-### The Model Cascade
-
-Different models have different cost/speed/quality tradeoffs. A compiled dataset orchestrates them:
-
-```
-Raw Images
-    │
-    ├──▶ Fast detector (e.g. YOLO) ──▶ bounding boxes     ← cheap, runs on everything
-    │
-    ├──▶ SAM (prompted by detections) ──▶ segmentation masks  ← moderate cost
-    │
-    └──▶ VLM / slow model ──▶ verify masks on high-value cases  ← expensive, targeted
+```bash
+uv sync
 ```
 
-Each stage is **independent per-image** — massively parallelizable. The "compile" step orchestrates which models run on what, routes outputs between stages, and assembles the final dataset artifact.
+## Basic usage
 
-### The Analogy
+```bash
+uv run python scripts/run_gemini_agentic_vision.py \
+  --dataset-name <dataset> \
+  --limit 5
+```
 
-| Concept | Code compilation | Dataset compilation |
-|---|---|---|
-| Source files | `.c`, `.rs` files | Raw images |
-| Compiler stages | Preprocessor → compiler → linker | Detector → segmenter → verifier |
-| Parallelism | `make -j16` | Run model stages across images concurrently |
-| Incremental builds | Only recompile changed files | Only re-annotate new/changed images |
-| Cost optimization | Optimize hot paths | Run expensive models only where needed |
+Common env vars:
 
-The key insight: **most of the work is embarrassingly parallel**, and the expensive models only need to touch a fraction of the data. A good compilation strategy minimizes cost while maximizing annotation quality.
+- `GEMINI_API_KEY`
+- `PG_DATABASE_URL`
+- GCS credentials such as `GOOGLE_APPLICATION_CREDENTIALS`
 
-## Visual Validation: Segmentation vs Outline
+For live viewer runs:
 
-A key validation step — crop a subset of an object and compare the **segmentation mask** against the **object outline**. This surfaces:
+- `DASHSCOPE_API_KEY`
+- optional `AGENTIC_VISION_VIEWER_RUNS_DIR`
+- optional `QWEN_MODEL`
 
-- Masks that bleed outside the actual object boundary
-- Under-segmented regions where the mask misses parts of the object
-- Annotation drift across frames or annotators
+## Active-learning simulation
 
-This kind of visual diff is hard to catch in aggregate stats but obvious when rendered side-by-side on a crop.
+```bash
+uv run python scripts/run_active_learning_curve.py \
+  --input-jsonl /path/to/frames.jsonl \
+  --output-csv /tmp/active_learning_curve.csv \
+  --output-plot /tmp/active_learning_curve.png \
+  --max-queries-per-frame 2 \
+  --max-queries-total 200 \
+  --budget-step 10 \
+  --optimize-prompts
+```
 
-## Presentation Notes
+Build the JSONL input directly from Postgres:
 
-- The gap in current MLOps tooling is at the **annotation management** layer — plenty of tools for experiment tracking and model serving, but dataset assembly is still ad-hoc
-- Key audience question: "How do you know your dataset is correct before you start training?"
-- Demo flow: show `ingest -> validate -> compile -> diff` as a tight CLI loop
-- Contrast with GUI-only annotation platforms — CLI-first means it fits into CI/CD and automation
+```bash
+uv run python scripts/build_active_learning_jsonl.py \
+  --dataset-name <dataset_name> \
+  --training-split val \
+  --limit-frames 1000 \
+  --output-jsonl /tmp/active_learning_frames.jsonl
+```
+
+## Viewer runtime
+
+`agentic_vision.viewer_runtime` records:
+
+- run metadata
+- ordered JSONL events
+- rendered image artifacts
+
+It is designed to sit underneath an API/UI layer, but the runtime itself lives in this package.
+
+## Viewer API
+
+Run the standalone FastAPI server:
+
+```bash
+uv run agentic-vision-viewer-api
+```
+
+Endpoints:
+
+- `POST /agentic-vision-viewer/runs`
+- `GET /agentic-vision-viewer/runs`
+- `GET /agentic-vision-viewer/runs/{run_id}`
+- `GET /agentic-vision-viewer/runs/{run_id}/events`
+- `GET /agentic-vision-viewer/runs/{run_id}/stream`
+- `GET /agentic-vision-viewer/runs/{run_id}/artifacts/{artifact_id}`
+
+`frame_uri` accepts:
+
+- local file paths
+- `http://` / `https://` image URLs
+- `gs://` URIs
+
+Notes:
+
+- the standalone repo does not bundle the SAM3 backend module
+- camera-mask sqlc bindings are not bundled either
+- those tool calls now fail with explicit messages instead of import crashes
+
+## React viewer app
+
+```bash
+cd frontend/agentic-vision-viewer
+npm install
+NEXT_PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL=http://127.0.0.1:8000 npm run dev
+```
+
+## Tests
+
+```bash
+PYTHONPATH=. python -m pytest \
+  tests/test_instance_segmentation_refinement.py \
+  tests/test_viewer_runtime.py \
+  tests/test_viewer_api.py \
+  tests/test_standalone_instance_segmentation_tools.py -q
+```
