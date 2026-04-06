@@ -30,7 +30,7 @@ function appendDedupedEvents(current: ViewerEvent[], incoming: ViewerEvent[]): V
   for (const event of incoming) {
     merged.set(event.sequence, event);
   }
-  return Array.from(merged.values()).sort((left, right) => left.sequence - right.sequence);
+  return Array.from(merged.values()).toSorted((left, right) => left.sequence - right.sequence);
 }
 
 function resolveArtifactFromEvent(event: ViewerEvent | null): ViewerArtifact | null {
@@ -63,7 +63,7 @@ export function RunDetailPage({ runId }: { runId: string }) {
         setRun(nextRun);
         setEvents(nextEvents);
         setStreamAfterSequence(nextEvents.length > 0 ? nextEvents[nextEvents.length - 1].sequence : 0);
-        const latestOverlay = [...nextEvents].reverse().find((event) => event.event_type === "overlay_generated");
+        const latestOverlay = nextEvents.toReversed().find((event) => event.event_type === "overlay_generated");
         if (latestOverlay) {
           setSelectedEventSequence(latestOverlay.sequence);
         } else if (nextEvents.length > 0) {
@@ -111,14 +111,16 @@ export function RunDetailPage({ runId }: { runId: string }) {
       eventSource.addEventListener(eventType, handleStreamEvent as EventListener);
     }
 
-    eventSource.onerror = () => {
+    const handleStreamError = () => {
       eventSource.close();
     };
+    eventSource.addEventListener("error", handleStreamError);
 
     return () => {
       for (const eventType of STREAM_EVENT_TYPES) {
         eventSource.removeEventListener(eventType, handleStreamEvent as EventListener);
       }
+      eventSource.removeEventListener("error", handleStreamError);
       eventSource.close();
     };
   }, [runId, streamAfterSequence]);

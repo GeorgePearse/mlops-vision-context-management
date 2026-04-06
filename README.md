@@ -19,6 +19,16 @@ This repo currently contains the `agentic_vision` package extracted from the lar
 uv sync
 ```
 
+## Tooling
+
+Python type checks are handled with `ty`, and the viewer app uses `oxlint` in front of ESLint.
+
+```bash
+uv run ty check
+cd frontend/agentic-vision-viewer && npm run lint
+uv run prek run --all-files
+```
+
 ## Basic usage
 
 ```bash
