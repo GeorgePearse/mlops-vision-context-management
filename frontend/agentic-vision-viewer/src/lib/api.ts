@@ -1,12 +1,15 @@
-import { StartRunPayload, ViewerEvent, ViewerRun } from "@/lib/types";
+import type { StartRunPayload, ViewerEvent, ViewerRun } from '$lib/types';
 
 function trimTrailingSlash(value: string): string {
-  return value.endsWith("/") ? value.slice(0, -1) : value;
+  return value.endsWith('/') ? value.slice(0, -1) : value;
 }
 
 export function getApiBaseUrl(): string {
-  const configured = process.env.NEXT_PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL;
-  return trimTrailingSlash(configured || "http://localhost:8000");
+  const configured =
+    import.meta.env.PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL ||
+    import.meta.env.NEXT_PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL;
+
+  return trimTrailingSlash(configured || 'http://localhost:8000');
 }
 
 export function buildRunApiUrl(path: string): string {

@@ -540,6 +540,7 @@ Declarative. Version-controlled. Reproducible.
 4. **Optimize cost** — expensive models only where they matter
 5. **Validate visually** — aggregate stats hide annotation bugs
 6. **CLI-first** — automation and CI/CD from day one
+7. **Stay kind to each other** — burnout is real in the LLM era; our tools are changing, expectations are increasing, and the products we build with these tools are rapidly evolving
 
 ---
 

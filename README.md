@@ -9,7 +9,7 @@ This repo currently contains the `agentic_vision` package extracted from the lar
 - `agentic_vision.object_memory`: object/background memory retrieval and persistence
 - `agentic_vision.viewer_runtime`: file-backed run/event/artifact recorder for live or replay visualization
 - `viewer_api`: minimal FastAPI layer for live/replay viewer access
-- `frontend/agentic-vision-viewer`: standalone React/Next.js viewer app
+- `frontend/agentic-vision-viewer`: standalone SvelteKit viewer app
 - `scripts/run_active_learning_curve.py`: offline Critic + QueryPolicy budget simulation
 - `scripts/build_active_learning_jsonl.py`: DB-to-JSONL builder for the simulation harness
 
@@ -25,7 +25,7 @@ Python type checks are handled with `ty`, and the viewer app uses `oxlint` in fr
 
 ```bash
 uv run ty check
-cd frontend/agentic-vision-viewer && npm run lint
+cd frontend/agentic-vision-viewer && npm run lint && npm run typecheck
 uv run prek run --all-files
 ```
 
@@ -111,12 +111,12 @@ Notes:
 - camera-mask sqlc bindings are not bundled either
 - those tool calls now fail with explicit messages instead of import crashes
 
-## React viewer app
+## Svelte viewer app
 
 ```bash
 cd frontend/agentic-vision-viewer
 npm install
-NEXT_PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL=http://127.0.0.1:8000 npm run dev
+PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL=http://127.0.0.1:8000 npm run dev
 ```
 
 ## Tests

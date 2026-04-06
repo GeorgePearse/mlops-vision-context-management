@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 :root {
+  --font-space-grotesk: 'Space Grotesk';
+  --font-ibm-plex-mono: 'IBM Plex Mono';
   --bg: #f7f4eb;
   --panel: rgba(255, 251, 244, 0.9);
   --panel-strong: #fffdf8;
@@ -246,6 +250,13 @@ pre {
   padding: 1rem;
 }
 
+.artifact-card,
+.event-card {
+  width: 100%;
+  color: inherit;
+  text-align: left;
+}
+
 .run-card:hover,
 .artifact-card:hover,
 .event-card:hover,
@@ -403,11 +414,6 @@ pre {
   background: var(--panel-strong);
   padding: 1rem;
   min-height: 220px;
-}
-
-.event-card,
-.artifact-card {
-  text-align: left;
 }
 
 .event-card p {

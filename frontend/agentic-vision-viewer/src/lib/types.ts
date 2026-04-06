@@ -38,8 +38,8 @@ export interface ViewerEvent {
 
 export interface StartRunPayload {
   frame_uri: string;
-  dataset_name?: string;
-  run_label?: string;
+  dataset_name?: string | undefined;
+  run_label?: string | undefined;
   max_iters: number;
   sam3_handler_name: string;
 }
