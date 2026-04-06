@@ -82,6 +82,7 @@ style: |
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -111,6 +112,7 @@ style: |
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -138,6 +140,7 @@ style: |
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -167,6 +170,7 @@ style: |
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -197,6 +201,7 @@ style: |
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -228,6 +233,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -258,6 +264,7 @@ There's no **build system** for datasets.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -284,6 +291,7 @@ Not a sequential pipeline.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -326,6 +334,7 @@ Raw Images
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -357,6 +366,7 @@ Like `make -j16` for your dataset.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -385,6 +395,7 @@ Like `make -j16` for your dataset.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -414,6 +425,7 @@ Like `make -j16` for your dataset.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -451,6 +463,7 @@ CLI-first → fits into CI/CD and automation
 <span class="active">Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -484,6 +497,7 @@ Hard to catch in aggregate stats.
 <span>Visual Validation</span>
 <span class="active">The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -529,6 +543,7 @@ Declarative. Version-controlled. Reproducible.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span class="active">Key Takeaways</span>
+<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -556,6 +571,32 @@ Declarative. Version-controlled. Reproducible.
 <span>Visual Validation</span>
 <span>The Pipeline Config</span>
 <span>Key Takeaways</span>
+<span class="active">References</span>
+<span>Thank You</span>
+</div>
+
+## References
+
+- [Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) — Anthropic's approach to improving RAG with contextual embeddings and contextual BM25
+- [Late Interaction Overview](https://weaviate.io/blog/late-interaction-overview) — Weaviate's overview of late interaction models for retrieval
+
+---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
 <span class="active">Thank You</span>
 </div>
 
