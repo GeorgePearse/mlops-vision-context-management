@@ -119,6 +119,10 @@ npm install
 NEXT_PUBLIC_AGENTIC_VISION_VIEWER_API_BASE_URL=http://127.0.0.1:8000 npm run dev
 ```
 
+## TODO
+
+- [ ] Add an image of an x-ray we install
+
 ## Tests
 
 ```bash
