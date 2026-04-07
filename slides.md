@@ -2,39 +2,44 @@
 marp: true
 theme: default
 paginate: true
-backgroundColor: #1a1a2e
-color: #eee
+backgroundColor: #f5f3ef
+color: #2d2d2d
 style: |
   section {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     padding-left: 220px;
   }
   h1, h2, h3 {
-    color: #e94560;
+    color: #1a1a1a;
   }
   a {
-    color: #0f3460;
+    color: #3a7d7e;
   }
   code {
-    background: #16213e;
-    color: #e94560;
+    background: #e8e5e0;
+    color: #3a7d7e;
   }
   table {
     font-size: 0.75em;
   }
   th {
-    background: #16213e;
-    color: #e94560;
+    background: #2d2d2d;
+    color: #f5f3ef;
   }
   td {
-    background: #0f3460;
+    background: #e8e5e0;
+    color: #2d2d2d;
   }
   pre {
-    background: #16213e !important;
+    background: #2d2d2d !important;
+    color: #f5f3ef !important;
   }
   blockquote {
-    border-left: 4px solid #e94560;
-    color: #ccc;
+    border-left: 4px solid #3a7d7e;
+    color: #555;
+  }
+  strong {
+    color: #3a7d7e;
   }
   .nav {
     position: absolute;
@@ -42,26 +47,26 @@ style: |
     left: 0;
     width: 190px;
     height: 100%;
-    background: #0f3460;
+    background: #2d2d2d;
     padding: 30px 0 30px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0;
     z-index: 10;
-    border-right: 2px solid #e94560;
+    border-right: 2px solid #3a7d7e;
   }
   .nav span {
     display: block;
     padding: 6px 14px;
     font-size: 0.48em;
-    color: #7a8ba6;
+    color: #888;
     line-height: 1.3;
   }
   .nav span.active {
-    color: #fff;
-    background: rgba(233, 69, 96, 0.25);
-    border-left: 3px solid #e94560;
+    color: #f5f3ef;
+    background: rgba(58, 125, 126, 0.2);
+    border-left: 3px solid #3a7d7e;
     font-weight: bold;
   }
 ---
