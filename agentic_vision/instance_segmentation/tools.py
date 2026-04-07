@@ -30,7 +30,12 @@ from openai import OpenAI
 from PIL import Image
 from skimage.segmentation import slic
 
-from agentic_vision.object_memory import BackgroundObjectObservation, ObjectMemoryBackgroundStore, ObjectMemoryRetriever
+from agentic_vision.coordinates import BoxFormat, BoxValidationError, validate_box
+from agentic_vision.object_memory import (
+    BackgroundObjectObservation,
+    ObjectMemoryBackgroundStore,
+    ObjectMemoryRetriever,
+)
 from agentic_vision.viewer_runtime import AgenticVisionRunRecorder, JsonObject
 
 GEMINI_CLASSIFY_PROMPT = """\
@@ -194,7 +199,13 @@ _BOX_RE = re.compile(
     r"\]?"
 )
 _SEGMENTATION_RE = re.compile(r"segmentation:\s*\[([^\]]*)\]")
-_ALLOWED_REFINEMENT_OPERATORS = {"auto", "keep", "grabcut", "superpixel_snap", "cleanup"}
+_ALLOWED_REFINEMENT_OPERATORS = {
+    "auto",
+    "keep",
+    "grabcut",
+    "superpixel_snap",
+    "cleanup",
+}
 
 
 @dataclass(slots=True)
@@ -269,7 +280,9 @@ def _parse_point_list_json(raw: str | None) -> list[tuple[float, float]]:
     return _parse_point_pairs(payload)
 
 
-def _normalize_refinement_operator(raw_mode: str | None, default: str = "grabcut") -> str:
+def _normalize_refinement_operator(
+    raw_mode: str | None, default: str = "grabcut"
+) -> str:
     """Normalize a refinement operator name."""
     candidate = (raw_mode or "").strip().lower()
     if candidate in _ALLOWED_REFINEMENT_OPERATORS:
@@ -277,7 +290,9 @@ def _normalize_refinement_operator(raw_mode: str | None, default: str = "grabcut
     return default
 
 
-def _parse_segmentation_entries(segmentations_text: str) -> list[ParsedSegmentationLine]:
+def _parse_segmentation_entries(
+    segmentations_text: str,
+) -> list[ParsedSegmentationLine]:
     """Parse segmentation lines while ignoring trailing note lines."""
     entries: list[ParsedSegmentationLine] = []
     for line_index, raw_line in enumerate(segmentations_text.splitlines()):
@@ -298,9 +313,13 @@ def _parse_segmentation_entries(segmentations_text: str) -> list[ParsedSegmentat
         polygon_points: list[tuple[float, float]] = []
         seg_match = _SEGMENTATION_RE.search(line)
         if seg_match and seg_match.group(1).strip():
-            values = [float(v.strip()) for v in seg_match.group(1).split(",") if v.strip()]
+            values = [
+                float(v.strip()) for v in seg_match.group(1).split(",") if v.strip()
+            ]
             if len(values) >= 6 and len(values) % 2 == 0:
-                polygon_points = [(values[i], values[i + 1]) for i in range(0, len(values), 2)]
+                polygon_points = [
+                    (values[i], values[i + 1]) for i in range(0, len(values), 2)
+                ]
 
         entries.append(
             ParsedSegmentationLine(
@@ -396,7 +415,12 @@ def _crop_px_points_to_full_1000(
     for x, y in points:
         clamped_x = max(0.0, min(1000.0, float(x)))
         clamped_y = max(0.0, min(1000.0, float(y)))
-        full_points.append((crop_x1 + clamped_x * crop_width / 1000.0, crop_y1 + clamped_y * crop_height / 1000.0))
+        full_points.append(
+            (
+                crop_x1 + clamped_x * crop_width / 1000.0,
+                crop_y1 + clamped_y * crop_height / 1000.0,
+            )
+        )
     return full_points
 
 
@@ -438,19 +462,25 @@ def _polygon_to_crop_mask(
 
 def _fill_binary_mask(mask: np.ndarray) -> np.ndarray:
     """Fill binary mask contours to remove internal holes."""
-    contours, _ = cv2.findContours(mask.astype(np.uint8), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(
+        mask.astype(np.uint8), cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE
+    )
     filled = np.zeros_like(mask, dtype=np.uint8)
     for contour in contours:
         cv2.drawContours(filled, [contour], -1, 1, thickness=-1)
     return filled
 
 
-def _keep_relevant_components(mask: np.ndarray, positive_points_px: list[tuple[int, int]]) -> np.ndarray:
+def _keep_relevant_components(
+    mask: np.ndarray, positive_points_px: list[tuple[int, int]]
+) -> np.ndarray:
     """Keep connected components covering positive seeds or, if none, the largest component."""
     if mask.max() == 0:
         return mask.astype(np.uint8)
 
-    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask.astype(np.uint8), connectivity=8)
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(
+        mask.astype(np.uint8), connectivity=8
+    )
     if num_labels <= 2:
         return mask.astype(np.uint8)
 
@@ -480,7 +510,9 @@ def _cleanup_binary_mask(
     if kernel_size % 2 == 0:
         kernel_size += 1
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
-    open_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (max(3, kernel_size - 2), max(3, kernel_size - 2)))
+    open_kernel = cv2.getStructuringElement(
+        cv2.MORPH_ELLIPSE, (max(3, kernel_size - 2), max(3, kernel_size - 2))
+    )
 
     cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_CLOSE, kernel)
     cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_OPEN, open_kernel)
@@ -510,7 +542,9 @@ def _apply_grabcut_refinement(
 
     grabcut_mask = np.full((height, width), cv2.GC_PR_BGD, dtype=np.uint8)
     x1, y1, x2, y2 = bbox_px_rel
-    grabcut_mask[max(0, y1):min(height, y2), max(0, x1):min(width, x2)] = cv2.GC_PR_FGD
+    grabcut_mask[max(0, y1) : min(height, y2), max(0, x1) : min(width, x2)] = (
+        cv2.GC_PR_FGD
+    )
 
     mask_u8 = (initial_mask > 0).astype(np.uint8)
     if mask_u8.any():
@@ -537,13 +571,27 @@ def _apply_grabcut_refinement(
     fgd_model = np.zeros((1, 65), np.float64)
 
     try:
-        cv2.grabCut(crop_bgr, grabcut_mask, None, bgd_model, fgd_model, max(1, int(iterations)), cv2.GC_INIT_WITH_MASK)
+        cv2.grabCut(
+            crop_bgr,
+            grabcut_mask,
+            None,
+            bgd_model,
+            fgd_model,
+            max(1, int(iterations)),
+            cv2.GC_INIT_WITH_MASK,
+        )
     except cv2.error as exc:
         logger.debug(f"GrabCut refinement failed; falling back to cleanup: {exc}")
-        return _cleanup_binary_mask(mask_u8, positive_points_px, negative_points_px, cleanup_kernel_size)
+        return _cleanup_binary_mask(
+            mask_u8, positive_points_px, negative_points_px, cleanup_kernel_size
+        )
 
-    refined = np.where((grabcut_mask == cv2.GC_FGD) | (grabcut_mask == cv2.GC_PR_FGD), 1, 0).astype(np.uint8)
-    refined = _cleanup_binary_mask(refined, positive_points_px, negative_points_px, cleanup_kernel_size)
+    refined = np.where(
+        (grabcut_mask == cv2.GC_FGD) | (grabcut_mask == cv2.GC_PR_FGD), 1, 0
+    ).astype(np.uint8)
+    refined = _cleanup_binary_mask(
+        refined, positive_points_px, negative_points_px, cleanup_kernel_size
+    )
     return refined if refined.any() else mask_u8
 
 
@@ -569,8 +617,16 @@ def _apply_superpixel_refinement(
 
     output_mask = np.zeros_like(mask_u8)
     dilated_mask = cv2.dilate(mask_u8, np.ones((3, 3), dtype=np.uint8), iterations=1)
-    positive_ids = {int(segments[y, x]) for x, y in positive_points_px if 0 <= x < segments.shape[1] and 0 <= y < segments.shape[0]}
-    negative_ids = {int(segments[y, x]) for x, y in negative_points_px if 0 <= x < segments.shape[1] and 0 <= y < segments.shape[0]}
+    positive_ids = {
+        int(segments[y, x])
+        for x, y in positive_points_px
+        if 0 <= x < segments.shape[1] and 0 <= y < segments.shape[0]
+    }
+    negative_ids = {
+        int(segments[y, x])
+        for x, y in negative_points_px
+        if 0 <= x < segments.shape[1] and 0 <= y < segments.shape[0]
+    }
 
     for segment_id in np.unique(segments):
         if int(segment_id) in negative_ids:
@@ -582,12 +638,20 @@ def _apply_superpixel_refinement(
             continue
 
         overlap = int(np.logical_and(segment_mask, mask_u8 > 0).sum()) / segment_area
-        dilated_overlap = int(np.logical_and(segment_mask, dilated_mask > 0).sum()) / segment_area
+        dilated_overlap = (
+            int(np.logical_and(segment_mask, dilated_mask > 0).sum()) / segment_area
+        )
 
-        if int(segment_id) in positive_ids or overlap >= 0.35 or (overlap >= 0.12 and dilated_overlap >= 0.75):
+        if (
+            int(segment_id) in positive_ids
+            or overlap >= 0.35
+            or (overlap >= 0.12 and dilated_overlap >= 0.75)
+        ):
             output_mask[segment_mask] = 1
 
-    refined = _cleanup_binary_mask(output_mask, positive_points_px, negative_points_px, cleanup_kernel_size)
+    refined = _cleanup_binary_mask(
+        output_mask, positive_points_px, negative_points_px, cleanup_kernel_size
+    )
     if refined.any():
         return refined, "superpixel_snap"
     return mask_u8, "superpixel_empty"
@@ -601,7 +665,9 @@ def _mask_to_polygon_points(
     full_height: int,
 ) -> list[tuple[float, float]]:
     """Convert a crop-relative binary mask into full-image polygon points in [0,1000]."""
-    contours, _ = cv2.findContours(mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(
+        mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
     if not contours:
         return []
 
@@ -684,9 +750,18 @@ def _parse_gemini_detections(response_text: str) -> str:
         confidence = det.get("confidence", 0.5)
 
         if len(box) == 4:
+            try:
+                validate_box(
+                    box, BoxFormat.YXYX_NORM_1K, context=f"Gemini detection '{label}'"
+                )
+            except BoxValidationError as exc:
+                logger.warning(f"Skipping invalid Gemini detection: {exc}")
+                continue
             # Gemini returns [y1, x1, y2, x2], convert to [x1, y1, x2, y2]
             y1, x1, y2, x2 = (float(v) for v in box)
-            detection_lines.append(f"object: {label} | box: [{x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f}] | confidence={float(confidence):.2f}")
+            detection_lines.append(
+                f"object: {label} | box: [{x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f}] | confidence={float(confidence):.2f}"
+            )
 
     return "\n".join(detection_lines) if detection_lines else "No objects detected."
 
@@ -735,7 +810,9 @@ def _parse_class_rename_rules(raw: str | None) -> dict[str, str]:
     return rules
 
 
-def _parse_indexed_point_prompts(raw: str | None, num_detections: int) -> list[list[list[float]]]:
+def _parse_indexed_point_prompts(
+    raw: str | None, num_detections: int
+) -> list[list[list[float]]]:
     """Parse per-detection point prompts from JSON.
 
     Supported formats:
@@ -780,7 +857,11 @@ def _parse_indexed_point_prompts(raw: str | None, num_detections: int) -> list[l
             if not isinstance(raw_index, str) or not raw_index.isdigit():
                 continue
             detection_index = int(raw_index)
-            if detection_index < 0 or detection_index >= num_detections or not isinstance(point_list, list):
+            if (
+                detection_index < 0
+                or detection_index >= num_detections
+                or not isinstance(point_list, list)
+            ):
                 continue
             normalized_points = []
             for point in point_list:
@@ -841,7 +922,9 @@ def _remap_detections_to_full_image(
             crop_y2,
         )
         remapped_box = f"[{fx1:.0f}, {fy1:.0f}, {fx2:.0f}, {fy2:.0f}]"
-        remapped_lines.append(line[: match.start()] + "box: " + remapped_box + line[match.end() :])
+        remapped_lines.append(
+            line[: match.start()] + "box: " + remapped_box + line[match.end() :]
+        )
     return "\n".join(remapped_lines)
 
 
@@ -909,10 +992,18 @@ def deduplicate_detections(detection_text: str, iou_threshold: float = 0.5) -> s
     detection_line_indices: list[int] = []
     for line_idx, line in enumerate(lines):
         stripped = line.strip()
-        if stripped and "no objects" not in stripped.lower() and _BOX_RE.search(stripped):
+        if (
+            stripped
+            and "no objects" not in stripped.lower()
+            and _BOX_RE.search(stripped)
+        ):
             detection_line_indices.append(line_idx)
 
-    kept_line_set = {detection_line_indices[i] for i in keep_indices if i < len(detection_line_indices)}
+    kept_line_set = {
+        detection_line_indices[i]
+        for i in keep_indices
+        if i < len(detection_line_indices)
+    }
     # Keep non-detection lines (headers etc) plus kept detection lines
     kept_lines = []
     for line_idx, line in enumerate(lines):
@@ -979,15 +1070,23 @@ class InstanceSegmentationToolkit:
         if dataset_name:
             # Always enable retriever for reading existing embeddings
             try:
-                self._object_memory_retriever = ObjectMemoryRetriever(dataset_name=dataset_name)
+                self._object_memory_retriever = ObjectMemoryRetriever(
+                    dataset_name=dataset_name
+                )
             except Exception as exc:
-                logger.warning(f"Object memory retriever unavailable for dataset={dataset_name}: {exc}")
+                logger.warning(
+                    f"Object memory retriever unavailable for dataset={dataset_name}: {exc}"
+                )
             # Only enable store/write if enable_object_memory is True
             if enable_object_memory:
                 try:
-                    self._object_memory_background_store = ObjectMemoryBackgroundStore(dataset_name=dataset_name)
+                    self._object_memory_background_store = ObjectMemoryBackgroundStore(
+                        dataset_name=dataset_name
+                    )
                 except Exception as exc:
-                    logger.warning(f"Object memory background store unavailable for dataset={dataset_name}: {exc}")
+                    logger.warning(
+                        f"Object memory background store unavailable for dataset={dataset_name}: {exc}"
+                    )
         logger.debug(
             f"InstanceSegmentationToolkit initialized | {self._full_width}x{self._full_height} "
             f"frame_uri={'yes' if frame_uri else 'no'} "
@@ -1034,7 +1133,9 @@ class InstanceSegmentationToolkit:
             "crop_region": [self._crop_x1, self._crop_y1, self._crop_x2, self._crop_y2],
         }
 
-    def _emit_tool_called(self, stage_name: str, args_summary: JsonObject | None = None) -> None:
+    def _emit_tool_called(
+        self, stage_name: str, args_summary: JsonObject | None = None
+    ) -> None:
         """Emit a structured tool-start event for the viewer."""
         if self._viewer_recorder is None:
             return
@@ -1081,7 +1182,9 @@ class InstanceSegmentationToolkit:
     def _box_annotations_payload(detections_text: str) -> list[JsonObject]:
         """Convert line-based detections into viewer box annotations."""
         annotations: list[JsonObject] = []
-        for label, x1, y1, x2, y2, confidence in parse_boxes_from_detections(detections_text):
+        for label, x1, y1, x2, y2, confidence in parse_boxes_from_detections(
+            detections_text
+        ):
             annotations.append(
                 {
                     "label": label,
@@ -1110,7 +1213,9 @@ class InstanceSegmentationToolkit:
         """Render detection boxes on the full image."""
         overlay = self._full_image_array.copy()
         render_w, render_h = self._full_width, self._full_height
-        for idx, (label, x1, y1, x2, y2, confidence) in enumerate(parse_boxes_from_detections(detections_text)):
+        for idx, (label, x1, y1, x2, y2, confidence) in enumerate(
+            parse_boxes_from_detections(detections_text)
+        ):
             color = (
                 (idx * 67 + 80) % 255,
                 (idx * 131 + 40) % 255,
@@ -1133,7 +1238,9 @@ class InstanceSegmentationToolkit:
         return overlay
 
     @staticmethod
-    def _parse_crop_region_from_zoom_result(result_text: str) -> tuple[float, float, float, float] | None:
+    def _parse_crop_region_from_zoom_result(
+        result_text: str,
+    ) -> tuple[float, float, float, float] | None:
         """Extract crop coordinates from zoomed verification output."""
         match = re.search(
             r"Crop region:\s*\[\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\]",
@@ -1143,7 +1250,9 @@ class InstanceSegmentationToolkit:
             return None
         return tuple(float(match.group(i)) for i in range(1, 5))
 
-    def _emit_stage_viewer_event(self, stage_name: str, prediction_text: str, input_text: str | None = None) -> None:
+    def _emit_stage_viewer_event(
+        self, stage_name: str, prediction_text: str, input_text: str | None = None
+    ) -> None:
         """Emit structured viewer events and overlay artifacts for a completed stage."""
         if self._viewer_recorder is None:
             return
@@ -1176,16 +1285,26 @@ class InstanceSegmentationToolkit:
                 overlay_image = self._render_boxes_on_full_image(source_text)
         elif stage_name in {"segment_with_sam3", "refine_mask_with_cv2"}:
             annotations = self._segmentation_annotations_payload(prediction_text)
-            overlay_payload = {"overlay_kind": "segmentations", "annotations": annotations}
+            overlay_payload = {
+                "overlay_kind": "segmentations",
+                "annotations": annotations,
+            }
             payload.update(overlay_payload)
             if annotations:
-                overlay_image = self._render_segmentations_on_image(prediction_text, overlay_opacity=0.35)
+                overlay_image = self._render_segmentations_on_image(
+                    prediction_text, overlay_opacity=0.35
+                )
         elif stage_name == "verify_segmentation_with_gemini" and input_text:
             annotations = self._segmentation_annotations_payload(input_text)
-            overlay_payload = {"overlay_kind": "segmentations", "annotations": annotations}
+            overlay_payload = {
+                "overlay_kind": "segmentations",
+                "annotations": annotations,
+            }
             payload.update(overlay_payload)
             if annotations:
-                overlay_image = self._render_segmentations_on_image(input_text, overlay_opacity=0.35)
+                overlay_image = self._render_segmentations_on_image(
+                    input_text, overlay_opacity=0.35
+                )
         elif stage_name == "plan_mask_refinement_with_gemini" and input_text:
             try:
                 plan_payload = json.loads(_clean_json_response(prediction_text))
@@ -1194,16 +1313,23 @@ class InstanceSegmentationToolkit:
             if isinstance(plan_payload, dict):
                 payload["plan"] = plan_payload
                 target_value = plan_payload.get("target_index")
-                target_index = int(target_value) if isinstance(target_value, int | float | str) and str(target_value).isdigit() else -1
+                target_index = (
+                    int(target_value)
+                    if isinstance(target_value, int | float | str)
+                    and str(target_value).isdigit()
+                    else -1
+                )
                 entries = _parse_segmentation_entries(input_text)
                 if 0 <= target_index < len(entries):
                     target = entries[target_index]
-                    crop_x1, crop_y1, crop_x2, crop_y2, avg_zoom = self._compute_focus_crop(
-                        target.x1,
-                        target.y1,
-                        target.x2,
-                        target.y2,
-                        zoom_factor=2.0,
+                    crop_x1, crop_y1, crop_x2, crop_y2, avg_zoom = (
+                        self._compute_focus_crop(
+                            target.x1,
+                            target.y1,
+                            target.x2,
+                            target.y2,
+                            zoom_factor=2.0,
+                        )
                     )
                     crop_image = self._render_segmentation_crop(
                         target.raw_line,
@@ -1251,13 +1377,17 @@ class InstanceSegmentationToolkit:
         if overlay_image is not None:
             self._viewer_recorder.record_artifact(
                 image_bgr=overlay_image,
-                artifact_kind=overlay_payload.get("overlay_kind", "overlay") if overlay_payload else "overlay",
+                artifact_kind=overlay_payload.get("overlay_kind", "overlay")
+                if overlay_payload
+                else "overlay",
                 stage_name=stage_name,
                 payload=payload,
                 message=f"Rendered {stage_name}",
             )
 
-    def _record_stage_predictions(self, stage_name: str, prediction_text: str, input_text: str | None = None) -> None:
+    def _record_stage_predictions(
+        self, stage_name: str, prediction_text: str, input_text: str | None = None
+    ) -> None:
         """Persist every stage prediction to object memory for later critique/learning."""
         self._emit_stage_viewer_event(stage_name, prediction_text, input_text)
         if self._object_memory_background_store is None or self._dataset_name is None:
@@ -1350,7 +1480,9 @@ class InstanceSegmentationToolkit:
                 )
             )
         try:
-            self._object_memory_background_store.store_background_observations(observations)
+            self._object_memory_background_store.store_background_observations(
+                observations
+            )
         except Exception as exc:
             logger.debug(f"Stage memory persistence failed for {stage_name}: {exc}")
 
@@ -1364,7 +1496,9 @@ class InstanceSegmentationToolkit:
         return max(minimum, min(maximum, coerced))
 
     @staticmethod
-    def _coerce_float(value: object, default: float, minimum: float, maximum: float) -> float:
+    def _coerce_float(
+        value: object, default: float, minimum: float, maximum: float
+    ) -> float:
         """Coerce a scalar-like value to a bounded float."""
         try:
             coerced = float(value)
@@ -1464,7 +1598,9 @@ class InstanceSegmentationToolkit:
             failure_mode=str(payload.get("failure_mode", "unknown"))[:64],
             positive_points=positive_points,
             negative_points=negative_points,
-            iterations=self._coerce_int(params_dict.get("iterations"), default=3, minimum=1, maximum=8),
+            iterations=self._coerce_int(
+                params_dict.get("iterations"), default=3, minimum=1, maximum=8
+            ),
             superpixel_segments=self._coerce_int(
                 params_dict.get("superpixel_segments"),
                 default=120,
@@ -1477,7 +1613,12 @@ class InstanceSegmentationToolkit:
                 minimum=3,
                 maximum=21,
             ),
-            padding_percent=self._coerce_float(params_dict.get("padding_percent"), default=12.0, minimum=2.0, maximum=40.0),
+            padding_percent=self._coerce_float(
+                params_dict.get("padding_percent"),
+                default=12.0,
+                minimum=2.0,
+                maximum=40.0,
+            ),
             expected_effect=str(payload.get("expected_effect", ""))[:240],
             notes=str(payload.get("notes", ""))[:400],
         )
@@ -1521,7 +1662,9 @@ class InstanceSegmentationToolkit:
 
         entries = _parse_segmentation_entries(segmentations)
         if target_index < 0 or target_index >= len(entries):
-            raise ValueError(f"target_index {target_index} out of range (0-{len(entries) - 1})")
+            raise ValueError(
+                f"target_index {target_index} out of range (0-{len(entries) - 1})"
+            )
 
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
@@ -1567,7 +1710,10 @@ class InstanceSegmentationToolkit:
         )
         response = client.models.generate_content(
             model="gemini-2.5-flash",
-            contents=[GEMINI_SEGMENTATION_REFINEMENT_PROMPT + "\n\n" + crop_info, pil_image],
+            contents=[
+                GEMINI_SEGMENTATION_REFINEMENT_PROMPT + "\n\n" + crop_info,
+                pil_image,
+            ],
             config=config,
         )
         if response.text is None:
@@ -1609,14 +1755,18 @@ class InstanceSegmentationToolkit:
                 target_index=target_index,
                 zoom_factor=zoom_factor,
                 overlay_opacity=overlay_opacity,
-                default_operator=_normalize_refinement_operator(default_operator, default="grabcut"),
+                default_operator=_normalize_refinement_operator(
+                    default_operator, default="grabcut"
+                ),
             )
         except Exception as exc:
             logger.warning(f"Gemini refinement planning failed: {exc}")
             return f"Error: refinement planning failed: {exc}"
 
         result = self._plan_to_json_text(plan, target_index=target_index)
-        self._record_stage_predictions("plan_mask_refinement_with_gemini", result, segmentations)
+        self._record_stage_predictions(
+            "plan_mask_refinement_with_gemini", result, segmentations
+        )
         return result
 
     def refine_mask_with_cv2(
@@ -1662,7 +1812,9 @@ class InstanceSegmentationToolkit:
                     default_operator="grabcut",
                 )
             except Exception as exc:
-                logger.debug(f"Failed to parse supplied refinement_plan; ignoring it: {exc}")
+                logger.debug(
+                    f"Failed to parse supplied refinement_plan; ignoring it: {exc}"
+                )
 
         if requested_mode == "auto" and not refinement_plan.strip():
             try:
@@ -1674,10 +1826,16 @@ class InstanceSegmentationToolkit:
                     default_operator="grabcut",
                 )
                 plan_text = self._plan_to_json_text(plan, target_index=target_index)
-                self._record_stage_predictions("plan_mask_refinement_with_gemini", plan_text, segmentations)
+                self._record_stage_predictions(
+                    "plan_mask_refinement_with_gemini", plan_text, segmentations
+                )
             except Exception as exc:
-                logger.warning(f"Auto refinement planning failed; defaulting to grabcut: {exc}")
-                plan = SegmentationRefinementPlan(recommended_operator="grabcut", notes=f"auto_plan_failed:{exc}")
+                logger.warning(
+                    f"Auto refinement planning failed; defaulting to grabcut: {exc}"
+                )
+                plan = SegmentationRefinementPlan(
+                    recommended_operator="grabcut", notes=f"auto_plan_failed:{exc}"
+                )
 
         explicit_positive_points = _parse_point_list_json(positive_points)
         explicit_negative_points = _parse_point_list_json(negative_points)
@@ -1687,7 +1845,9 @@ class InstanceSegmentationToolkit:
             plan.negative_points = explicit_negative_points
 
         if iterations is not None:
-            plan.iterations = self._coerce_int(iterations, default=plan.iterations, minimum=1, maximum=8)
+            plan.iterations = self._coerce_int(
+                iterations, default=plan.iterations, minimum=1, maximum=8
+            )
         if superpixel_segments is not None:
             plan.superpixel_segments = self._coerce_int(
                 superpixel_segments,
@@ -1710,8 +1870,12 @@ class InstanceSegmentationToolkit:
                 maximum=40.0,
             )
 
-        resolved_operator = plan.recommended_operator if requested_mode == "auto" else requested_mode
-        resolved_operator = _normalize_refinement_operator(resolved_operator, default="grabcut")
+        resolved_operator = (
+            plan.recommended_operator if requested_mode == "auto" else requested_mode
+        )
+        resolved_operator = _normalize_refinement_operator(
+            resolved_operator, default="grabcut"
+        )
 
         target = entries[target_index]
         box_w = target.x2 - target.x1
@@ -1723,9 +1887,13 @@ class InstanceSegmentationToolkit:
         crop_x2 = min(1000.0, target.x2 + pad_x)
         crop_y2 = min(1000.0, target.y2 + pad_y)
 
-        crop_px = _box_1000_to_px(crop_x1, crop_y1, crop_x2, crop_y2, self._full_width, self._full_height)
+        crop_px = _box_1000_to_px(
+            crop_x1, crop_y1, crop_x2, crop_y2, self._full_width, self._full_height
+        )
         crop_px_x1, crop_px_y1, crop_px_x2, crop_px_y2 = crop_px
-        crop_bgr = self._full_image_array[crop_px_y1:crop_px_y2, crop_px_x1:crop_px_x2].copy()
+        crop_bgr = self._full_image_array[
+            crop_px_y1:crop_px_y2, crop_px_x1:crop_px_x2
+        ].copy()
         if crop_bgr.size == 0:
             return "Error: refinement crop is empty."
         crop_height, crop_width = crop_bgr.shape[:2]
@@ -1744,7 +1912,9 @@ class InstanceSegmentationToolkit:
         positive_points_full = list(plan.positive_points)
         negative_points_full = list(plan.negative_points)
         if not positive_points_full:
-            positive_points_full = [((target.x1 + target.x2) / 2.0, (target.y1 + target.y2) / 2.0)]
+            positive_points_full = [
+                ((target.x1 + target.x2) / 2.0, (target.y1 + target.y2) / 2.0)
+            ]
 
         positive_points_px = _points_1000_to_crop_px(
             positive_points_full,
@@ -1765,7 +1935,14 @@ class InstanceSegmentationToolkit:
             full_height=self._full_height,
         )
 
-        full_box_px = _box_1000_to_px(target.x1, target.y1, target.x2, target.y2, self._full_width, self._full_height)
+        full_box_px = _box_1000_to_px(
+            target.x1,
+            target.y1,
+            target.x2,
+            target.y2,
+            self._full_width,
+            self._full_height,
+        )
         bbox_px_rel = (
             max(0, full_box_px[0] - crop_px_x1),
             max(0, full_box_px[1] - crop_px_y1),
@@ -1777,7 +1954,12 @@ class InstanceSegmentationToolkit:
         if resolved_operator == "keep":
             refined_mask = initial_mask.astype(np.uint8)
         elif resolved_operator == "cleanup":
-            refined_mask = _cleanup_binary_mask(initial_mask, positive_points_px, negative_points_px, plan.cleanup_kernel_size)
+            refined_mask = _cleanup_binary_mask(
+                initial_mask,
+                positive_points_px,
+                negative_points_px,
+                plan.cleanup_kernel_size,
+            )
         elif resolved_operator == "superpixel_snap":
             refined_mask, operator_note = _apply_superpixel_refinement(
                 crop_bgr=crop_bgr,
@@ -1819,7 +2001,9 @@ class InstanceSegmentationToolkit:
                 (target.x1, target.y2),
             ]
 
-        area_fraction = float(refined_mask.sum()) / float(self._full_width * self._full_height)
+        area_fraction = float(refined_mask.sum()) / float(
+            self._full_width * self._full_height
+        )
         updated_line = _format_segmentation_line(
             label=target.label,
             x1=target.x1,
@@ -1830,7 +2014,9 @@ class InstanceSegmentationToolkit:
             polygon_points=polygon_points,
             area_fraction=area_fraction,
         )
-        updated_lines = _replace_line(segmentations.splitlines(), target.line_index, updated_line)
+        updated_lines = _replace_line(
+            segmentations.splitlines(), target.line_index, updated_line
+        )
         updated_lines.append(
             "[CV2 refine "
             f"target_index={target_index} "
@@ -1860,7 +2046,12 @@ class InstanceSegmentationToolkit:
     @property
     def is_cropped(self) -> bool:
         """True when the current working image is a crop, not the full image."""
-        return not (self._crop_x1 == 0.0 and self._crop_y1 == 0.0 and self._crop_x2 == 1000.0 and self._crop_y2 == 1000.0)
+        return not (
+            self._crop_x1 == 0.0
+            and self._crop_y1 == 0.0
+            and self._crop_x2 == 1000.0
+            and self._crop_y2 == 1000.0
+        )
 
     def classify_with_gemini(self, detections: str) -> str:
         """Classify and refine labels for pre-detected bounding boxes using Gemini.
@@ -1970,7 +2161,9 @@ class InstanceSegmentationToolkit:
                         "content": [
                             {
                                 "type": "image_url",
-                                "image_url": {"url": f"data:image/jpeg;base64,{img_base64}"},
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{img_base64}"
+                                },
                             },
                             {"type": "text", "text": full_prompt},
                         ],
@@ -2115,17 +2308,30 @@ If no objects are detected, output: No objects detected."""
             return "No valid bounding boxes found in detections."
 
         # Convert 0-1000 normalized boxes to 0-1 normalized for SAM3
-        normalized_boxes = [[x1 / 1000.0, y1 / 1000.0, x2 / 1000.0, y2 / 1000.0] for _, x1, y1, x2, y2, _ in parsed]
-        normalized_positive_points = _parse_indexed_point_prompts(positive_points, len(parsed))
-        normalized_negative_points = _parse_indexed_point_prompts(negative_points, len(parsed))
+        normalized_boxes = [
+            [x1 / 1000.0, y1 / 1000.0, x2 / 1000.0, y2 / 1000.0]
+            for _, x1, y1, x2, y2, _ in parsed
+        ]
+        normalized_positive_points = _parse_indexed_point_prompts(
+            positive_points, len(parsed)
+        )
+        normalized_negative_points = _parse_indexed_point_prompts(
+            negative_points, len(parsed)
+        )
 
-        segment_boxes = modal.Function.from_name("sam3-vision-agents", "segment_boxes_with_points")
+        segment_boxes = modal.Function.from_name(
+            "sam3-vision-agents", "segment_boxes_with_points"
+        )
         results = segment_boxes.remote(
             frame_uri=self._frame_uri,
             boxes=normalized_boxes,
             handler_name=self._sam3_handler_name,
-            positive_points=normalized_positive_points if any(normalized_positive_points) else None,
-            negative_points=normalized_negative_points if any(normalized_negative_points) else None,
+            positive_points=normalized_positive_points
+            if any(normalized_positive_points)
+            else None,
+            negative_points=normalized_negative_points
+            if any(normalized_negative_points)
+            else None,
         )
 
         rename_rules = _parse_class_rename_rules(class_rename_rules)
@@ -2134,12 +2340,22 @@ If no objects are detected, output: No objects detected."""
             mapped_label = rename_rules.get(label.strip().lower(), label)
             if idx < len(results):
                 result = results[idx]
-                points = result.points if hasattr(result, "points") else result.get("points", [])
-                seg_area = result.segmentation_area if hasattr(result, "segmentation_area") else result.get("segmentation_area", 0.0)
+                points = (
+                    result.points
+                    if hasattr(result, "points")
+                    else result.get("points", [])
+                )
+                seg_area = (
+                    result.segmentation_area
+                    if hasattr(result, "segmentation_area")
+                    else result.get("segmentation_area", 0.0)
+                )
 
                 flat_points = []
                 for px, py in points:
-                    flat_points.extend([f"{float(px) * 1000:.0f}", f"{float(py) * 1000:.0f}"])
+                    flat_points.extend(
+                        [f"{float(px) * 1000:.0f}", f"{float(py) * 1000:.0f}"]
+                    )
                 seg_str = ", ".join(flat_points)
 
                 output_lines.append(
@@ -2160,7 +2376,13 @@ If no objects are detected, output: No objects detected."""
             f"negative_prompt={negative_prompt[:200]}\n"
             f"class_rename_rules={class_rename_rules[:200]}"
         )
-        if positive_points.strip() or negative_points.strip() or positive_prompt.strip() or negative_prompt.strip() or rename_rules:
+        if (
+            positive_points.strip()
+            or negative_points.strip()
+            or positive_prompt.strip()
+            or negative_prompt.strip()
+            or rename_rules
+        ):
             result += (
                 "\n"
                 f"[SAM3 experiment positive_points='{positive_points[:80]}' "
@@ -2219,7 +2441,9 @@ If no objects are detected, output: No objects detected."""
         opacity = max(0.0, min(1.0, float(overlay_opacity)))
 
         # Render masks onto the image
-        annotated_array = self._render_segmentations_on_image(segmentations, overlay_opacity=opacity)
+        annotated_array = self._render_segmentations_on_image(
+            segmentations, overlay_opacity=opacity
+        )
         annotated_bytes = cv2.imencode(".jpg", annotated_array)[1].tobytes()
 
         client = genai.Client(api_key=api_key)
@@ -2246,7 +2470,9 @@ If no objects are detected, output: No objects detected."""
 
         # Parse and format the verification results
         result = self._format_verification_results(response.text)
-        self._record_stage_predictions("verify_segmentation_with_gemini", result, segmentations)
+        self._record_stage_predictions(
+            "verify_segmentation_with_gemini", result, segmentations
+        )
         logger.debug(f"Gemini verification: {result[:200]}")
         return result
 
@@ -2373,7 +2599,10 @@ If no objects are detected, output: No objects detected."""
         try:
             response = client.models.generate_content(
                 model="gemini-2.5-flash",
-                contents=[GEMINI_VERIFY_SEGMENTATION_ZOOMED_PROMPT + "\n\n" + zoom_info, pil_image],
+                contents=[
+                    GEMINI_VERIFY_SEGMENTATION_ZOOMED_PROMPT + "\n\n" + zoom_info,
+                    pil_image,
+                ],
                 config=config,
             )
         except Exception as exc:
@@ -2393,8 +2622,12 @@ If no objects are detected, output: No objects detected."""
             crop_x2=crop_x2,
             crop_y2=crop_y2,
         )
-        self._record_stage_predictions("verify_segmentation_zoomed", result, target_line)
-        logger.debug(f"Gemini zoomed verification (index={target_index}, zoom={avg_zoom:.1f}x): {result[:200]}")
+        self._record_stage_predictions(
+            "verify_segmentation_zoomed", result, target_line
+        )
+        logger.debug(
+            f"Gemini zoomed verification (index={target_index}, zoom={avg_zoom:.1f}x): {result[:200]}"
+        )
         return result
 
     def _render_segmentation_crop(
@@ -2425,7 +2658,9 @@ If no objects are detected, output: No objects detected."""
         px_y2 = min(self._full_height, int(crop_y2 * self._full_height / 1000))
 
         if px_x2 <= px_x1 or px_y2 <= px_y1:
-            logger.warning(f"Degenerate crop region: [{crop_x1}, {crop_y1}, {crop_x2}, {crop_y2}]")
+            logger.warning(
+                f"Degenerate crop region: [{crop_x1}, {crop_y1}, {crop_x2}, {crop_y2}]"
+            )
             return None
 
         # Crop the full image
@@ -2465,9 +2700,20 @@ If no objects are detected, output: No objects detected."""
 
                 pts = np.array(points, dtype=np.int32)
                 mask_layer = crop_array.copy()
-                cv2.fillPoly(mask_layer, [pts], (0, 255, 0))  # Green fill for visibility
-                cv2.addWeighted(mask_layer, overlay_opacity, crop_array, 1.0 - overlay_opacity, 0, crop_array)
-                cv2.polylines(crop_array, [pts], isClosed=True, color=(0, 200, 0), thickness=2)
+                cv2.fillPoly(
+                    mask_layer, [pts], (0, 255, 0)
+                )  # Green fill for visibility
+                cv2.addWeighted(
+                    mask_layer,
+                    overlay_opacity,
+                    crop_array,
+                    1.0 - overlay_opacity,
+                    0,
+                    crop_array,
+                )
+                cv2.polylines(
+                    crop_array, [pts], isClosed=True, color=(0, 200, 0), thickness=2
+                )
 
         # Add label text if present
         label_match = re.search(r"object:\s*(.+?)\s*\|", segmentation_line)
@@ -2533,7 +2779,9 @@ If no objects are detected, output: No objects detected."""
 
         return "\n".join(result_lines)
 
-    def _render_segmentations_on_image(self, segmentations: str, overlay_opacity: float = 0.35) -> np.ndarray:
+    def _render_segmentations_on_image(
+        self, segmentations: str, overlay_opacity: float = 0.35
+    ) -> np.ndarray:
         """Render segmentation polygons onto the full image for visual review.
 
         Always renders on the full original image because segmentation and
@@ -2592,8 +2840,17 @@ If no objects are detected, output: No objects detected."""
                     pts = np.array(points, dtype=np.int32)
                     mask_layer = overlay.copy()
                     cv2.fillPoly(mask_layer, [pts], color)
-                    cv2.addWeighted(mask_layer, overlay_opacity, overlay, 1.0 - overlay_opacity, 0, overlay)
-                    cv2.polylines(overlay, [pts], isClosed=True, color=color, thickness=2)
+                    cv2.addWeighted(
+                        mask_layer,
+                        overlay_opacity,
+                        overlay,
+                        1.0 - overlay_opacity,
+                        0,
+                        overlay,
+                    )
+                    cv2.polylines(
+                        overlay, [pts], isClosed=True, color=color, thickness=2
+                    )
 
         return overlay
 
@@ -2638,7 +2895,9 @@ If no objects are detected, output: No objects detected."""
                 line += f" | {notes}"
             output_lines.append(line)
 
-        summary = f"Verification: {len(data)} objects checked, {issues_found} issues found."
+        summary = (
+            f"Verification: {len(data)} objects checked, {issues_found} issues found."
+        )
         return summary + "\n" + "\n".join(output_lines)
 
     def find_missed_objects_with_gemini(self, existing_detections: str) -> str:
@@ -2660,7 +2919,11 @@ If no objects are detected, output: No objects detected."""
         """
         self._emit_tool_called(
             "find_missed_objects_with_gemini",
-            {"existing_detections_preview": self._truncate_text(existing_detections, limit=400)},
+            {
+                "existing_detections_preview": self._truncate_text(
+                    existing_detections, limit=400
+                )
+            },
         )
 
         api_key = os.environ.get("GEMINI_API_KEY")
@@ -2702,7 +2965,9 @@ If no objects are detected, output: No objects detected."""
             self._crop_x2,
             self._crop_y2,
         )
-        self._record_stage_predictions("find_missed_objects_with_gemini", result, existing_detections)
+        self._record_stage_predictions(
+            "find_missed_objects_with_gemini", result, existing_detections
+        )
         logger.debug(f"Gemini missed objects: {result[:200]}")
         return result
 
@@ -2736,6 +3001,13 @@ If no objects are detected, output: No objects detected."""
             reason = det.get("reason_missed", "")
 
             if len(box) == 4:
+                try:
+                    validate_box(
+                        box, BoxFormat.YXYX_NORM_1K, context=f"missed object '{label}'"
+                    )
+                except BoxValidationError as exc:
+                    logger.warning(f"Skipping invalid missed-object detection: {exc}")
+                    continue
                 y1, x1, y2, x2 = (float(v) for v in box)
                 line = f"object: {label} | box: [{x1:.0f}, {y1:.0f}, {x2:.0f}, {y2:.0f}] | confidence={float(confidence):.2f}"
                 if reason:
@@ -2811,7 +3083,9 @@ If no objects are detected, output: No objects detected."""
             self._image_array = result
             self._height, self._width = result.shape[:2]
             self._image = _array_to_dspy_image(result)
-            logger.debug(f"execute_code updated working image to {self._width}x{self._height}")
+            logger.debug(
+                f"execute_code updated working image to {self._width}x{self._height}"
+            )
             response = f"Working image updated to {self._width}x{self._height}px. Subsequent VLM tools will see the processed image."
             if self._viewer_recorder is not None:
                 self._viewer_recorder.record_artifact(
@@ -2866,9 +3140,13 @@ If no objects are detected, output: No objects detected."""
             {"question": question},
         )
         if self._human_input_fn is None:
-            logger.debug(f"ask_for_input called but no human available: {question[:120]}")
+            logger.debug(
+                f"ask_for_input called but no human available: {question[:120]}"
+            )
             response = "No human operator available — proceed with your best judgment. If unsure, use a generic label and flag confidence as low."
-            self._emit_nonvisual_tool_result("ask_for_input", response, input_text=question, status="warning")
+            self._emit_nonvisual_tool_result(
+                "ask_for_input", response, input_text=question, status="warning"
+            )
             return response
 
         logger.info(f"ask_for_input: {question[:200]}")
@@ -2876,15 +3154,21 @@ If no objects are detected, output: No objects detected."""
             answer = self._human_input_fn(question)
             logger.info(f"Human responded: {str(answer)[:200]}")
             response = str(answer)
-            self._emit_nonvisual_tool_result("ask_for_input", response, input_text=question)
+            self._emit_nonvisual_tool_result(
+                "ask_for_input", response, input_text=question
+            )
             return response
         except Exception as exc:
             logger.warning(f"Human input callback failed: {exc}")
             response = f"Human input unavailable (error: {exc}). Proceed with your best judgment."
-            self._emit_nonvisual_tool_result("ask_for_input", response, input_text=question, status="warning")
+            self._emit_nonvisual_tool_result(
+                "ask_for_input", response, input_text=question, status="warning"
+            )
             return response
 
-    def retrieve_similar_annotations_knn(self, annotation_id: int, max_neighbors: int = 5) -> str:
+    def retrieve_similar_annotations_knn(
+        self, annotation_id: int, max_neighbors: int = 5
+    ) -> str:
         """Retrieve KNN-similar annotations with rich metadata.
 
         Uses TurboPuffer ANN lookup over maintained annotation embeddings and
@@ -2904,10 +3188,17 @@ If no objects are detected, output: No objects detected."""
             max_neighbors=max_neighbors,
             include_query=False,
         )
-        self._record_stage_predictions("retrieve_similar_annotations_knn", result, str(annotation_id))
+        self._record_stage_predictions(
+            "retrieve_similar_annotations_knn", result, str(annotation_id)
+        )
         return result
 
-    def remember_background_objects(self, detections: str, camera_id: int | None = None, reason: str = "background_object") -> str:
+    def remember_background_objects(
+        self,
+        detections: str,
+        camera_id: int | None = None,
+        reason: str = "background_object",
+    ) -> str:
         """Persist likely background detections into object memory for fast future rejection."""
         self._emit_tool_called(
             "remember_background_objects",
@@ -2962,12 +3253,16 @@ If no objects are detected, output: No objects detected."""
             return "No valid crop regions to remember."
 
         try:
-            result = self._object_memory_background_store.store_background_observations(observations)
+            result = self._object_memory_background_store.store_background_observations(
+                observations
+            )
         except Exception as exc:
             logger.warning(f"Failed to store background memory observations: {exc}")
             return f"Error storing background memory: {exc}"
         response = f"Stored {result['stored']} background object memories via {result['backend']}."
-        self._record_stage_predictions("remember_background_objects", response, detections)
+        self._record_stage_predictions(
+            "remember_background_objects", response, detections
+        )
         return response
 
     def filter_detections_by_camera_mask(self, detections: str, camera_id: int) -> str:
@@ -2978,7 +3273,10 @@ If no objects are detected, output: No objects detected."""
         """
         self._emit_tool_called(
             "filter_detections_by_camera_mask",
-            {"camera_id": camera_id, "detections_preview": self._truncate_text(detections, limit=400)},
+            {
+                "camera_id": camera_id,
+                "detections_preview": self._truncate_text(detections, limit=400),
+            },
         )
         if camera_id <= 0:
             return "camera_id must be a positive integer."
@@ -2999,18 +3297,25 @@ If no objects are detected, output: No objects detected."""
             return message
 
         try:
+
             async def _query(conn):
-                return list(await masks_db.get_masks_for_camera(conn, camera_id=camera_id))
+                return list(
+                    await masks_db.get_masks_for_camera(conn, camera_id=camera_id)
+                )
 
             mask_texts = run_sync(run_in_db(_query))
         except Exception as exc:
             logger.warning(f"Mask lookup failed for camera_id={camera_id}: {exc}")
-            return f"Error: failed to load camera masks for camera_id={camera_id}: {exc}"
+            return (
+                f"Error: failed to load camera masks for camera_id={camera_id}: {exc}"
+            )
 
         if not mask_texts:
             return detections
 
-        masks = [_parse_mask_polygon(str(mask_text)) for mask_text in mask_texts if mask_text]
+        masks = [
+            _parse_mask_polygon(str(mask_text)) for mask_text in mask_texts if mask_text
+        ]
         if not masks:
             return detections
 
@@ -3039,13 +3344,19 @@ If no objects are detected, output: No objects detected."""
 
         if not kept_lines:
             result = f"No objects detected after mask filtering (camera_id={camera_id}, removed={removed})."
-            self._record_stage_predictions("filter_detections_by_camera_mask", result, detections)
+            self._record_stage_predictions(
+                "filter_detections_by_camera_mask", result, detections
+            )
             return result
 
         if removed > 0:
-            kept_lines.append(f"[Mask filter camera_id={camera_id}: removed {removed} detection(s) outside belt region]")
+            kept_lines.append(
+                f"[Mask filter camera_id={camera_id}: removed {removed} detection(s) outside belt region]"
+            )
         result = "\n".join(kept_lines)
-        self._record_stage_predictions("filter_detections_by_camera_mask", result, detections)
+        self._record_stage_predictions(
+            "filter_detections_by_camera_mask", result, detections
+        )
         return result
 
     def zoom_in(self, x1: int, y1: int, x2: int, y2: int) -> str:
@@ -3078,8 +3389,12 @@ If no objects are detected, output: No objects detected."""
         px_y2 = min(self._full_height, int(float(y2) * self._full_height / 1000))
 
         if px_x2 <= px_x1 or px_y2 <= px_y1:
-            logger.warning(f"zoom_in degenerate box [{x1},{y1},{x2},{y2}]; keeping current image")
-            return f"Invalid crop region [{x1},{y1},{x2},{y2}]. Current image unchanged."
+            logger.warning(
+                f"zoom_in degenerate box [{x1},{y1},{x2},{y2}]; keeping current image"
+            )
+            return (
+                f"Invalid crop region [{x1},{y1},{x2},{y2}]. Current image unchanged."
+            )
 
         crop = self._full_image_array[px_y1:px_y2, px_x1:px_x2].copy()
         self._image_array = crop
@@ -3090,7 +3405,9 @@ If no objects are detected, output: No objects detected."""
         self._crop_x2 = float(x2)
         self._crop_y2 = float(y2)
 
-        logger.debug(f"zoom_in [{x1},{y1},{x2},{y2}] -> crop {self._width}x{self._height}")
+        logger.debug(
+            f"zoom_in [{x1},{y1},{x2},{y2}] -> crop {self._width}x{self._height}"
+        )
         response = (
             f"Zoomed into region [{x1},{y1},{x2},{y2}] — "
             f"crop is {self._width}x{self._height}px. "
@@ -3106,7 +3423,9 @@ If no objects are detected, output: No objects detected."""
                 payload=self._current_crop_payload(),
                 message="Rendered zoomed crop",
             )
-        self._emit_nonvisual_tool_result("zoom_in", response, extra_payload=self._current_crop_payload())
+        self._emit_nonvisual_tool_result(
+            "zoom_in", response, extra_payload=self._current_crop_payload()
+        )
         return response
 
     def reset_to_full_image(self) -> str:
@@ -3136,7 +3455,9 @@ If no objects are detected, output: No objects detected."""
                 payload=self._current_crop_payload(),
                 message="Restored full-frame view",
             )
-        self._emit_nonvisual_tool_result("reset_to_full_image", response, extra_payload=self._current_crop_payload())
+        self._emit_nonvisual_tool_result(
+            "reset_to_full_image", response, extra_payload=self._current_crop_payload()
+        )
         return response
 
     def as_tools(self) -> list[dspy.Tool]:
@@ -3315,7 +3636,9 @@ If no objects are detected, output: No objects detected."""
                     "segment_with_sam3 to get their masks."
                 ),
                 arg_desc={
-                    "existing_detections": ("Text listing all objects detected so far (from any prior detection or segmentation step)"),
+                    "existing_detections": (
+                        "Text listing all objects detected so far (from any prior detection or segmentation step)"
+                    ),
                 },
             ),
             dspy.Tool(

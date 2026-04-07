@@ -9,6 +9,9 @@ from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
+from loguru import logger
+
+from agentic_vision.coordinates import BoxFormat, BoxValidationError, validate_box
 
 
 @dataclass
@@ -155,11 +158,24 @@ def calculate_segmentation_metrics(
     metrics.false_positives = len(predictions) - metrics.true_positives
     metrics.false_negatives = len(ground_truth) - len(matched_gt_indices)
 
-    metrics.detection_precision = metrics.true_positives / metrics.num_predictions if metrics.num_predictions > 0 else 0.0
-    metrics.detection_recall = metrics.true_positives / metrics.num_ground_truth if metrics.num_ground_truth > 0 else 0.0
+    metrics.detection_precision = (
+        metrics.true_positives / metrics.num_predictions
+        if metrics.num_predictions > 0
+        else 0.0
+    )
+    metrics.detection_recall = (
+        metrics.true_positives / metrics.num_ground_truth
+        if metrics.num_ground_truth > 0
+        else 0.0
+    )
 
     if metrics.detection_precision + metrics.detection_recall > 0:
-        metrics.detection_f1 = 2 * metrics.detection_precision * metrics.detection_recall / (metrics.detection_precision + metrics.detection_recall)
+        metrics.detection_f1 = (
+            2
+            * metrics.detection_precision
+            * metrics.detection_recall
+            / (metrics.detection_precision + metrics.detection_recall)
+        )
 
     # Calculate segmentation metrics from matched pairs
     if matched_ious:
@@ -187,10 +203,17 @@ def calculate_segmentation_metrics(
             metrics.mask_precision = np.mean(mask_precisions)
             metrics.mask_recall = np.mean(mask_recalls)
             # Boundary F1 approximation
-            metrics.boundary_f1 = 2 * metrics.mask_precision * metrics.mask_recall / (metrics.mask_precision + metrics.mask_recall + 1e-8)
+            metrics.boundary_f1 = (
+                2
+                * metrics.mask_precision
+                * metrics.mask_recall
+                / (metrics.mask_precision + metrics.mask_recall + 1e-8)
+            )
 
     # Calculate per-class metrics
-    metrics.per_class_detection = _calculate_per_class_detection(predictions, ground_truth, matched_pred_indices, matched_gt_indices)
+    metrics.per_class_detection = _calculate_per_class_detection(
+        predictions, ground_truth, matched_pred_indices, matched_gt_indices
+    )
 
     return metrics
 
@@ -199,6 +222,23 @@ def _calculate_box_iou(
     box_a: list[float] | tuple[float, ...],
     box_b: list[float] | tuple[float, ...],
 ) -> float:
+    """Calculate IoU between two bounding boxes.
+
+    Both boxes must be in XYXY format (pixel or normalised) and in the
+    same coordinate space.  Degenerate or inverted boxes return 0.0
+    with a warning.
+    """
+    try:
+        validate_box(box_a, BoxFormat.XYXY_ANY, context="IoU box_a")
+    except BoxValidationError:
+        logger.warning(f"Skipping degenerate box_a {box_a} in IoU calculation")
+        return 0.0
+
+    try:
+        validate_box(box_b, BoxFormat.XYXY_ANY, context="IoU box_b")
+    except BoxValidationError:
+        logger.warning(f"Skipping degenerate box_b {box_b} in IoU calculation")
+        return 0.0
     """Calculate IoU between two bounding boxes."""
     x1_a, y1_a, x2_a, y2_a = box_a
     x1_b, y1_b, x2_b, y2_b = box_b
@@ -276,7 +316,11 @@ def _calculate_per_class_detection(
 
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+        f1 = (
+            2 * precision * recall / (precision + recall)
+            if (precision + recall) > 0
+            else 0.0
+        )
 
         result[label] = {
             "precision": precision,
@@ -301,7 +345,9 @@ def aggregate_metrics(metrics_list: list[SegmentationMetrics]) -> SegmentationMe
     aggregated = SegmentationMetrics()
 
     # Average detection metrics
-    aggregated.detection_precision = np.mean([m.detection_precision for m in metrics_list])
+    aggregated.detection_precision = np.mean(
+        [m.detection_precision for m in metrics_list]
+    )
     aggregated.detection_recall = np.mean([m.detection_recall for m in metrics_list])
     aggregated.detection_f1 = np.mean([m.detection_f1 for m in metrics_list])
 

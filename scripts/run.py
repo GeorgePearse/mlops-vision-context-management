@@ -39,6 +39,7 @@ from google.cloud import storage
 # FiftyOne import (optional)
 try:
     import fiftyone as fo
+
     FIFTYONE_AVAILABLE = True
 except ImportError:
     fo = None
@@ -90,13 +91,23 @@ from agentic_vision.experiment_plots import (
     plot_strategy_comparison,
     create_summary_table,
 )
+from agentic_vision.coordinates import (
+    BoxFormat,
+    BoxValidationError,
+    convert_box,
+    validate_annotation_boxes,
+    validate_box,
+    validate_predictions_boxes,
+)
 
 
 def get_db_connection() -> psycopg.Connection[Any]:
     """Create a database connection using PG_DATABASE_URL."""
     database_url = os.environ.get("PG_DATABASE_URL")
     if not database_url:
-        raise ValueError("PG_DATABASE_URL environment variable is required.\nExample: PG_DATABASE_URL='postgresql://user:pass@host:5432/dbname'")
+        raise ValueError(
+            "PG_DATABASE_URL environment variable is required.\nExample: PG_DATABASE_URL='postgresql://user:pass@host:5432/dbname'"
+        )
     return psycopg.connect(database_url)
 
 
@@ -192,11 +203,22 @@ def get_dataset_images_from_db(
                 x2 = x1 + width if width else x1
                 y2 = y1 + height if height else y1
 
+                box = [x1, y1, x2, y2]
+                try:
+                    validate_box(
+                        box,
+                        BoxFormat.XYXY_PIXEL,
+                        context=f"DB image_id={image_id} ann_id={ann_id}",
+                    )
+                except BoxValidationError as exc:
+                    logger.warning(f"Skipping invalid DB annotation: {exc}")
+                    continue
+
                 annotations.append(
                     {
                         "annotation_id": ann_id,
                         "label": class_name,
-                        "box": [x1, y1, x2, y2],
+                        "box": box,
                         "segmentation": [],  # segmentations is polygon type, would need parsing
                     }
                 )
@@ -224,7 +246,7 @@ def load_annotations_from_file(filepath: str) -> list[dict[str, Any]]:
         "images": [
             {
                 "image_id": 123,
-                "frame_uri": "gs://bucket/path/to/image.jpg",
+                "frame_uri": "<machine_learning.images.frame_uri or local image path>",
                 "annotations": [
                     {
                         "label": "person",
@@ -240,7 +262,37 @@ def load_annotations_from_file(filepath: str) -> list[dict[str, Any]]:
         data = json.load(f)
 
     images_data = data.get("images", [])
+
+    placeholder_indices = [
+        idx
+        for idx, image in enumerate(images_data)
+        if str(image.get("frame_uri", "")).startswith(
+            "REPLACE_WITH_MACHINE_LEARNING_IMAGES_FRAME_URI"
+        )
+    ]
+    if placeholder_indices:
+        raise ValueError(
+            "Annotation file contains placeholder frame_uri values. "
+            "Use the exact values from machine_learning.images.frame_uri "
+            "or valid local image paths before running experiments."
+        )
+
     logger.info(f"Loaded {len(images_data)} images from {filepath}")
+
+    for img_idx, img_data in enumerate(images_data):
+        annotations = img_data.get("annotations", [])
+        valid = validate_annotation_boxes(
+            annotations,
+            BoxFormat.XYXY_PIXEL,
+            context=f"file image[{img_idx}]",
+        )
+        img_data["annotations"] = valid
+        dropped = len(annotations) - len(valid)
+        if dropped:
+            logger.warning(
+                f"file image[{img_idx}]: dropped {dropped} invalid annotation(s)"
+            )
+
     return images_data
 
 
@@ -290,7 +342,9 @@ def create_fiftyone_dataset(
         - Predictions: Gemini [ymin, xmin, ymax, xmax] 0-1000 -> normalized [x, y, w, h]
     """
     if not FIFTYONE_AVAILABLE:
-        raise RuntimeError("FiftyOne is not available. Install with: pip install fiftyone")
+        raise RuntimeError(
+            "FiftyOne is not available. Install with: pip install fiftyone"
+        )
 
     # Delete existing dataset if it exists
     if fo.dataset_exists(dataset_name):
@@ -333,7 +387,9 @@ def create_fiftyone_dataset(
         try:
             # Download image from GCS
             image_bytes = download_image_from_gcs(frame_uri)
-            img_array = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR)
+            img_array = cv2.imdecode(
+                np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR
+            )
 
             if img_array is None:
                 logger.warning(f"Skipping image {idx}: could not decode {frame_uri}")
@@ -354,15 +410,29 @@ def create_fiftyone_dataset(
             gt_detections = []
             for ann in annotations:
                 box = ann.get("box", ann.get("bbox", [0, 0, 1, 1]))
-                x1, y1, x2, y2 = box
 
-                # Normalize bounding box to [0, 1] in XYWH format
-                rel_box = [
-                    x1 / width,
-                    y1 / height,
-                    (x2 - x1) / width,
-                    (y2 - y1) / height,
-                ]
+                try:
+                    validated_pixel = validate_box(
+                        box,
+                        BoxFormat.XYXY_PIXEL,
+                        context=f"FiftyOne GT image[{idx}]",
+                        image_width=width,
+                        image_height=height,
+                    )
+                except BoxValidationError as exc:
+                    logger.warning(f"Skipping GT detection for image[{idx}]: {exc}")
+                    continue
+
+                x1, y1, x2, y2 = validated_pixel
+
+                rel_box = convert_box(
+                    validated_pixel,
+                    BoxFormat.XYXY_PIXEL,
+                    BoxFormat.XYWH_NORM_01,
+                    image_width=width,
+                    image_height=height,
+                    context=f"FiftyOne GT image[{idx}]",
+                )
 
                 detection_kwargs = {
                     "label": ann.get("label", "unknown"),
@@ -379,9 +449,11 @@ def create_fiftyone_dataset(
                                 polygon_points = np.array(seg_points, dtype=np.int32)
                             else:
                                 polygon_points = np.array(
-                                    [(seg_points[i], seg_points[i+1])
-                                     for i in range(0, len(seg_points)-1, 2)],
-                                    dtype=np.int32
+                                    [
+                                        (seg_points[i], seg_points[i + 1])
+                                        for i in range(0, len(seg_points) - 1, 2)
+                                    ],
+                                    dtype=np.int32,
                                 )
                             cv2.fillPoly(mask, [polygon_points], (1,))
 
@@ -403,19 +475,35 @@ def create_fiftyone_dataset(
                 pred_detections = []
                 for pred in predictions_by_image[idx]:
                     box = pred.get("box", [0, 0, 1, 1])
-                    # Gemini returns [ymin, xmin, ymax, xmax] but we stored as [a,b,c,d]
-                    # So: ymin=box[0], xmin=box[1], ymax=box[2], xmax=box[3]
-                    ymin, xmin, ymax, xmax = box
-                    x1, y1, x2, y2 = xmin, ymin, xmax, ymax
 
-                    # Prediction boxes are in 0-1000 normalized space from Gemini
-                    # Convert to [0, 1] XYWH format for FiftyOne
-                    rel_box = [
-                        x1 / 1000.0,
-                        y1 / 1000.0,
-                        (x2 - x1) / 1000.0,
-                        (y2 - y1) / 1000.0,
-                    ]
+                    try:
+                        validated_yxyx = validate_box(
+                            box,
+                            BoxFormat.YXYX_NORM_1K,
+                            context=f"FiftyOne pred image[{idx}]",
+                        )
+                    except BoxValidationError as exc:
+                        logger.warning(f"Skipping prediction for image[{idx}]: {exc}")
+                        continue
+
+                    # Convert from Gemini [y1, x1, y2, x2] 0-1000 -> XYWH [0,1] for FiftyOne
+                    rel_box = convert_box(
+                        validated_yxyx,
+                        BoxFormat.YXYX_NORM_1K,
+                        BoxFormat.XYWH_NORM_01,
+                        context=f"FiftyOne pred image[{idx}]",
+                    )
+
+                    # Also get pixel coords for mask cropping
+                    pixel_box = convert_box(
+                        validated_yxyx,
+                        BoxFormat.YXYX_NORM_1K,
+                        BoxFormat.XYXY_PIXEL,
+                        image_width=width,
+                        image_height=height,
+                        context=f"FiftyOne pred mask image[{idx}]",
+                    )
+                    x1_px, y1_px, x2_px, y2_px = (int(v) for v in pixel_box)
 
                     pred_kwargs = {
                         "label": pred.get("label", "unknown"),
@@ -429,23 +517,30 @@ def create_fiftyone_dataset(
                             seg_points = pred["segmentation"]
                             if isinstance(seg_points, list) and len(seg_points) >= 6:
                                 mask = np.zeros((height, width), dtype=np.uint8)
-                                # Segmentation points are also in 0-1000 space, convert to pixels
                                 if isinstance(seg_points[0], (list, tuple)):
                                     polygon_points = np.array(
-                                        [[int(p[0] * width / 1000), int(p[1] * height / 1000)] for p in seg_points],
-                                        dtype=np.int32
+                                        [
+                                            [
+                                                int(p[0] * width / 1000),
+                                                int(p[1] * height / 1000),
+                                            ]
+                                            for p in seg_points
+                                        ],
+                                        dtype=np.int32,
                                     )
                                 else:
                                     polygon_points = np.array(
-                                        [(int(seg_points[i] * width / 1000), int(seg_points[i+1] * height / 1000))
-                                         for i in range(0, len(seg_points)-1, 2)],
-                                        dtype=np.int32
+                                        [
+                                            (
+                                                int(seg_points[i] * width / 1000),
+                                                int(seg_points[i + 1] * height / 1000),
+                                            )
+                                            for i in range(0, len(seg_points) - 1, 2)
+                                        ],
+                                        dtype=np.int32,
                                     )
                                 cv2.fillPoly(mask, [polygon_points], (1,))
 
-                                # Convert box coords to pixels for mask cropping
-                                x1_px, y1_px = int(x1 * width / 1000), int(y1 * height / 1000)
-                                x2_px, y2_px = int(x2 * width / 1000), int(y2 * height / 1000)
                                 cropped_mask = mask[y1_px:y2_px, x1_px:x2_px]
 
                                 if cropped_mask.size > 0:
@@ -456,10 +551,14 @@ def create_fiftyone_dataset(
                     pred_detections.append(fo.Detection(**pred_kwargs))
 
                 sample["predictions"] = fo.Detections(detections=pred_detections)
-                logger.debug(f"Added {len(pred_detections)} predictions for image {idx}")
+                logger.debug(
+                    f"Added {len(pred_detections)} predictions for image {idx}"
+                )
 
             dataset.add_sample(sample)
-            logger.info(f"Added image {idx}: {len(gt_detections)} GT, {len(predictions_by_image.get(idx, []))} predictions")
+            logger.info(
+                f"Added image {idx}: {len(gt_detections)} GT, {len(predictions_by_image.get(idx, []))} predictions"
+            )
 
         except Exception as e:
             logger.warning(f"Skipping image {idx}: {e}")
@@ -714,6 +813,10 @@ Examples:
   uv run python scripts/run.py \\
       --annotations-file ./annotations.json \\
       --budgets 0,5,10,20,50
+
+File-mode note:
+  Each frame_uri should be copied directly from machine_learning.images.frame_uri
+  or point at a real local image file. Do not reconstruct bucket URLs manually.
         """,
     )
 
@@ -840,7 +943,9 @@ Examples:
                 print(f"\n{name}:")
                 print(f"  Strategy: {result.config.strategy.value}")
                 print(f"  Annotations: {result.total_annotations_used}")
-                print(f"  Detection F1: {result.final_metrics.get('detection_f1', 0):.3f}")
+                print(
+                    f"  Detection F1: {result.final_metrics.get('detection_f1', 0):.3f}"
+                )
                 print(f"  Mean IoU: {result.final_metrics.get('mean_iou', 0):.3f}")
                 print(f"  Stopped: {result.stopped_reason}")
             print("=" * 70)
@@ -850,32 +955,53 @@ Examples:
             # Launch FiftyOne visualization
             if not args.no_fiftyone and images_data:
                 if not FIFTYONE_AVAILABLE:
-                    logger.warning("FiftyOne not available. Install with: pip install fiftyone")
+                    logger.warning(
+                        "FiftyOne not available. Install with: pip install fiftyone"
+                    )
                 else:
-                    fo_dataset_name = args.fiftyone_dataset_name or f"{args.dataset_name or 'experiment'}_experiment"
-                    results_file = Path(args.output_dir) / f"{args.experiment_name}.json"
+                    fo_dataset_name = (
+                        args.fiftyone_dataset_name
+                        or f"{args.dataset_name or 'experiment'}_experiment"
+                    )
+                    results_file = (
+                        Path(args.output_dir) / f"{args.experiment_name}.json"
+                    )
 
                     logger.info(f"Creating FiftyOne dataset: {fo_dataset_name}")
                     try:
                         # Set MongoDB URI if not set (use local MongoDB without auth)
                         if "FIFTYONE_DATABASE_URI" not in os.environ:
-                            os.environ["FIFTYONE_DATABASE_URI"] = "mongodb://localhost:27017"
+                            os.environ["FIFTYONE_DATABASE_URI"] = (
+                                "mongodb://localhost:27017"
+                            )
 
                         dataset = create_fiftyone_dataset(
                             images_data=images_data,
                             dataset_name=fo_dataset_name,
-                            results_file=str(results_file) if results_file.exists() else None,
+                            results_file=str(results_file)
+                            if results_file.exists()
+                            else None,
                         )
 
-                        logger.info(f"Launching FiftyOne app on port {args.fiftyone_port}...")
-                        session = fo.launch_app(dataset, port=args.fiftyone_port, address="0.0.0.0")
-                        logger.info(f"FiftyOne app running at: http://0.0.0.0:{args.fiftyone_port}")
-                        print(f"\nFiftyOne is running at: http://localhost:{args.fiftyone_port}")
+                        logger.info(
+                            f"Launching FiftyOne app on port {args.fiftyone_port}..."
+                        )
+                        session = fo.launch_app(
+                            dataset, port=args.fiftyone_port, address="0.0.0.0"
+                        )
+                        logger.info(
+                            f"FiftyOne app running at: http://0.0.0.0:{args.fiftyone_port}"
+                        )
+                        print(
+                            f"\nFiftyOne is running at: http://localhost:{args.fiftyone_port}"
+                        )
                         print("Press Enter to close FiftyOne and exit...")
                         input()
                     except Exception as e:
                         logger.error(f"Failed to launch FiftyOne: {e}")
-                        logger.info("Results are still saved. You can view them later with load_results_fiftyone.py")
+                        logger.info(
+                            "Results are still saved. You can view them later with load_results_fiftyone.py"
+                        )
         else:
             logger.error("Experiment produced no results")
             return 1

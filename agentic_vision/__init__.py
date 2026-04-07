@@ -3,7 +3,10 @@
 Includes active learning components for minimal-annotation instance segmentation.
 """
 
-from agentic_vision.gemini_agentic_vision import AgenticVisionResult, GeminiAgenticVisionClient
+from agentic_vision.gemini_agentic_vision import (
+    AgenticVisionResult,
+    GeminiAgenticVisionClient,
+)
 from agentic_vision.object_memory import ObjectMemoryRetriever
 from agentic_vision.instance_segmentation import (
     InstanceSegmentationAnnotator,
@@ -18,6 +21,14 @@ from agentic_vision.active_learning import (
     AnnotationStrategy,
     KnowledgeBase,
     ObjectUncertainty,
+)
+from agentic_vision.coordinates import (
+    BoxFormat,
+    BoxValidationError,
+    convert_box,
+    validate_annotation_boxes,
+    validate_box,
+    validate_predictions_boxes,
 )
 from agentic_vision.active_learning_programme import (
     ActiveLearningResult,
@@ -67,6 +78,13 @@ __all__ = [
     "KnowledgeBase",
     "ObjectUncertainty",
     "AnnotatedExample",
+    # Coordinates
+    "BoxFormat",
+    "BoxValidationError",
+    "convert_box",
+    "validate_annotation_boxes",
+    "validate_box",
+    "validate_predictions_boxes",
     # Experiment framework
     "ExperimentRunner",
     "ExperimentConfig",

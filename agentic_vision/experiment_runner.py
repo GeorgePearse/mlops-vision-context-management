@@ -20,6 +20,7 @@ from agentic_vision.active_learning_programme import (
     ActiveLearningSegmenter,
     SegmentationPrediction,
 )
+from agentic_vision.coordinates import BoxFormat, BoxValidationError, validate_box
 from agentic_vision.metrics import (
     SegmentationMetrics,
     aggregate_metrics,
@@ -47,7 +48,14 @@ class ExperimentConfig:
 
     # Secondary metrics to track (always recorded)
     track_metrics: list[str] = field(
-        default_factory=lambda: ["detection_f1", "detection_precision", "detection_recall", "mean_iou", "mask_precision", "mask_recall"]
+        default_factory=lambda: [
+            "detection_f1",
+            "detection_precision",
+            "detection_recall",
+            "mean_iou",
+            "mask_precision",
+            "mask_recall",
+        ]
     )
 
     def to_dict(self) -> dict[str, Any]:
@@ -125,6 +133,25 @@ class GroundTruthSimulator:
         self.iou_threshold = iou_threshold
         self._match_cache: dict[int, int | None] = {}  # pred_idx -> gt_idx
 
+        self._validate_ground_truth()
+
+    def _validate_ground_truth(self) -> None:
+        """Validate ground truth boxes and drop invalid entries."""
+        valid: list[dict[str, Any]] = []
+        for idx, gt in enumerate(self.ground_truth):
+            gt_box = gt.get("box", gt.get("bbox"))
+            try:
+                validate_box(gt_box, BoxFormat.XYXY_ANY, context=f"GT[{idx}]")
+                valid.append(gt)
+            except BoxValidationError as exc:
+                logger.warning(f"Dropping {exc}")
+        dropped = len(self.ground_truth) - len(valid)
+        if dropped:
+            logger.warning(
+                f"GroundTruthSimulator: dropped {dropped} invalid GT annotation(s)"
+            )
+            self.ground_truth = valid
+
     def find_match(
         self,
         prediction: SegmentationPrediction,
@@ -145,6 +172,14 @@ class GroundTruthSimulator:
         best_idx = None
 
         pred_box = prediction.box
+        try:
+            validate_box(
+                pred_box, BoxFormat.XYXY_ANY, context=f"prediction[{prediction_index}]"
+            )
+        except BoxValidationError as exc:
+            logger.warning(f"Cannot match prediction: {exc}")
+            self._match_cache[prediction_index] = None
+            return None
 
         for idx, gt in enumerate(self.ground_truth):
             gt_box = gt.get("box", gt.get("bbox", [0, 0, 0, 0]))
@@ -182,7 +217,9 @@ class GroundTruthSimulator:
                 "box": match.get("box", match.get("bbox", prediction.box)),
                 "segmentation": match.get("segmentation", prediction.segmentation),
                 "source": "ground_truth",
-                "iou_with_prediction": self._calculate_iou(prediction.box, match.get("box", match.get("bbox", prediction.box))),
+                "iou_with_prediction": self._calculate_iou(
+                    prediction.box, match.get("box", match.get("bbox", prediction.box))
+                ),
             }
 
         # No match - return original (simulating human confirming)
@@ -258,7 +295,9 @@ class GroundTruthSimulator:
             ys = [p[1] for p in poly]
             return (min(xs), min(ys), max(xs), max(ys))
 
-        return GroundTruthSimulator._calculate_iou(bbox_from_poly(poly_a), bbox_from_poly(poly_b))
+        return GroundTruthSimulator._calculate_iou(
+            bbox_from_poly(poly_a), bbox_from_poly(poly_b)
+        )
 
 
 class ExperimentRunner:
@@ -300,7 +339,9 @@ class ExperimentRunner:
         """
         result = ExperimentResult(config=config)
 
-        logger.info(f"Starting experiment: {config.name} (strategy={config.strategy.value}, budget={config.annotation_budget})")
+        logger.info(
+            f"Starting experiment: {config.name} (strategy={config.strategy.value}, budget={config.annotation_budget})"
+        )
 
         # Track cumulative state across images
         cumulative_annotations = 0
@@ -347,7 +388,9 @@ class ExperimentRunner:
                         pred.confidence = 0.95  # High confidence after annotation
 
                 # Calculate metrics for this image
-                metrics = simulator.calculate_comprehensive_metrics(al_result.predictions)
+                metrics = simulator.calculate_comprehensive_metrics(
+                    al_result.predictions
+                )
                 cumulative_metrics_list.append(metrics)
 
                 # Update cumulative stats
@@ -360,7 +403,11 @@ class ExperimentRunner:
                 result.primary_metric_scores.append(primary_score)
 
                 # Record all tracked metrics
-                metrics_dict: dict[str, float] = {k: float(v) for k, v in metrics.to_dict().items() if isinstance(v, (int, float))}
+                metrics_dict: dict[str, float] = {
+                    k: float(v)
+                    for k, v in metrics.to_dict().items()
+                    if isinstance(v, (int, float))
+                }
                 result.metrics_history.append(metrics_dict)
 
                 # Store predictions for FiftyOne visualization
@@ -389,7 +436,9 @@ class ExperimentRunner:
                 )
 
                 # Check stopping criteria
-                stop_reason = self._check_stopping_criteria(config, result.primary_metric_scores, cumulative_annotations)
+                stop_reason = self._check_stopping_criteria(
+                    config, result.primary_metric_scores, cumulative_annotations
+                )
 
                 if stop_reason:
                     result.stopped_reason = stop_reason
@@ -412,8 +461,14 @@ class ExperimentRunner:
 
             if all_gt:
                 final_simulator = GroundTruthSimulator(all_gt)
-                final_metrics = final_simulator.calculate_comprehensive_metrics(cumulative_predictions)
-                result.final_metrics = {k: float(v) for k, v in final_metrics.to_dict().items() if isinstance(v, (int, float))}
+                final_metrics = final_simulator.calculate_comprehensive_metrics(
+                    cumulative_predictions
+                )
+                result.final_metrics = {
+                    k: float(v)
+                    for k, v in final_metrics.to_dict().items()
+                    if isinstance(v, (int, float))
+                }
 
         if not result.stopped_reason:
             result.stopped_reason = "completed_all_images"

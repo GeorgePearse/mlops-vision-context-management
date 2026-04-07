@@ -21,6 +21,7 @@ from agentic_vision.active_learning import (
     KnowledgeBase,
     ObjectUncertainty,
 )
+from agentic_vision.coordinates import BoxFormat, BoxValidationError, validate_box
 from agentic_vision.instance_segmentation.tools import (
     InstanceSegmentationToolkit,
     parse_boxes_from_detections,
@@ -142,12 +143,22 @@ class ActiveLearningSegmentationSignature(dspy.Signature):
     """
 
     image: dspy.Image = dspy.InputField(desc="Image to segment with active learning")
-    budget_remaining: int = dspy.InputField(desc="Number of human annotations still available")
-    prior_knowledge: str = dspy.InputField(desc="Summary of what we know from prior annotations (optional)")
+    budget_remaining: int = dspy.InputField(
+        desc="Number of human annotations still available"
+    )
+    prior_knowledge: str = dspy.InputField(
+        desc="Summary of what we know from prior annotations (optional)"
+    )
 
-    segmentations: str = dspy.OutputField(desc="Instance segmentation results, one per line in standard format")
-    annotation_requests: str = dspy.OutputField(desc="List of object indices that need human annotation (comma-separated)")
-    uncertainty_summary: str = dspy.OutputField(desc="Summary of uncertainty levels for each detected object")
+    segmentations: str = dspy.OutputField(
+        desc="Instance segmentation results, one per line in standard format"
+    )
+    annotation_requests: str = dspy.OutputField(
+        desc="List of object indices that need human annotation (comma-separated)"
+    )
+    uncertainty_summary: str = dspy.OutputField(
+        desc="Summary of uncertainty levels for each detected object"
+    )
 
 
 class ActiveLearningSegmenter(dspy.Module):
@@ -242,7 +253,9 @@ class ActiveLearningSegmenter(dspy.Module):
         # Format as readable summary
         lines = [f"Found {len(neighbors)} similar examples:"]
         for n in neighbors[:3]:  # Show top 3
-            lines.append(f"- {n.get('class_name', 'unknown')} (distance={n.get('distance', 0):.2f}, proximity={n.get('proximity_score', 0):.2f})")
+            lines.append(
+                f"- {n.get('class_name', 'unknown')} (distance={n.get('distance', 0):.2f}, proximity={n.get('proximity_score', 0):.2f})"
+            )
         return "\n".join(lines)
 
     def _segment_with_sam3(self, detections: str) -> str:
@@ -251,11 +264,15 @@ class ActiveLearningSegmenter(dspy.Module):
             return "Error: Toolkit not initialized"
         return self._toolkit.segment_with_sam3(detections)
 
-    def _verify_segmentation(self, segmentations: str, overlay_opacity: float = 0.35) -> str:
+    def _verify_segmentation(
+        self, segmentations: str, overlay_opacity: float = 0.35
+    ) -> str:
         """Verify segmentation quality."""
         if self._toolkit is None:
             return "Error: Toolkit not initialized"
-        return self._toolkit.verify_segmentation_with_gemini(segmentations, overlay_opacity)
+        return self._toolkit.verify_segmentation_with_gemini(
+            segmentations, overlay_opacity
+        )
 
     def _verify_segmentation_zoomed(
         self,
@@ -366,7 +383,9 @@ class ActiveLearningSegmenter(dspy.Module):
 
         try:
             # Step 1: Detect all objects
-            detections_text = self._toolkit.locate_with_gemini("Find all objects in this image")
+            detections_text = self._toolkit.locate_with_gemini(
+                "Find all objects in this image"
+            )
             parsed_detections = parse_boxes_from_detections(detections_text)
 
             logger.info(f"Detected {len(parsed_detections)} objects")
@@ -375,6 +394,17 @@ class ActiveLearningSegmenter(dspy.Module):
             predictions: list[SegmentationPrediction] = []
 
             for idx, (label, x1, y1, x2, y2, conf) in enumerate(parsed_detections):
+                box = (x1, y1, x2, y2)
+                try:
+                    validate_box(
+                        box,
+                        BoxFormat.XYXY_NORM_1K,
+                        context=f"detection[{idx}] '{label}'",
+                    )
+                except BoxValidationError as exc:
+                    logger.warning(f"Skipping invalid detection: {exc}")
+                    continue
+
                 # Estimate uncertainty using knowledge base
                 uncertainty = self.knowledge_base.estimate_uncertainty_for_detection(
                     box=(x1, y1, x2, y2),
@@ -401,7 +431,9 @@ class ActiveLearningSegmenter(dspy.Module):
                     confidence=conf,
                     uncertainty=uncertainty,
                     detection_source="qwen",
-                    classification_source="gemini" if not should_annotate else "pending_human",
+                    classification_source="gemini"
+                    if not should_annotate
+                    else "pending_human",
                 )
 
                 if should_annotate and not self.budget_manager.is_exhausted:
@@ -432,7 +464,9 @@ class ActiveLearningSegmenter(dspy.Module):
                     pred.label = human_label
                     pred.confidence = 0.95  # High confidence after human input
 
-                logger.info(f"Annotated object {idx}: {pred.label} (budget remaining: {self.budget_manager.remaining_budget})")
+                logger.info(
+                    f"Annotated object {idx}: {pred.label} (budget remaining: {self.budget_manager.remaining_budget})"
+                )
 
             # Step 4: Generate segmentations
             detection_text = "\n".join(
@@ -461,7 +495,9 @@ class ActiveLearningSegmenter(dspy.Module):
                 processing_time_seconds=elapsed,
             )
 
-            logger.info(f"ActiveLearning complete: {len(predictions)} predictions, {result.annotations_used} annotations used, {elapsed:.1f}s")
+            logger.info(
+                f"ActiveLearning complete: {len(predictions)} predictions, {result.annotations_used} annotations used, {elapsed:.1f}s"
+            )
 
             return result
 
