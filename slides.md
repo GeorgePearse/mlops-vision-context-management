@@ -72,6 +72,7 @@ style: |
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -103,6 +104,7 @@ style: |
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -132,6 +134,7 @@ style: |
 <span class="active">Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -163,6 +166,7 @@ style: |
 <span>Dataset Compilation</span>
 <span class="active">Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -232,6 +236,44 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span class="active">Image vs Text</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## Image vs Text: Choosing Your Canvas
+
+When passing context between pipeline stages, you have a choice:
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| **Image** (render predictions onto pixels) | Downstream model can re-interpret; errors don't propagate as hard | Vision understanding is weaker; lossy |
+| **Text/JSON** (structured output) | LLMs understand text far better; precise; composable | Early mistakes propagate; no second chance to see the raw signal |
+
+**The trade-off**: Text lets you reason precisely, but if stage 1 misreads "7" as "1", stage 2 has no way to recover. An image overlay at least preserves the original pixels for reinterpretation.
+
+**Hybrid approach**: Pass both — structured JSON for the happy path, but include a crop or thumbnail so the model can sanity-check ambiguous cases.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>Image vs Text</span>
 <span class="active">The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -267,6 +309,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span class="active">The Gap</span>
 <span>The Compile Analogy</span>
@@ -301,6 +344,7 @@ There's no **build system** for datasets.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span class="active">The Compile Analogy</span>
@@ -332,6 +376,7 @@ Not a sequential pipeline.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -378,6 +423,7 @@ Raw Images
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -413,6 +459,7 @@ Like `make -j16` for your dataset.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -445,6 +492,7 @@ Like `make -j16` for your dataset.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -478,6 +526,7 @@ Like `make -j16` for your dataset.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -519,6 +568,7 @@ CLI-first → fits into CI/CD and automation
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -556,6 +606,7 @@ Hard to catch in aggregate stats.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -605,6 +656,7 @@ Declarative. Version-controlled. Reproducible.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -637,6 +689,7 @@ Declarative. Version-controlled. Reproducible.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -665,6 +718,7 @@ Declarative. Version-controlled. Reproducible.
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
