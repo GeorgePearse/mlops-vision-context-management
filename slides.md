@@ -367,6 +367,8 @@ Without it, the optimizer would overfit: append more rules, more examples, more 
 
 Punishing complexity forces the system to *distill* what it learned, not just *append* it.
 
+**The mechanism**: Keep specialists alive, let them evolve independently, then breed a generalist from the best specialists at the end. The final output avoids regressions on hard cases because the frontier preserves what each specialist learned.
+
 ---
 
 <div class="nav">
