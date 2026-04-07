@@ -1,6 +1,6 @@
 """Instance segmentation annotation programme using DSPy ReAct with multi-model tools.
 
-Orchestrates Gemini, Qwen, and SAM3 through a ReAct agent that learns
+Orchestrates Gemini and SAM3 through a ReAct agent that learns
 optimal tool-calling strategies via DSPy optimization.
 """
 
@@ -28,7 +28,7 @@ class InstanceSegmentationSignature(dspy.Signature):
     """Produce instance segmentation annotations for all objects in the image.
 
     You have access to specialized tools:
-    - locate_with_qwen: Find all objects with precise bounding boxes (best at spatial localization)
+    - locate_with_gemini: Find all objects with precise bounding boxes
     - classify_with_gemini: Assign specific labels to detected boxes (best at visual classification)
     - filter_detections_by_camera_mask: Remove detections outside the configured belt region
     - segment_with_sam3: PRIMARY iterative tool call for mask generation/refinement
@@ -49,8 +49,8 @@ class InstanceSegmentationSignature(dspy.Signature):
     - ask_for_input: Ask a human operator when confidence is low
 
     Recommended workflow:
-    1. locate_with_qwen to find all objects with tight bounding boxes.
-    2. classify_with_gemini with the Qwen output to get specific category labels.
+    1. locate_with_gemini to find all objects with tight bounding boxes.
+    2. classify_with_gemini with the detection output to get specific category labels.
     3. filter_detections_by_camera_mask with the camera_id before segmentation.
     4. segment_with_sam3 with the filtered detections to get segmentation masks.
     5. Re-run segment_with_sam3 frequently as the primary loop with:
@@ -89,7 +89,7 @@ class InstanceSegmentationSignature(dspy.Signature):
 class InstanceSegmentationAnnotator(dspy.Module):
     """ReAct-based instance segmentation annotator.
 
-    Uses VLMs (Gemini, Qwen) for detection and SAM3 for segmentation masks.
+    Uses Gemini for detection and SAM3 for segmentation masks.
     The ReAct agent learns the optimal tool-calling strategy through DSPy optimization.
     """
 
@@ -109,7 +109,7 @@ class InstanceSegmentationAnnotator(dspy.Module):
         self.annotator = dspy.ReAct(
             InstanceSegmentationSignature,
             tools=[
-                self._locate_with_qwen,
+                self._locate_with_gemini,
                 self._classify_with_gemini,
                 self._filter_detections_by_camera_mask,
                 self._segment_with_sam3,
@@ -128,11 +128,11 @@ class InstanceSegmentationAnnotator(dspy.Module):
             max_iters=max_iters,
         )
 
-    def _locate_with_qwen(self, prompt: str) -> str:
-        """Locate all objects with precise bounding boxes using Qwen."""
+    def _locate_with_gemini(self, prompt: str) -> str:
+        """Locate all objects with precise bounding boxes using Gemini."""
         if self._toolkit is None:
             raise RuntimeError("Toolkit not initialized; call forward() first")
-        return self._toolkit.locate_with_qwen(prompt)
+        return self._toolkit.locate_with_gemini(prompt)
 
     def _classify_with_gemini(self, detections: str) -> str:
         """Classify detected objects with specific labels using Gemini."""

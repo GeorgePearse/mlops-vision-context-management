@@ -1,6 +1,6 @@
 """Tools for instance segmentation annotation DSPy programme.
 
-Provides VLM detection (Gemini, Qwen), SAM3 segmentation,
+Provides VLM detection (Gemini), SAM3 segmentation,
 and zoom capabilities as dspy.Tool instances for use with dspy.ReAct.
 """
 
@@ -929,7 +929,7 @@ def deduplicate_detections(detection_text: str, iou_threshold: float = 0.5) -> s
 class InstanceSegmentationToolkit:
     """Tools for instance segmentation annotation.
 
-    Wraps Gemini, Qwen, SAM3, and zoom
+    Wraps Gemini, SAM3, and zoom
     as callable tools for dspy.ReAct.
 
     All VLM and verification tools operate on the *current working image*,
@@ -1153,7 +1153,7 @@ class InstanceSegmentationToolkit:
         overlay_payload: JsonObject | None = None
 
         if stage_name in {
-            "locate_with_qwen",
+            "locate_with_gemini",
             "classify_with_gemini",
             "find_missed_objects_with_gemini",
             "filter_detections_by_camera_mask",
@@ -1862,7 +1862,7 @@ class InstanceSegmentationToolkit:
         """Classify and refine labels for pre-detected bounding boxes using Gemini.
 
         Gemini excels at visual understanding and classification. Pass bounding
-        box detections (e.g. from locate_with_qwen) and Gemini will assign
+        box detections (e.g. from locate_with_gemini) and Gemini will assign
         specific, descriptive category labels to each detection. It may also
         identify additional objects that were missed.
 
@@ -1995,7 +1995,8 @@ class InstanceSegmentationToolkit:
     def locate_with_gemini(self, prompt: str) -> str:
         """Locate objects in the image using Gemini vision.
 
-        Alternative to locate_with_qwen that uses Gemini API instead of Dashscope.
+        Gemini excels at spatial localization - producing tight, accurate
+        bounding boxes for every object in the scene.
 
         Args:
             prompt: What types of objects to look for in the image.
@@ -2646,7 +2647,7 @@ If no objects are detected, output: No objects detected."""
 
         Args:
             existing_detections: Detection/segmentation text listing objects
-                already found (from locate_with_qwen, classify_with_gemini,
+                already found (from locate_with_gemini, classify_with_gemini,
                 or segment_with_sam3).
 
         Returns:
@@ -3138,7 +3139,7 @@ If no objects are detected, output: No objects detected."""
         """Return all tools for dspy.ReAct.
 
         The recommended workflow is:
-        1. locate_with_qwen — find all objects with precise bounding boxes
+        1. locate_with_gemini — find all objects with precise bounding boxes
         2. classify_with_gemini — assign specific labels to the located boxes
         3. segment_with_sam3 — primary/most-frequent iterative tool call for mask generation
            (re-run with positive/negative points plus prompt/class-name experiments)
@@ -3152,11 +3153,11 @@ If no objects are detected, output: No objects detected."""
         """
         return [
             dspy.Tool(
-                func=self.locate_with_qwen,
-                name="locate_with_qwen",
+                func=self.locate_with_gemini,
+                name="locate_with_gemini",
                 desc=(
-                    "STEP 1: Locate all objects with precise bounding boxes using Qwen VLM. "
-                    "Qwen produces tight, accurate boxes for every object in the scene. "
+                    "STEP 1: Locate all objects with precise bounding boxes using Gemini VLM. "
+                    "Gemini produces tight, accurate boxes for every object in the scene. "
                     "Call this first to get bounding box detections, then pass the output "
                     "to classify_with_gemini for specific category labels."
                 ),
@@ -3171,12 +3172,12 @@ If no objects are detected, output: No objects detected."""
                     "STEP 2: Classify detected objects using Gemini VLM. "
                     "Gemini excels at visual understanding and produces specific, "
                     "descriptive category labels. Pass the bounding box output from "
-                    "locate_with_qwen to get accurate classifications. Can also "
+                    "locate_with_gemini to get accurate classifications. Can also "
                     "identify objects that were missed during localization."
                 ),
                 arg_desc={
                     "detections": (
-                        "Detection text with bounding boxes from locate_with_qwen, or a description of what to look for if starting fresh"
+                        "Detection text with bounding boxes from locate_with_gemini, or a description of what to look for if starting fresh"
                     ),
                 },
             ),
