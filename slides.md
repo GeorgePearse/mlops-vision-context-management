@@ -69,6 +69,7 @@ style: |
 <div class="nav">
 <span class="active">About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -131,6 +132,50 @@ style: |
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span class="active">What is an Agent?</span>
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>Image vs Text</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## What is an Agent?
+
+A working definition:
+
+- **Runs continuously** or for a non-predetermined amount of time
+- **Takes human input** at some point in its lifecycle
+
+A closed system with fixed inputs and deterministic termination is **not an agent** — it's a pipeline.
+
+| System | Human input? | Open-ended runtime? | Agent? |
+|--------|--------------|---------------------|--------|
+| Batch inference script | No | No | No |
+| GEPA optimization loop | Yes (seed, feedback) | Yes (until convergence) | Yes |
+| Active learning annotator | Yes (corrections) | Yes (ongoing) | Yes |
+| One-shot VLM call | No | No | No |
+
+The distinction matters: agents need **context management** across time. Pipelines just need correct wiring.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What is an Agent?</span>
 <span class="active">Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -163,6 +208,7 @@ style: |
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span class="active">Types of Context</span>
 <span>GEPA Context</span>
@@ -198,6 +244,7 @@ style: |
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span class="active">GEPA Context</span>
@@ -233,6 +280,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -270,6 +318,7 @@ When passing context between pipeline stages, you have a choice:
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -306,6 +355,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -341,6 +391,7 @@ There's no **build system** for datasets.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -373,6 +424,7 @@ Not a sequential pipeline.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -420,6 +472,7 @@ Raw Images
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -456,6 +509,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -489,6 +543,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -523,6 +578,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -565,6 +621,7 @@ CLI-first → fits into CI/CD and automation
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -603,6 +660,7 @@ Hard to catch in aggregate stats.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -653,6 +711,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -686,6 +745,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -715,6 +775,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
