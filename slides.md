@@ -69,6 +69,7 @@ style: |
 <div class="nav">
 <span class="active">About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -102,6 +103,7 @@ style: |
 <div class="nav">
 <span>About Me</span>
 <span class="active">Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -133,6 +135,71 @@ style: |
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span class="active">What we Do</span>
+<span>What is an Agent?</span>
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>Image vs Text</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## What we Do
+
+![bg right:55% contain](images/instance-segmentation-demo.png)
+
+Instance segmentation at scale — detecting and delineating every object in complex, cluttered scenes.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span class="active">What we Do</span>
+<span>What is an Agent?</span>
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>Image vs Text</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## What we Do
+
+![bg right:55% contain](images/xray-detection-demo.png)
+
+X-ray object detection — identifying hazardous items like lead acid batteries in complex, overlapping cargo scans.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
 <span class="active">What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -176,6 +243,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span class="active">Dataset Compilation</span>
 <span>Types of Context</span>
@@ -209,6 +277,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span class="active">Types of Context</span>
@@ -245,6 +314,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -282,6 +352,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -320,6 +391,7 @@ When passing context between pipeline stages, you have a choice:
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -357,6 +429,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -393,6 +466,7 @@ There's no **build system** for datasets.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -426,6 +500,7 @@ Not a sequential pipeline.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -474,6 +549,7 @@ Raw Images
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -511,6 +587,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -545,6 +622,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -580,6 +658,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -623,6 +702,7 @@ CLI-first → fits into CI/CD and automation
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -662,6 +742,7 @@ Hard to catch in aggregate stats.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -713,6 +794,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -747,6 +829,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
@@ -777,6 +860,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
