@@ -227,6 +227,8 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -260,6 +262,8 @@ But how do you **assemble, validate, and version** the dataset itself?
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -292,6 +296,8 @@ There's no **build system** for datasets.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -321,6 +327,8 @@ Not a sequential pipeline.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -365,6 +373,8 @@ Raw Images
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -398,6 +408,8 @@ Like `make -j16` for your dataset.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -428,6 +440,8 @@ Like `make -j16` for your dataset.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -459,6 +473,8 @@ Like `make -j16` for your dataset.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -498,6 +514,8 @@ CLI-first → fits into CI/CD and automation
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -533,6 +551,8 @@ Hard to catch in aggregate stats.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -580,6 +600,8 @@ Declarative. Version-controlled. Reproducible.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -610,6 +632,8 @@ Declarative. Version-controlled. Reproducible.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -636,6 +660,8 @@ Declarative. Version-controlled. Reproducible.
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
