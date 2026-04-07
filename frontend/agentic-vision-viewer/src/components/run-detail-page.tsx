@@ -7,11 +7,13 @@ import { buildArtifactUrl, buildSseUrl, fetchRun, fetchRunEvents } from "@/lib/a
 import { ViewerArtifact, ViewerEvent, ViewerRun } from "@/lib/types";
 
 const STREAM_EVENT_TYPES = [
+  "reasoning",
+  "run_started",
   "tool_called",
   "tool_result",
   "overlay_generated",
   "log",
-  "frame_started",
+  "frameStarted",
   "frame_completed",
   "run_completed",
   "run_failed",
@@ -135,6 +137,11 @@ export function RunDetailPage({ runId }: { runId: string }) {
     [events],
   );
 
+  const reasoningEvents = useMemo(
+    () => events.filter((event) => event.event_type === "reasoning"),
+    [events],
+  );
+
   const selectedArtifact = resolveArtifactFromEvent(selectedEvent) || resolveArtifactFromEvent(overlayEvents.at(-1) || null);
 
   return (
@@ -219,6 +226,39 @@ export function RunDetailPage({ runId }: { runId: string }) {
               <pre>{run?.result_annotations || "Run still in progress."}</pre>
             </div>
           </div>
+
+          {reasoningEvents.length > 0 ? (
+            <div className="reasoning-trace">
+              <div className="panel-header">
+                <div>
+                  <p className="panel-kicker">Agent reasoning</p>
+                  <h2>Thought / Action / Observation</h2>
+                </div>
+              </div>
+              <div className="reasoning-list">
+                {reasoningEvents.map((event) => {
+                  const stage = event.stage_name || "thought";
+                  const iteration = event.payload?.iteration as number | undefined;
+                  return (
+                    <div key={event.sequence} className={`reasoning-step reasoning-${stage}`}>
+                      <div className="reasoning-step-header">
+                        <span className={`reasoning-badge badge-${stage}`}>{stage}</span>
+                        {iteration !== undefined ? <span className="reasoning-iter">Step {iteration}</span> : null}
+                        <span className="event-time">{formatTimestamp(event.timestamp)}</span>
+                      </div>
+                      <p className="reasoning-message">{event.message || ""}</p>
+                      {stage === "action" && event.payload?.tool_name ? (
+                        <p className="reasoning-detail">Tool: <strong>{event.payload.tool_name as string}</strong></p>
+                      ) : null}
+                      {stage === "observation" && event.payload?.observation_length ? (
+                        <p className="reasoning-detail">Observation: {(event.payload.observation_length as number).toLocaleString()} chars</p>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
         </section>
 
         <aside className="panel-card event-stream">

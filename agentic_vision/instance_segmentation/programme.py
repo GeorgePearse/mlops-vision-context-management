@@ -15,6 +15,7 @@ from loguru import logger
 from agentic_vision.instance_segmentation.tools import (
     InstanceSegmentationToolkit,
 )
+from agentic_vision.tracing_react import TracingReAct
 from agentic_vision.viewer_runtime import AgenticVisionRunRecorder
 
 
@@ -77,7 +78,9 @@ class InstanceSegmentationSignature(dspy.Signature):
     object: <label> | box: [x1, y1, x2, y2] | segmentation: [x0, y0, ...] | confidence=0.XX
     """
 
-    image: dspy.Image = dspy.InputField(desc="Image to annotate with instance segmentations")
+    image: dspy.Image = dspy.InputField(
+        desc="Image to annotate with instance segmentations"
+    )
     annotations: str = dspy.OutputField(
         desc=(
             "Instance segmentation annotations, one per line. "
@@ -106,7 +109,7 @@ class InstanceSegmentationAnnotator(dspy.Module):
         self._toolkit: InstanceSegmentationToolkit | None = None
 
         # Placeholder tools for ReAct initialization — replaced per-forward call
-        self.annotator = dspy.ReAct(
+        self.annotator = TracingReAct(
             InstanceSegmentationSignature,
             tools=[
                 self._locate_with_gemini,
@@ -144,7 +147,9 @@ class InstanceSegmentationAnnotator(dspy.Module):
         """Filter detections against configured masks for a camera."""
         if self._toolkit is None:
             raise RuntimeError("Toolkit not initialized; call forward() first")
-        return self._toolkit.filter_detections_by_camera_mask(detections=detections, camera_id=camera_id)
+        return self._toolkit.filter_detections_by_camera_mask(
+            detections=detections, camera_id=camera_id
+        )
 
     def _segment_with_sam3(
         self,
@@ -167,11 +172,15 @@ class InstanceSegmentationAnnotator(dspy.Module):
             class_rename_rules=class_rename_rules,
         )
 
-    def _verify_segmentation_with_gemini(self, segmentations: str, overlay_opacity: float = 0.35) -> str:
+    def _verify_segmentation_with_gemini(
+        self, segmentations: str, overlay_opacity: float = 0.35
+    ) -> str:
         """Verify segmentation mask quality by rendering masks on image and asking Gemini."""
         if self._toolkit is None:
             raise RuntimeError("Toolkit not initialized; call forward() first")
-        return self._toolkit.verify_segmentation_with_gemini(segmentations, overlay_opacity)
+        return self._toolkit.verify_segmentation_with_gemini(
+            segmentations, overlay_opacity
+        )
 
     def _plan_mask_refinement_with_gemini(
         self,
@@ -265,17 +274,28 @@ class InstanceSegmentationAnnotator(dspy.Module):
             raise RuntimeError("Toolkit not initialized; call forward() first")
         return self._toolkit.find_missed_objects_with_gemini(existing_detections)
 
-    def _retrieve_similar_annotations_knn(self, annotation_id: int, max_neighbors: int = 5) -> str:
+    def _retrieve_similar_annotations_knn(
+        self, annotation_id: int, max_neighbors: int = 5
+    ) -> str:
         """Retrieve KNN-similar annotations with metadata."""
         if self._toolkit is None:
             raise RuntimeError("Toolkit not initialized; call forward() first")
-        return self._toolkit.retrieve_similar_annotations_knn(annotation_id=annotation_id, max_neighbors=max_neighbors)
+        return self._toolkit.retrieve_similar_annotations_knn(
+            annotation_id=annotation_id, max_neighbors=max_neighbors
+        )
 
-    def _remember_background_objects(self, detections: str, camera_id: int | None = None, reason: str = "background_object") -> str:
+    def _remember_background_objects(
+        self,
+        detections: str,
+        camera_id: int | None = None,
+        reason: str = "background_object",
+    ) -> str:
         """Store likely background detections into object memory."""
         if self._toolkit is None:
             raise RuntimeError("Toolkit not initialized; call forward() first")
-        return self._toolkit.remember_background_objects(detections=detections, camera_id=camera_id, reason=reason)
+        return self._toolkit.remember_background_objects(
+            detections=detections, camera_id=camera_id, reason=reason
+        )
 
     def _zoom_in(self, x1: int, y1: int, x2: int, y2: int) -> str:
         """Zoom into a region — all subsequent tools operate on this crop."""
@@ -352,11 +372,17 @@ class InstanceSegmentationAnnotator(dspy.Module):
                     },
                 )
             t0 = time.monotonic()
-            prediction = self.annotator(image=image)
+            prediction = self.annotator(image=image, viewer_recorder=viewer_recorder)
             elapsed = time.monotonic() - t0
 
-            annotation_count = sum(1 for line in prediction.annotations.strip().splitlines() if line.strip() and "no objects" not in line.lower())
-            logger.debug(f"InstanceSegmentationAnnotator complete ({elapsed:.1f}s): {annotation_count} annotations")
+            annotation_count = sum(
+                1
+                for line in prediction.annotations.strip().splitlines()
+                if line.strip() and "no objects" not in line.lower()
+            )
+            logger.debug(
+                f"InstanceSegmentationAnnotator complete ({elapsed:.1f}s): {annotation_count} annotations"
+            )
             if viewer_recorder is not None:
                 viewer_recorder.emit_event(
                     "frame_completed",
@@ -368,7 +394,9 @@ class InstanceSegmentationAnnotator(dspy.Module):
                         "annotations_preview": prediction.annotations[:1200],
                     },
                 )
-                viewer_recorder.update_status("completed", result_annotations=prediction.annotations)
+                viewer_recorder.update_status(
+                    "completed", result_annotations=prediction.annotations
+                )
                 viewer_recorder.emit_event(
                     "run_completed",
                     status="ok",
