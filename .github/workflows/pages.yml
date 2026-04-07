@@ -29,7 +29,10 @@ jobs:
         run: npm install -g @marp-team/marp-cli
 
       - name: Build slides
-        run: marp slides.md -o _site/index.html --html
+        run: marp slides.md -o _site/index.html --html --allow-local-files
+
+      - name: Copy images
+        run: cp -r images _site/images
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
