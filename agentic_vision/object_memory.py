@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import time
@@ -10,14 +11,16 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Any
 
+import modal
 import numpy as np
 import psycopg
 import turbopuffer
 from loguru import logger
+from PIL import Image
 from psycopg.rows import dict_row
 
-DEFAULT_OBJECT_MEMORY_EMBEDDING_SOURCE = "dinov2"
-DEFAULT_DINOV2_MODEL_NAME = "facebook/dinov2-base"
+DEFAULT_OBJECT_MEMORY_EMBEDDING_SOURCE = "dinov3-vith16plus-pretrain-lvd1689m"
+DEFAULT_DINO_MODEL_NAME = "facebook/dinov2-base"  # fallback for local embedding
 DEFAULT_QDRANT_DISTANCE = "Cosine"
 
 
@@ -100,8 +103,6 @@ class ObjectMemoryRetriever:
             return "No similar annotations found."
 
         payload = [asdict(neighbor) for neighbor in neighbors]
-        import json
-
         return json.dumps(payload, indent=2, sort_keys=True)
 
     def get_similar_annotations(
@@ -224,7 +225,7 @@ class ObjectMemoryRetriever:
                     FROM machine_learning.turbopuffer_connector tc
                     JOIN machine_learning.embedding_sources es ON es.id = tc.embedding_source_id
                     WHERE tc.dataset_name = %(dataset_name)s
-                      AND lower(es.name) LIKE 'dinov2%%'
+                      AND (lower(es.name) LIKE 'dinov2%%' OR lower(es.name) LIKE 'dinov3%%')
                     ORDER BY es.id DESC
                     LIMIT 1
                     """,
@@ -351,7 +352,7 @@ class ObjectMemoryBackgroundStore:
         self,
         dataset_name: str,
         embedding_source_name: str = DEFAULT_OBJECT_MEMORY_EMBEDDING_SOURCE,
-        dino_model_name: str = DEFAULT_DINOV2_MODEL_NAME,
+        dino_model_name: str = DEFAULT_DINO_MODEL_NAME,
     ) -> None:
         self.dataset_name = dataset_name
         self.embedding_source_name = embedding_source_name
@@ -419,7 +420,7 @@ class ObjectMemoryBackgroundStore:
                     FROM machine_learning.turbopuffer_connector tc
                     JOIN machine_learning.embedding_sources es ON es.id = tc.embedding_source_id
                     WHERE tc.dataset_name = %(dataset_name)s
-                      AND lower(es.name) LIKE 'dinov2%%'
+                      AND (lower(es.name) LIKE 'dinov2%%' OR lower(es.name) LIKE 'dinov3%%')
                     ORDER BY es.id DESC
                     LIMIT 1
                     """,
@@ -456,36 +457,39 @@ class ObjectMemoryBackgroundStore:
         self._qdrant_collection_name = collection_name
         self._backend = "qdrant"
 
-    @classmethod
-    def _load_dino_model(cls, model_name: str) -> tuple[Any, Any]:
-        if cls._processor is None or cls._model is None:
-            from transformers import AutoImageProcessor, AutoModel
-
-            cls._processor = AutoImageProcessor.from_pretrained(model_name)
-            cls._model = AutoModel.from_pretrained(model_name)
-            cls._model.eval()
-        return cls._processor, cls._model
-
     def _embed_observations(self, observations: Sequence[BackgroundObjectObservation]) -> list[list[float]]:
-        from PIL import Image
-        import torch
+        """Generate embeddings using Modal embedding-calculator endpoint."""
+        # Get the Modal embedding calculator
+        try:
+            embedding_calculator = modal.Cls.from_name("embedding-calculator", "EmbeddingCalculator")
+            calculator_instance = embedding_calculator()
+        except Exception as exc:
+            logger.error(f"Failed to connect to Modal embedding-calculator: {exc}")
+            raise RuntimeError(f"Modal embedding-calculator unavailable: {exc}")
 
-        processor, model = self._load_dino_model(self.dino_model_name)
-        images: list[Image.Image] = []
+        vectors: list[list[float]] = []
         for obs in observations:
+            # Convert BGR to RGB PIL Image
             rgb = obs.crop_bgr[:, :, ::-1]
-            images.append(Image.fromarray(rgb))
-        inputs = processor(images=images, return_tensors="pt")
-        with torch.inference_mode():
-            outputs = model(**inputs)
-        vectors = outputs.pooler_output.detach().cpu().numpy()
-        return [[float(value) for value in row] for row in vectors]
+            pil_image = Image.fromarray(rgb)
+
+            try:
+                # Call Modal endpoint
+                embedding = calculator_instance.embed_image.remote(pil_image)
+                # embedding is a numpy array, convert to list of floats
+                vectors.append([float(v) for v in embedding.flatten()])
+            except Exception as exc:
+                logger.warning(f"Failed to embed observation: {exc}")
+                # Return zero vector as fallback
+                vectors.append([0.0] * 768)  # DINOv3 ViT-H has 768-dim embeddings
+
+        return vectors
 
     @staticmethod
     def _build_payload(observation: BackgroundObjectObservation) -> dict[str, Any]:
         payload: dict[str, Any] = {
             "class_name": observation.class_name,
-            "confidence": observation.confidence,
+            "confidence": float(observation.confidence),
             "camera_id": observation.camera_id,
             "frame_uri": observation.frame_uri,
             "dataset_name": observation.dataset_name,
@@ -510,7 +514,7 @@ class ObjectMemoryBackgroundStore:
     def _upsert_turbopuffer(self, observations: Sequence[BackgroundObjectObservation], vectors: Sequence[Sequence[float]]) -> None:
         assert self._turbopuffer_client is not None
         assert self._namespace is not None
-        namespace = self._turbopuffer_client.namespace(self._namespace)
+        ns = self._turbopuffer_client.namespace(self._namespace)
         ids = [int(obs.detection_id) for obs in observations]
         payloads = [self._build_payload(obs) for obs in observations]
         documents: dict[str, Any] = {
@@ -519,7 +523,10 @@ class ObjectMemoryBackgroundStore:
         }
         for key in payloads[0]:
             documents[key] = [payload[key] for payload in payloads]
-        namespace.upsert(documents)
+        ns.write(
+            upsert_columns=documents,
+            distance_metric="cosine_distance",
+        )
 
     def _upsert_qdrant(self, observations: Sequence[BackgroundObjectObservation], vectors: Sequence[Sequence[float]]) -> None:
         assert self._qdrant_client is not None

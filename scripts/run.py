@@ -24,11 +24,14 @@ Environment Variables:
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import sys
 from pathlib import Path
 from typing import Any
+
+from google.cloud import storage
 
 
 # Load .env file from parent directory before other imports
@@ -230,11 +233,34 @@ def load_annotations_from_file(filepath: str) -> list[dict[str, Any]]:
     return images_data
 
 
+def download_image_from_gcs(frame_uri: str) -> bytes:
+    """Download image from GCS and return bytes."""
+    if not frame_uri.startswith("gs://"):
+        raise ValueError(f"Invalid GCS URI: {frame_uri}")
+
+    parts = frame_uri[5:].split("/", 1)
+    bucket_name = parts[0]
+    blob_name = parts[1] if len(parts) > 1 else ""
+
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    return blob.download_as_bytes()
+
+
+def image_bytes_to_data_uri(image_bytes: bytes, mime_type: str = "image/jpeg") -> str:
+    """Convert image bytes to a data URI."""
+    b64 = base64.b64encode(image_bytes).decode("utf-8")
+    return f"data:{mime_type};base64,{b64}"
+
+
 def prepare_images_for_experiment(
     images_data: list[dict[str, Any]],
     max_images: int | None = None,
 ) -> tuple[list[dspy.Image], list[list[dict[str, Any]]], list[str | None]]:
     """Convert database/file data to format needed for experiments.
+
+    Downloads images from GCS and converts to data URIs for dspy.Image.
 
     Returns:
         (images, ground_truths, frame_uris)
@@ -247,14 +273,22 @@ def prepare_images_for_experiment(
     frame_uris: list[str | None] = []
 
     for img_data in images_data:
-        # For now, create placeholder dspy.Image
-        # In production, you'd download from GCS
         frame_uri = img_data.get("frame_uri", "")
 
-        # Create a placeholder image (would download from GCS in production)
-        # For experiments, we can work with just the URI
         try:
-            img = dspy.Image(url=frame_uri)
+            # Download image from GCS and convert to data URI
+            logger.debug(f"Downloading image: {frame_uri}")
+            image_bytes = download_image_from_gcs(frame_uri)
+
+            # Determine mime type from extension
+            mime_type = "image/jpeg"
+            if frame_uri.lower().endswith(".png"):
+                mime_type = "image/png"
+            elif frame_uri.lower().endswith(".webp"):
+                mime_type = "image/webp"
+
+            data_uri = image_bytes_to_data_uri(image_bytes, mime_type)
+            img = dspy.Image(url=data_uri)
             images.append(img)
         except Exception as exc:
             logger.warning(f"Could not load image {frame_uri}: {exc}")

@@ -107,7 +107,7 @@ class ActiveLearningSegmentationSignature(dspy.Signature):
     AVAILABLE TOOLS:
 
     Detection & Segmentation:
-    - locate_with_qwen: Find all objects with bounding boxes (no annotation cost)
+    - locate_with_gemini: Find all objects with bounding boxes (no annotation cost)
     - classify_with_gemini: Assign labels to detected boxes (no annotation cost)
     - segment_with_sam3: Generate segmentation masks (no annotation cost)
     - verify_segmentation_with_gemini: Check segmentation quality (no annotation cost)
@@ -127,7 +127,7 @@ class ActiveLearningSegmentationSignature(dspy.Signature):
       * Segmentation verification fails
 
     Strategy:
-    1. Detect all objects with locate_with_qwen
+    1. Detect all objects with locate_with_gemini
     2. For each detection:
        a. Query object memory KNN for similar examples
        b. If confident match exists, use that classification
@@ -204,7 +204,7 @@ class ActiveLearningSegmenter(dspy.Module):
         self.agent = dspy.ReAct(
             ActiveLearningSegmentationSignature,
             tools=[
-                self._locate_with_qwen,
+                self._locate_with_gemini,
                 self._classify_with_gemini,
                 self._query_object_memory_knn,
                 self._segment_with_sam3,
@@ -215,11 +215,11 @@ class ActiveLearningSegmenter(dspy.Module):
             max_iters=15,
         )
 
-    def _locate_with_qwen(self, prompt: str) -> str:
-        """Locate objects using Qwen."""
+    def _locate_with_gemini(self, prompt: str) -> str:
+        """Locate objects using Gemini."""
         if self._toolkit is None:
             return "Error: Toolkit not initialized"
-        return self._toolkit.locate_with_qwen(prompt)
+        return self._toolkit.locate_with_gemini(prompt)
 
     def _classify_with_gemini(self, detections: str) -> str:
         """Classify detected objects using Gemini."""
@@ -363,7 +363,7 @@ class ActiveLearningSegmenter(dspy.Module):
 
         try:
             # Step 1: Detect all objects
-            detections_text = self._toolkit.locate_with_qwen("Find all objects in this image")
+            detections_text = self._toolkit.locate_with_gemini("Find all objects in this image")
             parsed_detections = parse_boxes_from_detections(detections_text)
 
             logger.info(f"Detected {len(parsed_detections)} objects")

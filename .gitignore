@@ -11,3 +11,4 @@ node_modules/
 .next/
 *.tsbuildinfo
 .env
+qdrant_object_memory/

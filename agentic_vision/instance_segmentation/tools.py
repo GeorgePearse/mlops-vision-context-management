@@ -7,6 +7,7 @@ and zoom capabilities as dspy.Tool instances for use with dspy.ReAct.
 from __future__ import annotations
 
 import base64
+import contextlib
 import hashlib
 import io
 import json
@@ -14,13 +15,20 @@ import os
 import re
 import tempfile
 import time
+import traceback
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
 import cv2
 import dspy
+import modal
 import numpy as np
+from google import genai
+from google.genai import types as genai_types
 from loguru import logger
+from openai import OpenAI
+from PIL import Image
+from skimage.segmentation import slic
 
 from agentic_vision.object_memory import BackgroundObjectObservation, ObjectMemoryBackgroundStore, ObjectMemoryRetriever
 from agentic_vision.viewer_runtime import AgenticVisionRunRecorder, JsonObject
@@ -547,13 +555,7 @@ def _apply_superpixel_refinement(
     superpixel_segments: int,
     cleanup_kernel_size: int,
 ) -> tuple[np.ndarray, str]:
-    """Snap a mask to superpixel-like regions using SLIC when available."""
-    try:
-        from skimage.segmentation import slic
-    except ImportError:
-        fallback = _cleanup_binary_mask(initial_mask, positive_points_px, negative_points_px, cleanup_kernel_size)
-        return fallback if fallback.any() else initial_mask.astype(np.uint8), "skimage_unavailable"
-
+    """Snap a mask to superpixel-like regions using SLIC."""
     mask_u8 = (initial_mask > 0).astype(np.uint8)
     image_rgb = cv2.cvtColor(crop_bgr, cv2.COLOR_BGR2RGB)
     segments = slic(
@@ -1512,9 +1514,6 @@ class InstanceSegmentationToolkit:
         default_operator: str,
     ) -> tuple[SegmentationRefinementPlan, str]:
         """Ask Gemini to choose a deterministic refinement operator and seed points."""
-        from google import genai
-        from google.genai import types
-        from PIL import Image
 
         entries = _parse_segmentation_entries(segmentations)
         if target_index < 0 or target_index >= len(entries):
@@ -1558,8 +1557,8 @@ class InstanceSegmentationToolkit:
         )
 
         client = genai.Client(api_key=api_key)
-        config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        config = genai_types.GenerateContentConfig(
+            thinking_config=genai_types.ThinkingConfig(thinking_budget=0),
             response_mime_type="application/json",
         )
         response = client.models.generate_content(
@@ -1878,9 +1877,6 @@ class InstanceSegmentationToolkit:
             "classify_with_gemini",
             {"detections_preview": self._truncate_text(detections, limit=400)},
         )
-        from google import genai
-        from google.genai import types
-        from PIL import Image
 
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
@@ -1898,8 +1894,8 @@ class InstanceSegmentationToolkit:
         else:
             full_prompt = f"{detections}\n\n{GEMINI_DETECT_PROMPT}"
 
-        config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        config = genai_types.GenerateContentConfig(
+            thinking_config=genai_types.ThinkingConfig(thinking_budget=0),
             response_mime_type="application/json",
         )
 
@@ -1946,7 +1942,6 @@ class InstanceSegmentationToolkit:
             "locate_with_qwen",
             {"prompt": prompt},
         )
-        from openai import OpenAI
 
         api_key = os.environ.get("DASHSCOPE_API_KEY")
         if not api_key:
@@ -1997,6 +1992,82 @@ class InstanceSegmentationToolkit:
         logger.debug(f"Qwen located: {response_text[:200]}")
         return response_text
 
+    def locate_with_gemini(self, prompt: str) -> str:
+        """Locate objects in the image using Gemini vision.
+
+        Alternative to locate_with_qwen that uses Gemini API instead of Dashscope.
+
+        Args:
+            prompt: What types of objects to look for in the image.
+
+        Returns:
+            Detection results with precise bounding boxes in standard format:
+            object: <label> | box: [x1, y1, x2, y2] | confidence=0.XX
+        """
+        self._emit_tool_called(
+            "locate_with_gemini",
+            {"prompt": prompt},
+        )
+
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            return "Error: GEMINI_API_KEY not set."
+
+        client = genai.Client(api_key=api_key)
+
+        image_bytes = _decode_dspy_image_bytes(self._image)
+        img_base64 = base64.b64encode(image_bytes).decode()
+
+        localize_prompt = f"""{prompt}
+
+Locate all distinct objects in this image with precise bounding boxes.
+For each object provide EXACTLY this format, one per line:
+object: <label> | box: [x1, y1, x2, y2] | confidence=0.XX
+
+Coordinates are normalized 0-1000 (top-left origin, so x increases right, y increases down).
+Focus on precise, tight bounding boxes that closely fit each object.
+Be thorough — detect every distinct object or cluster visible, even partially occluded ones.
+If no objects are detected, output: No objects detected."""
+
+        try:
+            image = Image.open(io.BytesIO(image_bytes))
+            image = image.convert("RGB")
+
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[localize_prompt, image],
+            )
+
+            if not response.candidates:
+                return "No objects detected."
+
+            content = response.candidates[0].content
+            if content is None or content.parts is None:
+                return "No objects detected."
+
+            response_text = ""
+            for part in content.parts:
+                if part.text:
+                    response_text += part.text
+
+        except Exception as exc:
+            logger.error(f"Gemini localization failed: {exc}")
+            return f"Error: Gemini API call failed: {exc}"
+
+        if not response_text.strip():
+            return "No objects detected."
+
+        response_text = _remap_detections_to_full_image(
+            response_text,
+            self._crop_x1,
+            self._crop_y1,
+            self._crop_x2,
+            self._crop_y2,
+        )
+        self._record_stage_predictions("locate_with_gemini", response_text, prompt)
+        logger.debug(f"Gemini located: {response_text[:200]}")
+        return response_text
+
     def segment_with_sam3(
         self,
         detections: str,
@@ -2043,27 +2114,14 @@ class InstanceSegmentationToolkit:
         normalized_positive_points = _parse_indexed_point_prompts(positive_points, len(parsed))
         normalized_negative_points = _parse_indexed_point_prompts(negative_points, len(parsed))
 
-        try:
-            from sam3_inference.sam3_prod_inference import segment_boxes
-        except ModuleNotFoundError:
-            message = (
-                "Error: SAM3 backend is not installed in this standalone repo. "
-                "Install or vendor a `sam3_inference.sam3_prod_inference` module to enable live segmentation."
-            )
-            logger.warning(message)
-            return message
-
-        try:
-            results = segment_boxes.remote(
-                frame_uri=self._frame_uri,
-                boxes=normalized_boxes,
-                handler_name=self._sam3_handler_name,
-                positive_points=normalized_positive_points,
-                negative_points=normalized_negative_points,
-            )
-        except Exception as exc:
-            logger.error(f"SAM3 segmentation failed: {exc}")
-            return f"Error: SAM3 segmentation failed: {exc}"
+        segment_boxes = modal.Function.from_name("sam3-vision-agents", "segment_boxes_with_points")
+        results = segment_boxes.remote(
+            frame_uri=self._frame_uri,
+            boxes=normalized_boxes,
+            handler_name=self._sam3_handler_name,
+            positive_points=normalized_positive_points if any(normalized_positive_points) else None,
+            negative_points=normalized_negative_points if any(normalized_negative_points) else None,
+        )
 
         rename_rules = _parse_class_rename_rules(class_rename_rules)
         output_lines = []
@@ -2148,9 +2206,6 @@ class InstanceSegmentationToolkit:
             "verify_segmentation_with_gemini",
             {"overlay_opacity": overlay_opacity},
         )
-        from google import genai
-        from google.genai import types
-        from PIL import Image
 
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
@@ -2166,8 +2221,8 @@ class InstanceSegmentationToolkit:
         pil_image = Image.open(io.BytesIO(annotated_bytes)).convert("RGBA")
         pil_image.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
 
-        config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        config = genai_types.GenerateContentConfig(
+            thinking_config=genai_types.ThinkingConfig(thinking_budget=0),
             response_mime_type="application/json",
         )
 
@@ -2253,9 +2308,6 @@ class InstanceSegmentationToolkit:
                 "overlay_opacity": overlay_opacity,
             },
         )
-        from google import genai
-        from google.genai import types
-        from PIL import Image
 
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
@@ -2308,8 +2360,8 @@ class InstanceSegmentationToolkit:
         if center_x_offset != 0 or center_y_offset != 0:
             zoom_info += f" Crop center is offset ({center_x_offset:+.0f}%, {center_y_offset:+.0f}%) from the object's bounding box center."
 
-        config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        config = genai_types.GenerateContentConfig(
+            thinking_config=genai_types.ThinkingConfig(thinking_budget=0),
             response_mime_type="application/json",
         )
 
@@ -2605,9 +2657,6 @@ class InstanceSegmentationToolkit:
             "find_missed_objects_with_gemini",
             {"existing_detections_preview": self._truncate_text(existing_detections, limit=400)},
         )
-        from google import genai
-        from google.genai import types
-        from PIL import Image
 
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
@@ -2622,8 +2671,8 @@ class InstanceSegmentationToolkit:
         prompt = GEMINI_FIND_MISSED_OBJECTS_PROMPT.format(
             existing_detections=existing_detections,
         )
-        config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        config = genai_types.GenerateContentConfig(
+            thinking_config=genai_types.ThinkingConfig(thinking_budget=0),
             response_mime_type="application/json",
         )
 
@@ -2728,11 +2777,6 @@ class InstanceSegmentationToolkit:
             "execute_code",
             {"code_preview": self._truncate_text(code, limit=500)},
         )
-        import contextlib
-        import traceback
-
-        from PIL import Image
-
         namespace: dict = {
             "image_array": self._image_array.copy(),
             "full_image_array": self._full_image_array.copy(),
