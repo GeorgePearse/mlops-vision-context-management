@@ -431,7 +431,7 @@ Hard to catch in aggregate stats.
 
 ## Thank You
 
-**github.com/GeorgePearse/mlops-vision-context-management**
+**github.com/GeorgePearse/vision-agents**
 
 ### We're Hiring
 
