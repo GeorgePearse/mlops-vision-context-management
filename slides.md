@@ -160,7 +160,7 @@ style: |
 
 ![bg right:55% contain](images/instance-segmentation-demo.png)
 
-Instance segmentation at scale — detecting and delineating every object in complex, cluttered scenes.
+Help with cost disagreements between buyers and sellers at metal yards. 
 
 ---
 
@@ -192,7 +192,7 @@ Instance segmentation at scale — detecting and delineating every object in com
 
 ![bg right:55% contain](images/xray-detection-demo.png)
 
-X-ray object detection — identifying hazardous items like lead acid batteries in complex, overlapping cargo scans.
+Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 
 ---
 
@@ -224,7 +224,7 @@ X-ray object detection — identifying hazardous items like lead acid batteries 
 
 ![bg right:55% contain](images/aerial-detection-demo.png)
 
-Aerial and satellite imagery analysis — detecting objects and materials in overhead views of complex environments.
+Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 
 ---
 
