@@ -333,7 +333,7 @@ class ExperimentRunner:
             frame_uri = frame_uris[img_idx] if frame_uris else None
 
             try:
-                al_result = segmenter.forward(image, frame_uri)
+                al_result = segmenter(image, frame_uri)
 
                 # Simulate human annotations using ground truth
                 for pred_idx, pred in enumerate(al_result.predictions):

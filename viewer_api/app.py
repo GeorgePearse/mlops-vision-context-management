@@ -37,7 +37,7 @@ class StartAgenticVisionViewerRunRequest(BaseModel):
     dataset_name: str | None = None
     run_label: str | None = None
     max_iters: int = Field(default=16, ge=1, le=40)
-    sam3_handler_name: str = "premier"
+    sam3_handler_name: str = "premier_sam3"
 
 
 def _get_runs_dir() -> str:

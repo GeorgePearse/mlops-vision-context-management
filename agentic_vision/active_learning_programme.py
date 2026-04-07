@@ -170,7 +170,7 @@ class ActiveLearningSegmenter(dspy.Module):
         strategy: AnnotationStrategy = AnnotationStrategy.UNCERTAINTY_SAMPLING,
         uncertainty_threshold: float = 0.7,
         bootstrap_examples: int = 0,
-        sam3_handler_name: str = "premier",
+        sam3_handler_name: str = "premier_sam3",
         dataset_name: str | None = None,
     ) -> None:
         super().__init__()
@@ -528,7 +528,7 @@ def run_active_learning_experiment(
             total_score = 0.0
 
             for idx, image in enumerate(images):
-                result = segmenter.forward(image)
+                result = segmenter(image)
                 total_annotations += result.annotations_used
 
                 # Calculate score (would use ground truth if available)

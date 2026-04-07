@@ -948,7 +948,7 @@ class InstanceSegmentationToolkit:
         image: dspy.Image,
         frame_uri: str | None = None,
         dataset_name: str | None = None,
-        sam3_handler_name: str = "premier",
+        sam3_handler_name: str = "premier_sam3",
         human_input_fn: Callable[[str], str] | None = None,
         viewer_recorder: AgenticVisionRunRecorder | None = None,
     ) -> None:

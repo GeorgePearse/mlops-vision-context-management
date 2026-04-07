@@ -97,7 +97,7 @@ class InstanceSegmentationAnnotator(dspy.Module):
         self,
         max_iters: int = 12,
         dataset_name: str | None = None,
-        sam3_handler_name: str = "premier",
+        sam3_handler_name: str = "premier_sam3",
     ) -> None:
         super().__init__()
         self._dataset_name = dataset_name
