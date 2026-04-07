@@ -199,6 +199,38 @@ X-ray object detection — identifying hazardous items like lead acid batteries 
 <div class="nav">
 <span>About Me</span>
 <span>Visia</span>
+<span class="active">What we Do</span>
+<span>What is an Agent?</span>
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>Image vs Text</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## What we Do
+
+![bg right:55% contain](images/aerial-detection-demo.png)
+
+Aerial and satellite imagery analysis — detecting objects and materials in overhead views of complex environments.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>What we Do</span>
 <span class="active">What is an Agent?</span>
 <span>Dataset Compilation</span>
