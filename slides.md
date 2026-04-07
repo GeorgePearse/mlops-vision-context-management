@@ -658,4 +658,8 @@ Declarative. Version-controlled. Reproducible.
 
 **github.com/GeorgePearse/mlops-vision-context-management**
 
+### We're Hiring
+
+If this kind of work interests you, reach out.
+
 <!-- Add a link at the end to the DSPy article: if you don't use DSPy, you build DSPy, and you should only build it if you first know and understand DSPy. -->
