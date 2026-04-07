@@ -71,20 +71,11 @@ style: |
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -105,20 +96,11 @@ style: |
 <span class="active">Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -137,20 +119,11 @@ style: |
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -169,20 +142,11 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -201,20 +165,11 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -233,20 +188,11 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>Visia</span>
 <span>What we Do</span>
 <span class="active">What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -277,54 +223,11 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span class="active">Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-# Dataset Compilation
-
-### Treating annotation as a build system problem
-
-<!-- What is context? It's anything carried along with the agent from the initial prompt. It can be retrieved from existing data (RAG), it can be a history of previous interactions. Context is the cookies of agents. In a vision application it can be a carefully crafted image with both the predicted segmentation and the real segmentation presented to a second model for feedback. -->
-
-> *"Context is the friends made along the way."*
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span class="active">Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -348,20 +251,11 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span class="active">GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -386,20 +280,11 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span class="active">Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -425,216 +310,11 @@ When passing context between pipeline stages, you have a choice:
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span class="active">The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Problem
-
-We have mature tooling for **everything except the dataset**
-
-- Experiment tracking — MLflow, W&B, etc.
-- Model serving — TorchServe, Triton, etc.
-- Training orchestration — Kubeflow, Ray, etc.
-
-But how do you **assemble, validate, and version** the dataset itself?
-
-> "How do you know your dataset is correct before you start training?"
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span class="active">The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Gap
-
-Most teams build datasets by:
-
-1. Manually exporting from an annotation tool
-2. Running ad-hoc scripts to convert formats
-3. Hoping nothing changed since last time
-4. Debugging model failures that turn out to be data bugs
-
-There's no **build system** for datasets.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span class="active">The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Compile Analogy
-
-Building a dataset is like compiling a large codebase:
-
-**A DAG of specialized steps that can run in parallel**
-
-Not a sequential pipeline.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span class="active">The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Model Cascade
-
-Different models = different cost/speed/quality tradeoffs
-
-```
-Raw Images
-    │
-    ├──▶ Fast detector (YOLO)        ──▶ bounding boxes
-    │         cheap, runs on everything
-    │
-    ├──▶ SAM (prompted by detections) ──▶ segmentation masks
-    │         moderate cost
-    │
-    └──▶ VLM / slow model            ──▶ verify high-value cases
-              expensive, targeted
-```
-
-<!-- Note: optimize for bandwidth and communication between stages, especially across the Segment Anything family. Ask what the downstream model can be prompted with cheaply and reliably: boxes, inside/outside points, sparse clicks, prior masks. Prefer upstream steps that emit the most useful prompt signal with the least communication cost. -->
-
-<!-- Note: compress context into dynamic retrieval between stages. Instead of passing full state forward, distill it into retrievable signals and only fetch richer context when confidence is too low or when a human confirmation step is required. -->
-
-<!-- Note: there is a large test-time inference / chain-of-thought tuning space here. Two main axes are how specific each question is and how small a crop you inspect. Narrower questions over tighter crops can often improve results. -->
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span class="active">Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## Why This Works
-
-Each stage is **independent per-image**
-
-→ Massively parallelizable
-
-Expensive models only touch a **fraction** of the data
-
-→ Cost efficient
-
-Like `make -j16` for your dataset.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span class="active">Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -656,100 +336,11 @@ Like `make -j16` for your dataset.
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span class="active">The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Analogy
-
-| Concept | Code Compilation | Dataset Compilation |
-|---|---|---|
-| Source files | `.c`, `.rs` files | Raw images |
-| Compiler stages | Preprocessor → compiler → linker | Detector → segmenter → verifier |
-| Parallelism | `make -j16` | Model stages run concurrently per-image |
-| Incremental builds | Only recompile changed files | Only re-annotate new/changed images |
-| Cost optimization | Optimize hot paths | Expensive models only where needed |
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span class="active">The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Annotation CLI
-
-```bash
-# Ingest from multiple sources
-dataset ingest --source s3://raw-images --annotations coco.json
-
-# Validate before you compile
-dataset validate --check balance --check coverage
-
-# Compile: orchestrate the model cascade
-dataset compile --config pipeline.yaml --parallel 64
-
-# What changed?
-dataset diff v1.2 v1.3
-```
-
-CLI-first → fits into CI/CD and automation
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span class="active">Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -776,72 +367,11 @@ Hard to catch in aggregate stats.
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span class="active">The Pipeline Config</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## The Pipeline Config
-
-```yaml
-# pipeline.yaml
-stages:
-  detect:
-    model: yolov8-x
-    run_on: all
-    output: bounding_boxes
-
-  segment:
-    model: sam-2
-    depends_on: detect
-    run_on: all
-    output: masks
-
-  verify:
-    model: gpt-4o
-    depends_on: segment
-    run_on:
-      filter: confidence < 0.85 OR area > 50000
-    output: verified_masks
-```
-
-Declarative. Version-controlled. Reproducible.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Dataset Compilation</span>
-<span>Types of Context</span>
-<span>GEPA Context</span>
-<span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
-<span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
-<span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span class="active">Key Takeaways</span>
 <span>References</span>
 <span>Thank You</span>
@@ -849,12 +379,11 @@ Declarative. Version-controlled. Reproducible.
 
 ## Key Takeaways
 
-1. **Dataset assembly is the missing build system** in MLOps
-2. **Compile, don't script** — orchestrate a DAG of models
-3. **Parallelize** — most work is embarrassingly parallel
-4. **Optimize cost** — expensive models only where they matter
-5. **Validate visually** — aggregate stats hide annotation bugs
-6. **CLI-first** — automation and CI/CD from day one
+1. **Context management is the core challenge** for vision agents
+2. **Consolidate, don't accumulate** — compress context into retrievable signals
+3. **Visual context matters** — images preserve raw signal that text loses
+4. **Validate visually** — aggregate stats hide annotation bugs
+5. **Know your degrees of freedom** — be explicit about what the model can learn at test time
 
 ---
 
@@ -863,20 +392,11 @@ Declarative. Version-controlled. Reproducible.
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span class="active">References</span>
 <span>Thank You</span>
@@ -894,20 +414,11 @@ Declarative. Version-controlled. Reproducible.
 <span>Visia</span>
 <span>What we Do</span>
 <span>What is an Agent?</span>
-<span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>Image vs Text</span>
-<span>The Problem</span>
-<span>The Gap</span>
-<span>The Compile Analogy</span>
-<span>The Model Cascade</span>
-<span>Why This Works</span>
 <span>Degrees of Freedom</span>
-<span>The Analogy</span>
-<span>The Annotation CLI</span>
 <span>Visual Validation</span>
-<span>The Pipeline Config</span>
 <span>Key Takeaways</span>
 <span>References</span>
 <span class="active">Thank You</span>
