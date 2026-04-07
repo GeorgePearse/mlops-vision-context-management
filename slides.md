@@ -71,6 +71,7 @@ style: |
 <span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -101,6 +102,7 @@ style: |
 <span class="active">Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -129,6 +131,7 @@ style: |
 <span>Visia</span>
 <span class="active">Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -159,6 +162,7 @@ style: |
 <span>Visia</span>
 <span>Dataset Compilation</span>
 <span class="active">Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -188,8 +192,44 @@ style: |
 ---
 
 <div class="nav">
+<span>About Me</span>
+<span>Visia</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span class="active">GEPA Context</span>
+<span>The Problem</span>
+<span>The Gap</span>
+<span>The Compile Analogy</span>
+<span>The Model Cascade</span>
+<span>Why This Works</span>
+<span>Degrees of Freedom</span>
+<span>The Analogy</span>
+<span>The Annotation CLI</span>
+<span>Visual Validation</span>
+<span>The Pipeline Config</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## GEPA Context Management
+
+GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
+
+- **Evaluation cache** — stores `(candidate, example)` results to avoid redundant inference
+- **Reflective dataset** — captures execution traces for reflection-based prompt mutation
+- **Pareto frontiers** — tracks best programs per validation example or objective (compressed historical context)
+- **Batch sampling** — strategic minibatch selection balances coverage vs. cost
+- **State persistence** — `GEPAState` serializes candidate evolution, enabling resumable optimization
+
+The key insight: **consolidate context into retrievable signals** rather than passing full state forward. Only fetch richer context when confidence is low.
+
+---
+
+<div class="nav">
+<span>Dataset Compilation</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
 <span class="active">The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -222,6 +262,7 @@ But how do you **assemble, validate, and version** the dataset itself?
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span class="active">The Gap</span>
 <span>The Compile Analogy</span>
@@ -253,6 +294,7 @@ There's no **build system** for datasets.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span class="active">The Compile Analogy</span>
@@ -281,11 +323,13 @@ Not a sequential pipeline.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
 <span class="active">The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -323,6 +367,7 @@ Raw Images
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -355,6 +400,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -384,6 +430,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -414,6 +461,7 @@ Like `make -j16` for your dataset.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -452,6 +500,7 @@ CLI-first → fits into CI/CD and automation
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -486,6 +535,7 @@ Hard to catch in aggregate stats.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -532,6 +582,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
@@ -561,11 +612,13 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
 <span>The Model Cascade</span>
 <span>Why This Works</span>
+<span>Degrees of Freedom</span>
 <span>The Analogy</span>
 <span>The Annotation CLI</span>
 <span>Visual Validation</span>
@@ -585,6 +638,7 @@ Declarative. Version-controlled. Reproducible.
 <div class="nav">
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
+<span>GEPA Context</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>
