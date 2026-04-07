@@ -102,6 +102,7 @@ style: |
 <div class="nav">
 <span>About Me</span>
 <span class="active">Visia</span>
+<span>What is an Agent?</span>
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
@@ -248,6 +249,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Dataset Compilation</span>
 <span>Types of Context</span>
 <span class="active">GEPA Context</span>
+<span>Image vs Text</span>
 <span>The Problem</span>
 <span>The Gap</span>
 <span>The Compile Analogy</span>

@@ -523,9 +523,14 @@ class ObjectMemoryBackgroundStore:
         }
         for key in payloads[0]:
             documents[key] = [payload[key] for payload in payloads]
+        # Specify schema for float fields to avoid type inference issues
+        schema: dict[str, str] = {
+            "confidence": "float",
+        }
         ns.write(
             upsert_columns=documents,
             distance_metric="cosine_distance",
+            schema=schema,
         )
 
     def _upsert_qdrant(self, observations: Sequence[BackgroundObjectObservation], vectors: Sequence[Sequence[float]]) -> None:
