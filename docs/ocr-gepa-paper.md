@@ -27,8 +27,10 @@ Image → Markdown (vision stage)
 Markdown → JSON (language stage)
 ```
 
-- **Vision stage**: Gemini extracts text and coarse structure. Bounded by scan quality — prompting can't fix missed tokens or corrupt text.
-- **Language stage**: LLM maps text to strict schema. **This is where GEPA helps** — schema discipline, read-order, reconciliation policies, null handling.
+GEPA optimizes prompts for **both** stages, but gains concentrate differently:
+
+- **Vision stage**: Gemini extracts text and coarse structure. GEPA *does* optimize this prompt (coverage rules, reading order, table formatting, checkbox handling) but gains are **marginal**. Bounded by scan quality — the model either sees the text or it doesn't. Prompting can't fix missed tokens or corrupt text.
+- **Language stage**: LLM maps text to strict schema. **This is where GEPA helps most** — schema discipline, read-order, reconciliation policies, null handling. Policy and structure dominate here, making it highly steerable.
 
 ## How GEPA Works Here
 
@@ -49,7 +51,7 @@ This avoids wasting compute on unsalvageable scans or trivially correct samples.
 
 ## What GEPA Learned (Qualitative)
 
-The reflection model independently converged toward best-practice extraction policies:
+The reflection model independently converged toward best-practice extraction policies. Interestingly, the final optimized prompt (shown in the paper) is for the **vision stage** (Image→Markdown) — GEPA evolved detailed rules even where gains were smaller:
 
 - **Coverage**: "include everything visible", "preserve reading order"
 - **Anti-hallucination**: "do not invent", "use `unreadable` for illegible text"
