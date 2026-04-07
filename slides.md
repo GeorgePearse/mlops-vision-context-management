@@ -81,6 +81,7 @@ style: |
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -109,6 +110,7 @@ style: |
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -135,6 +137,7 @@ style: |
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -161,6 +164,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -187,6 +191,7 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -213,6 +218,7 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -250,6 +256,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -281,6 +288,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -311,6 +319,7 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span class="active">GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -343,6 +352,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>GEPA Context</span>
 <span class="active">GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -420,6 +430,40 @@ Punishing complexity forces the system to *distill* what it learned, not just *a
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span class="active">Context Pressure</span>
+<span>Image vs Text</span>
+<span>Degrees of Freedom</span>
+<span>Visual Validation</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## Handling Context Pressure
+
+Practical mitigations for the double-pressure problem:
+
+- **Reduce `reflection_minibatch_size`** from 3 to 1–2 for ReAct programs with long trajectories
+- **Use a high-context reflection LM** — models with large context windows (10M tokens ideal)
+- **Reduce ReAct's `max_iters`** to 3–5 instead of 20
+- **Keep tool return values concise** — control retrieved passage counts and output verbosity
+- **Override `truncate_trajectory()`** for domain-aware truncation that preserves the most informative steps, not just the most recent
+
+**Proven architecture for GEPA+ReAct**: Individually optimized specialist ReAct subagents (each with domain-specific tools) combined under a lead routing agent, with GEPA applied to each component separately before optimizing the coordinator.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>What is an Agent?</span>
+<span>Types of Context</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span class="active">Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -453,6 +497,7 @@ When passing context between pipeline stages, you have a choice:
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span class="active">Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -482,6 +527,7 @@ When passing context between pipeline stages, you have a choice:
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span class="active">Visual Validation</span>
@@ -516,6 +562,7 @@ Hard to catch in aggregate stats.
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -544,6 +591,7 @@ Hard to catch in aggregate stats.
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -569,6 +617,7 @@ Hard to catch in aggregate stats.
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
+<span>Context Pressure</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
