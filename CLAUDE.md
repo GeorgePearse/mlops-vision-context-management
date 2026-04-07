@@ -10,8 +10,8 @@ The primary goal of this repository is to improve `scripts/run.py` - the active 
 # With local annotations file
 python scripts/run.py --annotations-file scripts/sample_annotations.json --budgets 0,5,10,20,50
 
-# With database connection
-python scripts/run.py --dataset-name construction_demolition --num-images 50 --budgets 0,5,10,20,50
+# With database connection (use municipals dataset for testing)
+python scripts/run.py --dataset-name municipals --num-images 50 --budgets 0,5,10,20,50
 ```
 
 ## Key Arguments

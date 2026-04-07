@@ -8,10 +8,10 @@ When asked to "run something" or "run the script", always run:
 python scripts/run.py --annotations-file scripts/sample_annotations.json
 ```
 
-Or with a database:
+Or with a database (use municipals dataset for testing):
 
 ```bash
-python scripts/run.py --dataset-name <dataset> --num-images 50
+python scripts/run.py --dataset-name municipals --num-images 50
 ```
 
 ## Repository Goal
