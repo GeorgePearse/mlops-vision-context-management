@@ -77,6 +77,7 @@ style: |
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -104,6 +105,7 @@ style: |
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -129,6 +131,7 @@ style: |
 <span class="active">What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -154,6 +157,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span class="active">What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -179,6 +183,7 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span class="active">What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -204,6 +209,7 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>What we Do</span>
 <span class="active">What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -271,6 +277,37 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span class="active">GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
+<span>Image vs Text</span>
+<span>Degrees of Freedom</span>
+<span>Visual Validation</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## GEPA Algorithm
+
+GEPA's core algorithm iterates through three stages — **Executor**, **Reflector**, **Curator** — each with distinct context demands.
+
+| Stage | Role | Context |
+|-------|------|---------|
+| **Executor** | Runs candidate program on a small training minibatch (`reflection_minibatch_size`, default 3 examples) | Captures full execution traces: reasoning chains, intermediate outputs, tool calls, error messages |
+| **Reflector** | Feeds traces + evaluator feedback into a strong LLM (`reflection_lm`) | Diagnoses failure modes and identifies causal patterns |
+| **Curator** | Proposes concrete instruction mutation based on the diagnosis | Transforms reflection into actionable prompt edits |
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>What is an Agent?</span>
+<span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -302,6 +339,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span class="active">GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -340,6 +378,7 @@ On structured document subsets, the frontier approached **~97% accuracy** — ne
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span class="active">Pareto as Context Mgmt</span>
@@ -377,6 +416,7 @@ Punishing complexity forces the system to *distill* what it learned, not just *a
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -409,6 +449,7 @@ When passing context between pipeline stages, you have a choice:
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -437,6 +478,7 @@ When passing context between pipeline stages, you have a choice:
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -470,6 +512,7 @@ Hard to catch in aggregate stats.
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -497,6 +540,7 @@ Hard to catch in aggregate stats.
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
@@ -521,6 +565,7 @@ Hard to catch in aggregate stats.
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span>Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
