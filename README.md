@@ -72,6 +72,17 @@ uv run python scripts/build_active_learning_jsonl.py \
   --output-jsonl /tmp/active_learning_frames.jsonl
 ```
 
+## Trajectories
+
+A **trajectory** is the path an agent takes during execution — the sequence of observations, decisions, tool calls, and outputs that constitute a single run. In this codebase:
+
+- Each tool call (detect, segment, verify, query memory) is a step in the trajectory
+- The viewer runtime captures trajectories as ordered event streams
+- Trajectories are the unit of reflection in GEPA: the optimizer analyzes *what the agent did* to propose prompt improvements
+- For active learning, trajectories show where the agent was confident vs. where it requested human input
+
+Trajectories matter because they're **inspectable**. Unlike a black-box model, you can replay a trajectory, see where it went wrong, and understand *why* — which is essential for debugging and improving agentic systems.
+
 ## Viewer runtime
 
 `agentic_vision.viewer_runtime` records:
