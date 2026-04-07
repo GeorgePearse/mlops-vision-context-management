@@ -79,6 +79,7 @@ style: |
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -105,6 +106,7 @@ style: |
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -129,6 +131,7 @@ style: |
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -153,6 +156,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -177,6 +181,7 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -201,6 +206,7 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -237,6 +243,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span class="active">Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -266,6 +273,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Types of Context</span>
 <span class="active">GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -296,6 +304,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span class="active">GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -333,6 +342,42 @@ On structured document subsets, the frontier approached **~97% accuracy** — ne
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span class="active">Pareto as Context Mgmt</span>
+<span>Image vs Text</span>
+<span>Degrees of Freedom</span>
+<span>Visual Validation</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## Pareto Frontier as Context Management
+
+The complexity penalty in GEPA's Pareto frontier is **context management in disguise**.
+
+Without it, the optimizer would overfit: append more rules, more examples, more edge-case handling — until the prompt balloons and generalization collapses.
+
+| Uncontrolled growth | Pareto-controlled |
+|---------------------|-------------------|
+| Prompts accumulate every observed failure | Only rules that improve accuracy *per token* survive |
+| Context window fills with redundant policy | Compression is forced by the complexity axis |
+| New examples crowd out core instructions | Trade-offs are explicit and tracked |
+
+**The insight**: Pareto selection is a principled way to **consolidate context** — the same goal as RAG retrieval, memory pruning, or conversation summarization.
+
+Punishing complexity forces the system to *distill* what it learned, not just *append* it.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>What is an Agent?</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span class="active">Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -364,6 +409,7 @@ When passing context between pipeline stages, you have a choice:
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span class="active">Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -391,6 +437,7 @@ When passing context between pipeline stages, you have a choice:
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span class="active">Visual Validation</span>
@@ -423,6 +470,7 @@ Hard to catch in aggregate stats.
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -449,6 +497,7 @@ Hard to catch in aggregate stats.
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -472,6 +521,7 @@ Hard to catch in aggregate stats.
 <span>Types of Context</span>
 <span>GEPA Context</span>
 <span>GEPA Pareto Frontier</span>
+<span>Pareto as Context Mgmt</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
