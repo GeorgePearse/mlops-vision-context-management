@@ -328,6 +328,7 @@ class ExperimentRunner:
                 uncertainty_threshold=config.uncertainty_threshold,
                 bootstrap_examples=config.bootstrap_examples,
                 dataset_name=self.dataset_name,
+                enable_object_memory=False,  # Disable embedding writes for simulations (retrieval still enabled)
             )
 
             # Process image

@@ -172,6 +172,7 @@ class ActiveLearningSegmenter(dspy.Module):
         bootstrap_examples: int = 0,
         sam3_handler_name: str = "premier_sam3",
         dataset_name: str | None = None,
+        enable_object_memory: bool = True,
     ) -> None:
         super().__init__()
 
@@ -180,6 +181,7 @@ class ActiveLearningSegmenter(dspy.Module):
         self.uncertainty_threshold = uncertainty_threshold
         self.sam3_handler_name = sam3_handler_name
         self.dataset_name = dataset_name
+        self.enable_object_memory = enable_object_memory
 
         # Initialize budget manager and knowledge base
         self.budget_manager = AnnotationBudgetManager(
@@ -358,6 +360,7 @@ class ActiveLearningSegmenter(dspy.Module):
             dataset_name=self.dataset_name,
             sam3_handler_name=self.sam3_handler_name,
             human_input_fn=human_input_fn,
+            enable_object_memory=self.enable_object_memory,
         )
         self._human_input_fn = human_input_fn
 

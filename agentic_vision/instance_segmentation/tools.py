@@ -951,6 +951,7 @@ class InstanceSegmentationToolkit:
         sam3_handler_name: str = "premier_sam3",
         human_input_fn: Callable[[str], str] | None = None,
         viewer_recorder: AgenticVisionRunRecorder | None = None,
+        enable_object_memory: bool = True,
     ) -> None:
         self._full_image = image
         self._full_image_array = _decode_dspy_image_array(image)
@@ -976,14 +977,17 @@ class InstanceSegmentationToolkit:
         self._object_memory_background_store: ObjectMemoryBackgroundStore | None = None
         self._stage_event_counter = 0
         if dataset_name:
+            # Always enable retriever for reading existing embeddings
             try:
                 self._object_memory_retriever = ObjectMemoryRetriever(dataset_name=dataset_name)
             except Exception as exc:
                 logger.warning(f"Object memory retriever unavailable for dataset={dataset_name}: {exc}")
-            try:
-                self._object_memory_background_store = ObjectMemoryBackgroundStore(dataset_name=dataset_name)
-            except Exception as exc:
-                logger.warning(f"Object memory background store unavailable for dataset={dataset_name}: {exc}")
+            # Only enable store/write if enable_object_memory is True
+            if enable_object_memory:
+                try:
+                    self._object_memory_background_store = ObjectMemoryBackgroundStore(dataset_name=dataset_name)
+                except Exception as exc:
+                    logger.warning(f"Object memory background store unavailable for dataset={dataset_name}: {exc}")
         logger.debug(
             f"InstanceSegmentationToolkit initialized | {self._full_width}x{self._full_height} "
             f"frame_uri={'yes' if frame_uri else 'no'} "
