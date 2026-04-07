@@ -78,6 +78,7 @@ style: |
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -103,6 +104,7 @@ style: |
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -126,6 +128,7 @@ style: |
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -149,6 +152,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -172,6 +176,7 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -195,6 +200,7 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span class="active">What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -230,6 +236,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>What is an Agent?</span>
 <span class="active">Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -258,6 +265,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span class="active">GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -287,6 +295,44 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span class="active">GEPA Pareto Frontier</span>
+<span>Image vs Text</span>
+<span>Degrees of Freedom</span>
+<span>Visual Validation</span>
+<span>Key Takeaways</span>
+<span>References</span>
+<span>Thank You</span>
+</div>
+
+## GEPA Pareto Frontier
+
+GEPA optimizes prompts across **two competing objectives**:
+
+| Objective | Why it matters |
+|-----------|----------------|
+| **Accuracy** | Higher extraction quality on validation set |
+| **Prompt complexity** | Simpler prompts generalize better, cost less |
+
+The Pareto frontier tracks candidates where improving one objective requires sacrificing the other.
+
+**Selection flow**:
+1. Evaluate candidate prompts on validation slice
+2. Compare against current frontier
+3. Keep candidates that are non-dominated (better on at least one axis without being worse on the other)
+4. Iterate until convergence
+
+On structured document subsets, the frontier approached **~97% accuracy** — near the ceiling for OCR on clean scans.
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>What is an Agent?</span>
+<span>Types of Context</span>
+<span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span class="active">Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -317,6 +363,7 @@ When passing context between pipeline stages, you have a choice:
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span class="active">Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -343,6 +390,7 @@ When passing context between pipeline stages, you have a choice:
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span class="active">Visual Validation</span>
@@ -374,6 +422,7 @@ Hard to catch in aggregate stats.
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -399,6 +448,7 @@ Hard to catch in aggregate stats.
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
@@ -421,6 +471,7 @@ Hard to catch in aggregate stats.
 <span>What is an Agent?</span>
 <span>Types of Context</span>
 <span>GEPA Context</span>
+<span>GEPA Pareto Frontier</span>
 <span>Image vs Text</span>
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
