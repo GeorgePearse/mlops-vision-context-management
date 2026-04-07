@@ -28,18 +28,29 @@ import base64
 import json
 import os
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 
+import cv2
+import numpy as np
 from google.cloud import storage
+
+# FiftyOne import (optional)
+try:
+    import fiftyone as fo
+    FIFTYONE_AVAILABLE = True
+except ImportError:
+    fo = None
+    FIFTYONE_AVAILABLE = False
 
 
 # Load .env file from parent directory before other imports
 def _load_env_file():
     """Load environment variables from .env file in parent directory."""
     script_dir = Path(__file__).parent.absolute()
-    # Go up from scripts/ to agentic_vision/ to lib/python/ to repo root
-    env_file = script_dir.parent.parent.parent.parent / ".env"
+    # Go up from scripts/ to repo root
+    env_file = script_dir.parent / ".env"
 
     if env_file.exists():
         with open(env_file) as f:
@@ -254,6 +265,210 @@ def image_bytes_to_data_uri(image_bytes: bytes, mime_type: str = "image/jpeg") -
     return f"data:{mime_type};base64,{b64}"
 
 
+def create_fiftyone_dataset(
+    images_data: list[dict[str, Any]],
+    dataset_name: str,
+    results_file: str | None = None,
+) -> "fo.Dataset":
+    """Create FiftyOne dataset from images data and optionally add predictions.
+
+    Args:
+        images_data: List of dicts with frame_uri, annotations, etc.
+            Ground truth boxes are in pixel coordinates [x1, y1, x2, y2].
+        dataset_name: Name for the FiftyOne dataset
+        results_file: Optional path to experiment results JSON containing predictions.
+            Predictions from Gemini are stored as [ymin, xmin, ymax, xmax] in 0-1000
+            normalized space. This function converts them to FiftyOne's expected
+            format: [x, y, width, height] normalized to [0, 1].
+
+    Returns:
+        FiftyOne Dataset object with 'ground_truth' and 'predictions' fields.
+
+    Note:
+        Coordinate format conversions:
+        - Ground truth: pixel [x1, y1, x2, y2] -> normalized [x, y, w, h]
+        - Predictions: Gemini [ymin, xmin, ymax, xmax] 0-1000 -> normalized [x, y, w, h]
+    """
+    if not FIFTYONE_AVAILABLE:
+        raise RuntimeError("FiftyOne is not available. Install with: pip install fiftyone")
+
+    # Delete existing dataset if it exists
+    if fo.dataset_exists(dataset_name):
+        fo.delete_dataset(dataset_name)
+
+    dataset = fo.Dataset(dataset_name)
+    dataset.persistent = True
+
+    # Load predictions from results file if provided
+    predictions_by_image: dict[int, list[dict]] = {}
+    if results_file and Path(results_file).exists():
+        logger.info(f"Loading predictions from: {results_file}")
+        with open(results_file) as f:
+            results = json.load(f)
+
+        # Extract predictions from step_details - use the best experiment's predictions
+        # (highest budget with uncertainty strategy, or fall back to any with predictions)
+        best_exp = None
+        for exp_name, exp_result in results.items():
+            if "step_details" in exp_result and exp_result["step_details"]:
+                if best_exp is None or "uncertainty" in exp_name:
+                    best_exp = exp_name
+
+        if best_exp:
+            logger.info(f"Using predictions from experiment: {best_exp}")
+            for step in results[best_exp]["step_details"]:
+                img_idx = step.get("image_idx", -1)
+                preds = step.get("predictions", [])
+                if img_idx >= 0 and preds:
+                    predictions_by_image[img_idx] = preds
+            logger.info(f"Loaded predictions for {len(predictions_by_image)} images")
+
+    # Process each image
+    temp_dir = tempfile.mkdtemp()
+
+    for idx, img_data in enumerate(images_data):
+        frame_uri = img_data.get("frame_uri", "")
+        annotations = img_data.get("annotations", [])
+
+        try:
+            # Download image from GCS
+            image_bytes = download_image_from_gcs(frame_uri)
+            img_array = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR)
+
+            if img_array is None:
+                logger.warning(f"Skipping image {idx}: could not decode {frame_uri}")
+                continue
+
+            height, width = img_array.shape[:2]
+
+            # Save to temp file
+            temp_path = Path(temp_dir) / f"image_{idx}.jpg"
+            cv2.imwrite(str(temp_path), img_array)
+
+            # Create sample
+            sample = fo.Sample(filepath=str(temp_path))
+            sample["frame_uri"] = frame_uri
+            sample["frame_id"] = img_data.get("frame_id", idx)
+
+            # Add ground truth detections
+            gt_detections = []
+            for ann in annotations:
+                box = ann.get("box", ann.get("bbox", [0, 0, 1, 1]))
+                x1, y1, x2, y2 = box
+
+                # Normalize bounding box to [0, 1] in XYWH format
+                rel_box = [
+                    x1 / width,
+                    y1 / height,
+                    (x2 - x1) / width,
+                    (y2 - y1) / height,
+                ]
+
+                detection_kwargs = {
+                    "label": ann.get("label", "unknown"),
+                    "bounding_box": rel_box,
+                }
+
+                # Add segmentation mask if available
+                if ann.get("segmentation"):
+                    try:
+                        seg_points = ann["segmentation"]
+                        if isinstance(seg_points, list) and len(seg_points) >= 6:
+                            mask = np.zeros((height, width), dtype=np.uint8)
+                            if isinstance(seg_points[0], (list, tuple)):
+                                polygon_points = np.array(seg_points, dtype=np.int32)
+                            else:
+                                polygon_points = np.array(
+                                    [(seg_points[i], seg_points[i+1])
+                                     for i in range(0, len(seg_points)-1, 2)],
+                                    dtype=np.int32
+                                )
+                            cv2.fillPoly(mask, [polygon_points], (1,))
+
+                            x1_int, y1_int = int(x1), int(y1)
+                            x2_int, y2_int = int(x2), int(y2)
+                            cropped_mask = mask[y1_int:y2_int, x1_int:x2_int]
+
+                            if cropped_mask.size > 0:
+                                detection_kwargs["mask"] = cropped_mask.astype(bool)
+                    except Exception as e:
+                        logger.debug(f"Could not create mask: {e}")
+
+                gt_detections.append(fo.Detection(**detection_kwargs))
+
+            sample["ground_truth"] = fo.Detections(detections=gt_detections)
+
+            # Add predictions if available for this image
+            if idx in predictions_by_image:
+                pred_detections = []
+                for pred in predictions_by_image[idx]:
+                    box = pred.get("box", [0, 0, 1, 1])
+                    # Gemini returns [ymin, xmin, ymax, xmax] but we stored as [a,b,c,d]
+                    # So: ymin=box[0], xmin=box[1], ymax=box[2], xmax=box[3]
+                    ymin, xmin, ymax, xmax = box
+                    x1, y1, x2, y2 = xmin, ymin, xmax, ymax
+
+                    # Prediction boxes are in 0-1000 normalized space from Gemini
+                    # Convert to [0, 1] XYWH format for FiftyOne
+                    rel_box = [
+                        x1 / 1000.0,
+                        y1 / 1000.0,
+                        (x2 - x1) / 1000.0,
+                        (y2 - y1) / 1000.0,
+                    ]
+
+                    pred_kwargs = {
+                        "label": pred.get("label", "unknown"),
+                        "bounding_box": rel_box,
+                        "confidence": pred.get("confidence", 0.5),
+                    }
+
+                    # Add prediction mask if available
+                    if pred.get("segmentation"):
+                        try:
+                            seg_points = pred["segmentation"]
+                            if isinstance(seg_points, list) and len(seg_points) >= 6:
+                                mask = np.zeros((height, width), dtype=np.uint8)
+                                # Segmentation points are also in 0-1000 space, convert to pixels
+                                if isinstance(seg_points[0], (list, tuple)):
+                                    polygon_points = np.array(
+                                        [[int(p[0] * width / 1000), int(p[1] * height / 1000)] for p in seg_points],
+                                        dtype=np.int32
+                                    )
+                                else:
+                                    polygon_points = np.array(
+                                        [(int(seg_points[i] * width / 1000), int(seg_points[i+1] * height / 1000))
+                                         for i in range(0, len(seg_points)-1, 2)],
+                                        dtype=np.int32
+                                    )
+                                cv2.fillPoly(mask, [polygon_points], (1,))
+
+                                # Convert box coords to pixels for mask cropping
+                                x1_px, y1_px = int(x1 * width / 1000), int(y1 * height / 1000)
+                                x2_px, y2_px = int(x2 * width / 1000), int(y2 * height / 1000)
+                                cropped_mask = mask[y1_px:y2_px, x1_px:x2_px]
+
+                                if cropped_mask.size > 0:
+                                    pred_kwargs["mask"] = cropped_mask.astype(bool)
+                        except Exception as e:
+                            logger.debug(f"Could not create prediction mask: {e}")
+
+                    pred_detections.append(fo.Detection(**pred_kwargs))
+
+                sample["predictions"] = fo.Detections(detections=pred_detections)
+                logger.debug(f"Added {len(pred_detections)} predictions for image {idx}")
+
+            dataset.add_sample(sample)
+            logger.info(f"Added image {idx}: {len(gt_detections)} GT, {len(predictions_by_image.get(idx, []))} predictions")
+
+        except Exception as e:
+            logger.warning(f"Skipping image {idx}: {e}")
+            continue
+
+    logger.info(f"Created dataset '{dataset_name}' with {len(dataset)} samples")
+    return dataset
+
+
 def prepare_images_for_experiment(
     images_data: list[dict[str, Any]],
     max_images: int | None = None,
@@ -310,8 +525,12 @@ def run_experiment_from_db(
     strategies: list[AnnotationStrategy],
     output_dir: str,
     experiment_name: str,
-) -> dict[str, Any]:
-    """Run experiment using database as data source."""
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """Run experiment using database as data source.
+
+    Returns:
+        Tuple of (results dict, images_data list for FiftyOne)
+    """
 
     # Connect to database
     conn = get_db_connection()
@@ -322,14 +541,14 @@ def run_experiment_from_db(
 
         if not images_data:
             logger.error(f"No images found for dataset: {dataset_name}")
-            return {}
+            return {}, []
 
         # Prepare for experiment
         images, ground_truths, frame_uris = prepare_images_for_experiment(images_data)
 
         if not images:
             logger.error("No valid images to process")
-            return {}
+            return {}, []
 
         # Create experiment configurations
         configs = []
@@ -375,7 +594,7 @@ def run_experiment_from_db(
         for name, path in plot_outputs.items():
             logger.info(f"  - {name}: {path}")
 
-        return results
+        return results, images_data
 
     finally:
         conn.close()
@@ -387,22 +606,25 @@ def run_experiment_from_file(
     strategies: list[AnnotationStrategy],
     output_dir: str,
     experiment_name: str,
-) -> dict[str, Any]:
-    """Run experiment using local annotation file as data source."""
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """Run experiment using local annotation file as data source.
 
+    Returns:
+        Tuple of (results dict, images_data list for FiftyOne)
+    """
     # Load annotations
     images_data = load_annotations_from_file(annotations_file)
 
     if not images_data:
         logger.error(f"No images loaded from: {annotations_file}")
-        return {}
+        return {}, []
 
     # Prepare for experiment
     images, ground_truths, frame_uris = prepare_images_for_experiment(images_data)
 
     if not images:
         logger.error("No valid images to process")
-        return {}
+        return {}, []
 
     # Create experiment configurations
     configs = []
@@ -448,7 +670,7 @@ def run_experiment_from_file(
     for name, path in plot_outputs.items():
         logger.info(f"  - {name}: {path}")
 
-    return results
+    return results, images_data
 
 
 def parse_budget_list(budgets_str: str) -> list[int]:
@@ -547,6 +769,24 @@ Examples:
         help="Enable verbose logging",
     )
 
+    # FiftyOne visualization
+    parser.add_argument(
+        "--no-fiftyone",
+        action="store_true",
+        help="Skip launching FiftyOne visualization",
+    )
+    parser.add_argument(
+        "--fiftyone-port",
+        type=int,
+        default=5151,
+        help="Port for FiftyOne app (default: 5151)",
+    )
+    parser.add_argument(
+        "--fiftyone-dataset-name",
+        type=str,
+        help="Name for FiftyOne dataset (default: {dataset_name}_experiment)",
+    )
+
     args = parser.parse_args()
 
     # Setup logging
@@ -573,7 +813,7 @@ Examples:
         # Run experiment based on data source
         if args.dataset_name:
             logger.info(f"Running with database dataset: {args.dataset_name}")
-            results = run_experiment_from_db(
+            results, images_data = run_experiment_from_db(
                 dataset_name=args.dataset_name,
                 num_images=args.num_images,
                 budgets=budgets,
@@ -583,7 +823,7 @@ Examples:
             )
         else:
             logger.info(f"Running with annotation file: {args.annotations_file}")
-            results = run_experiment_from_file(
+            results, images_data = run_experiment_from_file(
                 annotations_file=args.annotations_file,
                 budgets=budgets,
                 strategies=strategies,
@@ -606,6 +846,36 @@ Examples:
             print("=" * 70)
             print(f"\nResults saved to: {args.output_dir}")
             print("=" * 70)
+
+            # Launch FiftyOne visualization
+            if not args.no_fiftyone and images_data:
+                if not FIFTYONE_AVAILABLE:
+                    logger.warning("FiftyOne not available. Install with: pip install fiftyone")
+                else:
+                    fo_dataset_name = args.fiftyone_dataset_name or f"{args.dataset_name or 'experiment'}_experiment"
+                    results_file = Path(args.output_dir) / f"{args.experiment_name}.json"
+
+                    logger.info(f"Creating FiftyOne dataset: {fo_dataset_name}")
+                    try:
+                        # Set MongoDB URI if not set (use local MongoDB without auth)
+                        if "FIFTYONE_DATABASE_URI" not in os.environ:
+                            os.environ["FIFTYONE_DATABASE_URI"] = "mongodb://localhost:27017"
+
+                        dataset = create_fiftyone_dataset(
+                            images_data=images_data,
+                            dataset_name=fo_dataset_name,
+                            results_file=str(results_file) if results_file.exists() else None,
+                        )
+
+                        logger.info(f"Launching FiftyOne app on port {args.fiftyone_port}...")
+                        session = fo.launch_app(dataset, port=args.fiftyone_port, address="0.0.0.0")
+                        logger.info(f"FiftyOne app running at: http://0.0.0.0:{args.fiftyone_port}")
+                        print(f"\nFiftyOne is running at: http://localhost:{args.fiftyone_port}")
+                        print("Press Enter to close FiftyOne and exit...")
+                        input()
+                    except Exception as e:
+                        logger.error(f"Failed to launch FiftyOne: {e}")
+                        logger.info("Results are still saved. You can view them later with load_results_fiftyone.py")
         else:
             logger.error("Experiment produced no results")
             return 1

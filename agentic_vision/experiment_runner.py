@@ -90,6 +90,7 @@ class ExperimentResult:
             "annotations_used": self.annotations_used,
             "primary_metric_scores": self.primary_metric_scores,
             "metrics_history": self.metrics_history,
+            "step_details": self.step_details,  # Include predictions for FiftyOne
             "final_metrics": self.final_metrics,
             "total_annotations_used": self.total_annotations_used,
             "stopped_reason": self.stopped_reason,
@@ -361,13 +362,28 @@ class ExperimentRunner:
                 metrics_dict: dict[str, float] = {k: float(v) for k, v in metrics.to_dict().items() if isinstance(v, (int, float))}
                 result.metrics_history.append(metrics_dict)
 
+                # Store predictions for FiftyOne visualization
+                # Note: box coordinates from Gemini are [ymin, xmin, ymax, xmax] in 0-1000 space
+                predictions_data = [
+                    {
+                        "label": p.label,
+                        "box": p.box,  # [ymin, xmin, ymax, xmax] normalized 0-1000
+                        "segmentation": p.segmentation,
+                        "confidence": p.confidence,
+                        "is_human_annotated": p.is_human_annotated,
+                    }
+                    for p in al_result.predictions
+                ]
+
                 result.step_details.append(
                     {
                         "image_idx": img_idx,
+                        "frame_uri": frame_uri,
                         "annotations_this_image": al_result.annotations_used,
                         "cumulative_annotations": cumulative_annotations,
                         "metrics": metrics.to_dict(),
                         "metrics_summary": metrics.summary,
+                        "predictions": predictions_data,
                     }
                 )
 
