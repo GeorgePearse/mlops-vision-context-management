@@ -261,12 +261,12 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 
 ## State of VLMs
 
-- **Gemini 2.5 Pro** — best-in-class for visual grounding and long-context vision tasks
-- **Qwen 2.5 / 3** — strong open-weight option, good at object detection and spatial reasoning
-- **GPT-4o** — solid all-rounder but expensive for high-volume inference
-- **Claude Sonnet 4** — strong at structured output and reasoning over images
-- VLMs are now good enough for **real industrial applications** — grading materials, reading gauges, identifying contaminants
-- The gap between open and closed models is shrinking fast, especially for domain-specific fine-tuning
+- **Qwen 3.5** — best for object detection.
+- **Gemini** — best for image-text descriptions / general image understanding.
+- **Sam3** - best for instance-segmentations and has some textual understanding (grounded phrases)
+- **Moondream** - Some of all of the above and targeting smaller size ranges and higher inference speeds.
+  
+- VLMs are now (just about) good enough for **real industrial applications** — grading materials, reading gauges, identifying contaminants
 
 ---
 
