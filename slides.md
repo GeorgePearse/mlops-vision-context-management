@@ -225,6 +225,28 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span class="active">Metal Yard Application</span>
+<span>Types of Context</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Thank You</span>
+</div>
+
+## Metal Yard Application (2)
+
+- **Turbopuffer** for the object memory and image memory
+- **DINOv3** for the embeddings
+- **Gemini** to coordinate the system
+- **Qwen3.5** for the initial boxes and when to zoom
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="active">Types of Context</span>
 <span>GEPA Algorithm</span>
