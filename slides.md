@@ -142,26 +142,6 @@ style: |
 
 <div class="nav">
 <span>About Me</span>
-<span class="active">Visia</span>
-<span>What we Do</span>
-<span>Can we see yet</span>
-<span>Metal Yard Application</span>
-<span class="sub">1. Photos</span>
-<span class="sub">2. Program Tools</span>
-<span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
-<span>Thank You</span>
-</div>
-
-## Visia
-
-![bg right:55% contain](images/office.jpeg)
-
----
-
-<div class="nav">
-<span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>Can we see yet</span>
