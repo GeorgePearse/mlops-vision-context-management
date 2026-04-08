@@ -67,6 +67,15 @@ style: |
     padding-left: 28px;
     font-size: 0.42em;
   }
+  .profile-pic {
+    float: right;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 0 20px 30px;
+    border: 3px solid #3a7d7e;
+  }
   .nav span.active {
     color: #f5f3ef;
     background: rgba(58, 125, 126, 0.2);
@@ -93,6 +102,8 @@ style: |
 </div>
 
 ## About Me
+
+<img src="images/george_linked_in_pic.jpg" class="profile-pic" />
 
 - Started as a Data Engineer
 - A few years in a medical imaging start-up working on lung cancer detection in x-rays, and brain tumours in CT scans
