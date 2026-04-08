@@ -82,8 +82,6 @@ style: |
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -111,8 +109,6 @@ style: |
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -138,8 +134,6 @@ style: |
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -165,8 +159,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -192,8 +184,6 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -219,8 +209,6 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -257,8 +245,6 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -289,8 +275,6 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -320,8 +304,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -353,8 +335,6 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span class="active">GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -464,72 +444,6 @@ Practical mitigations for the double-pressure problem:
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span class="active">Image vs Text</span>
-<span>Degrees of Freedom</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## Image vs Text: Choosing Your Canvas
-
-When passing context between pipeline stages, you have a choice:
-
-| Approach | Pros | Cons |
-|----------|------|------|
-| **Image** (render predictions onto pixels) | Downstream model can re-interpret; errors don't propagate as hard | Vision understanding is weaker; lossy |
-| **Text/JSON** (structured output) | LLMs understand text far better; precise; composable | Early mistakes propagate; no second chance to see the raw signal |
-
-**The trade-off**: Text lets you reason precisely, but if stage 1 misreads "7" as "1", stage 2 has no way to recover. An image overlay at least preserves the original pixels for reinterpretation.
-
-**Hybrid approach**: Pass both — structured JSON for the happy path, but include a crop or thumbnail so the model can sanity-check ambiguous cases.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
-<span>Context Pressure</span>
-<span>Image vs Text</span>
-<span class="active">Degrees of Freedom</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
-<span>References</span>
-<span>Thank You</span>
-</div>
-
-## What Are Your Degrees of Freedom?
-
-- Where is the capacity in the agent to actually adapt at inference time?
-- The main knobs are prompt structure, retrieved context, question specificity, and crop size
-- Prefer **knowledge consolidation**: pull things out of the active prompt, but keep them accessible via retrieval or search
-- Contrast that with **compaction**: just shrinking the prompt and losing access to the underlying information
-- For segmentation, learning through prompts and context is only just about possible right now
-- So be explicit about what must come from the base model versus what you can steer at test time
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
-<span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span class="active">Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
@@ -563,8 +477,6 @@ Hard to catch in aggregate stats.
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span class="active">Key Takeaways</span>
 <span>References</span>
@@ -592,8 +504,6 @@ Hard to catch in aggregate stats.
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span class="active">References</span>
@@ -618,8 +528,6 @@ Hard to catch in aggregate stats.
 <span>GEPA Pareto Frontier</span>
 <span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>References</span>
