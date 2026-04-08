@@ -98,7 +98,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -126,7 +125,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -153,7 +151,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -177,7 +174,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -203,7 +199,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -229,7 +224,6 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -255,7 +249,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -285,7 +278,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -310,7 +302,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -334,7 +325,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -358,7 +348,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -386,7 +375,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -431,7 +419,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -459,7 +446,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -484,7 +470,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -514,7 +499,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
 <span>Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -544,7 +528,6 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span class="active">Context Pressure</span>
-<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
@@ -575,37 +558,6 @@ Practical mitigations for the double-pressure problem:
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span class="active">Types of Context</span>
-<span>Thank You</span>
-</div>
-
-## Types of Context
-
-- **Prompt context** — system instructions and framing baked into the initial call
-- **Retrieved context (RAG)** — information pulled from external stores at query time
-- **Conversational context** — the history of the current interaction
-- **Tool/observation context** — results from tool calls and API responses the agent generates for itself
-- **Persistent context** — memories and session state carried across conversations (the cookies of agents, but more like a cheatsheet intentionally kept small)
-
-<!-- The core tension: context management is compression and selection. Finite window, right information, right time. Too little → hallucination. Too much → noise. -->
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>State of VLMs</span>
-<span>Where do we use Agents</span>
-<span>Metal Yard Application</span>
-<span class="sub">1. Photos</span>
-<span class="sub">2. Program Tools</span>
-<span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>Context Pressure</span>
-<span>Types of Context</span>
 <span class="active">Thank You</span>
 </div>
 
