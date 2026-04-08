@@ -333,7 +333,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 ## Metal Yard Application — 2. Program Tools
 
 - All in service of finding the right **material grade** and the **cost deduction** — the accuracy of these 2 outputs are the core metric we optimise via the DSPy GEPA loops
-- A single ticket can be approx 10 images of the dump, the system runs over each independently, that all gets saved to the database, and then the combination is fed into a separate LLM call to come to a conclusion on the material code and any deductions
+- A ticket is ~10 images — each analysed independently, then a final LLM call aggregates the results into a material code and deductions
 - The customer reviews the output, writes a comment with any feedback, this is fed to another VLM which converts it to our Annotation format.
 
 ---
