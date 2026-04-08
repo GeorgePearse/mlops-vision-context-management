@@ -345,47 +345,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Can we see yet</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
-<span class="sub active">2. Program Tools</span>
-<span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
-<span>Thank You</span>
-</div>
-
-## Metal Yard Application — DSPy Signature
-
-```python
-class RadiusTicketMaterialCodeSignature(dspy.Signature):
-    """Determine the overall material code for an entire
-    ticket (load) from per-frame analyses.
-
-    Material codes:
-    - 290-100: Steel blocks with transmissions
-    - 290-101: Aluminum/iron blocks with transmissions
-    - 290-102: Aluminum blocks with transmissions
-    - 290-103: Aluminum transmissions
-    - 290-104: Aluminum blocks
-    - 290-105: Irony aluminum low grade, 15-29% aluminum
-    - 290-106: Irony aluminum mid grade, 30-49% aluminum
-    - 290-107: Irony aluminum high grade, 50-74% aluminum
-    - 290-108: Irony aluminum high grade, 75%+ aluminum
-    - 290-109: Aluminum van trailer
-    - 290-110: Aluminum refrigerated trailer
-
-    IMPORTANT — Solar panels: Always classify solar panel
-    loads as 290-105 or at most 290-106.
-    """
-```
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Can we see yet</span>
-<span>Metal Yard Application</span>
-<span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub active">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
