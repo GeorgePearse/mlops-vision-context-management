@@ -38,6 +38,10 @@ style: |
   pre code {
     background: #2d2d2d !important;
     color: #f5f3ef !important;
+    filter: none !important;
+  }
+  pre code span {
+    color: #f5f3ef !important;
   }
   blockquote {
     border-left: 4px solid #3a7d7e;
