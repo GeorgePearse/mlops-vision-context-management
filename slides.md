@@ -133,9 +133,8 @@ style: |
 ## Visia
 
 - **Multisensor AI for Heavy Industry** — cameras, x-rays, and lidar
-- Started selling cameras to recycling facilities, added x-rays for detecting Lithium Ion Batteries (fire prevention), then lidar
+- Started selling cameras to recycling facilities, added x-rays for detecting Lithium Ion Batteries (**fire prevention**), then lidar
 - We help recyclers, metal yards, and waste-to-energy plants make faster, more accurate decisions
-- ~30 people, based in Dublin with customers across Europe
 
 ---
 
