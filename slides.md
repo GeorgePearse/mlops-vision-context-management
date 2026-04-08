@@ -267,6 +267,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - **Moondream** - Some of all of the above and targeting smaller size ranges and higher inference speeds.
   
 - VLMs are now (just about) good enough for **real industrial applications** — grading materials, reading gauges, identifying contaminants
+- We (and the ecosystem) are just crossing the line to systems that can defensibly be called 'agentic'.
 
 ---
 
