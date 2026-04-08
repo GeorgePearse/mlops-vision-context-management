@@ -2,6 +2,8 @@
 
 This is good https://www.youtube.com/watch?v=4GiqzUHD5AA
 
+https://blog.langchain.com/context-engineering-for-agents/
+
 Standalone Python package for agentic vision context management, active-learning simulation, and instance-segmentation orchestration.
 
 This repo currently contains the `agentic_vision` package extracted from the larger Visia monorepo. The main surfaces are:
