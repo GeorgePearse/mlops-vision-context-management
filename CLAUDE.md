@@ -26,6 +26,7 @@ python scripts/run.py --dataset-name municipals --num-images 50 --budgets 0,5,10
 ## Git Workflow
 
 - Always commit and push directly to `main`. No branches or PRs needed for this repo.
+- Commit and push after every change without waiting to be asked.
 
 ## Environment
 

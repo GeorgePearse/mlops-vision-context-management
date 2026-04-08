@@ -410,10 +410,10 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
 <span class="sub active">4. Context Management</span>
-<span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Types of Context</span>
 <span>Thank You</span>
 </div>
 
