@@ -83,6 +83,7 @@ style: |
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -106,6 +107,7 @@ style: |
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -130,6 +132,7 @@ style: |
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -153,6 +156,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -176,6 +180,7 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -199,6 +204,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -221,6 +227,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Metal Yard Application</span>
 <span class="sub active">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -246,6 +253,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub active">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -271,6 +279,29 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub active">3. Context Management</span>
+<span>Types of Context</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Thank You</span>
+</div>
+
+## Metal Yard Application — 3. Context Management
+
+- When optimising this program with GEPA, we can't actually keep the image within the context of the reflection LM, because it almost instantly exceeds the token limit
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
+<span class="sub">1. Program Tools</span>
+<span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span class="active">Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -298,6 +329,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -325,6 +357,7 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
@@ -352,6 +385,7 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -380,6 +414,7 @@ Practical mitigations for the double-pressure problem:
 <span>Metal Yard Application</span>
 <span class="sub">1. Program Tools</span>
 <span class="sub">2. Tech Stack</span>
+<span class="sub">3. Context Management</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
