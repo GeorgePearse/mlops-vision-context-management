@@ -309,7 +309,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 
 ## Metal Yard Application — 2. Program Tools
 
-- The agent is a **ReAct program**
+- The agent is a **ReAct** program:
   - It can **zoom in** on an uncertain or dense region
   - It has both an **image-level** and **object-level** store
   - Some simple dumps only require image-level retrieval (all the same material), most are more complicated and have a huge mix of materials made of different materials
