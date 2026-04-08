@@ -225,6 +225,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>What we Do</span>
 <span>What is an Agent?</span>
 <span class="active">Types of Context</span>
+<span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
