@@ -87,11 +87,11 @@ style: |
 
 # George Pearse
 
-### Machine vision, data quality, and annotation systems
+### Data Engineering, MLOps, and ML 
 
-- Working on practical vision workflows where dataset quality is often the bottleneck
-- Interested in reproducible annotation, validation, and dataset compilation
-- This talk is about making data preparation feel more like engineering
+- Started as a Data Engineer
+- A few years in a medical imaging start-up working on lung cancer detection in x-rays, and brain tumours in CT scans
+- Approaching 4 years at Visia, building Computer Vision applications for recyling and heavy industry.
 
 ---
 
