@@ -102,7 +102,6 @@ style: |
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -129,7 +128,6 @@ style: |
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -155,7 +153,6 @@ style: |
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -178,7 +175,6 @@ style: |
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -203,7 +199,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -228,7 +223,6 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -253,7 +247,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -286,7 +279,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -310,7 +302,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -333,7 +324,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -356,7 +346,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -385,7 +374,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -429,7 +417,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -456,7 +443,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="sub active">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -480,7 +466,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="sub">4. Context Management</span>
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -509,7 +494,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
-<span>Context Pressure</span>
 <span>Thank You</span>
 </div>
 
@@ -538,37 +522,6 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span class="active">Context Pressure</span>
-<span>Thank You</span>
-</div>
-
-## Handling Context Pressure
-
-Practical mitigations for the double-pressure problem:
-
-- **Reduce `reflection_minibatch_size`** from 3 to 1–2 for ReAct programs with long trajectories
-- **Use a high-context reflection LM** — models with large context windows (10M tokens ideal)
-- **Reduce ReAct's `max_iters`** to 3–5 instead of 20
-- **Keep tool return values concise** — control retrieved passage counts and output verbosity
-- **Override `truncate_trajectory()`** for domain-aware truncation that preserves the most informative steps, not just the most recent
-
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Can we see yet</span>
-<span>Where do we use Agents</span>
-<span>Metal Yard Application</span>
-<span class="sub">1. Photos</span>
-<span class="sub">2. Program Tools</span>
-<span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>Context Pressure</span>
 <span class="active">Thank You</span>
 </div>
 
