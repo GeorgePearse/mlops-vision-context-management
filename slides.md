@@ -104,7 +104,6 @@ style: |
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -129,7 +128,6 @@ style: |
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -153,7 +151,6 @@ style: |
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -174,7 +171,6 @@ style: |
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -197,7 +193,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -220,7 +215,6 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -243,7 +237,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -274,7 +267,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -295,7 +287,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -316,7 +307,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -337,7 +327,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -358,7 +347,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -382,7 +370,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -405,7 +392,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -447,7 +433,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="sub active">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -472,7 +457,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="sub">3. Tech Stack</span>
 <span class="sub active">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -494,7 +478,6 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span class="active">GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span>Thank You</span>
 </div>
 
@@ -521,34 +504,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span class="sub">3. Tech Stack</span>
 <span class="sub">4. Context Management</span>
 <span>GEPA Algorithm</span>
-<span class="active">GEPA Context</span>
-<span>Thank You</span>
-</div>
-
-## GEPA Context Management
-
-GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
-
-- **Evaluation cache** — stores `(candidate, example)` results to avoid redundant inference
-- **Reflective dataset** — captures execution traces for reflection-based prompt mutation
-- **Pareto frontiers** — tracks best programs per validation example or objective (compressed historical context)
-- **Batch sampling** — strategic minibatch selection balances coverage vs. cost
-- **State persistence** — `GEPAState` serializes candidate evolution.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Can we see yet</span>
-<span>Metal Yard Application</span>
-<span class="sub">1. Photos</span>
-<span class="sub">2. Program Tools</span>
-<span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
 <span class="active">Thank You</span>
 </div>
 
@@ -561,3 +516,15 @@ Be kind to each other, AI's getting wild.
 If this kind of work interests you, reach out.
 
 <!-- Add a link at the end to the DSPy article: if you don't use DSPy, you build DSPy, and you should only build it if you first know and understand DSPy. -->
+
+---
+
+## GEPA Context Management
+
+GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
+
+- **Evaluation cache** — stores `(candidate, example)` results to avoid redundant inference
+- **Reflective dataset** — captures execution traces for reflection-based prompt mutation
+- **Pareto frontiers** — tracks best programs per validation example or objective (compressed historical context)
+- **Batch sampling** — strategic minibatch selection balances coverage vs. cost
+- **State persistence** — `GEPAState` serializes candidate evolution.
