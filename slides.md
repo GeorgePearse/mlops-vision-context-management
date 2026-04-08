@@ -135,7 +135,7 @@ style: |
 - Started off selling cameras to recycling facilities
 - Chucked x-rays in for good measure (and preventing fires from Lithium Ion Batteries)
 - Added Lidar into the mix for some applications
-- Now Multimsensor AI for Heavy Industry
+- Now **Multimsensor AI for Heavy Industry**
 
 ---
 
