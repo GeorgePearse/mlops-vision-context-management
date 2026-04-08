@@ -7,7 +7,7 @@ color: #2d2d2d
 style: |
   section {
     font-family: 'Inter', 'Segoe UI', sans-serif;
-    padding-left: 220px;
+    padding-left: 250px;
   }
   h1, h2, h3 {
     color: #1a1a1a;
@@ -45,7 +45,7 @@ style: |
     position: absolute;
     top: 0;
     left: 0;
-    width: 190px;
+    width: 220px;
     height: 100%;
     background: #2d2d2d;
     padding: 30px 0 30px 0;
