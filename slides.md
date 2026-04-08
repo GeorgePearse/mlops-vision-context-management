@@ -88,6 +88,7 @@ style: |
 <span class="active">About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -115,6 +116,7 @@ style: |
 <span>About Me</span>
 <span class="active">Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -141,6 +143,7 @@ style: |
 <span>About Me</span>
 <span class="active">Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -164,6 +167,7 @@ style: |
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -189,6 +193,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -214,6 +219,7 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -239,6 +245,36 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span class="active">State of VLMs</span>
+<span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
+<span class="sub">1. Photos</span>
+<span class="sub">2. Program Tools</span>
+<span class="sub">3. Tech Stack</span>
+<span class="sub">4. Context Management</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Types of Context</span>
+<span>Thank You</span>
+</div>
+
+## State of VLMs
+
+- **Gemini 2.5 Pro** — best-in-class for visual grounding and long-context vision tasks
+- **Qwen 2.5 / 3** — strong open-weight option, good at object detection and spatial reasoning
+- **GPT-4o** — solid all-rounder but expensive for high-volume inference
+- **Claude Sonnet 4** — strong at structured output and reasoning over images
+- VLMs are now good enough for **real industrial applications** — grading materials, reading gauges, identifying contaminants
+- The gap between open and closed models is shrinking fast, especially for domain-specific fine-tuning
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>State of VLMs</span>
 <span class="active">Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -263,6 +299,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub active">1. Photos</span>
@@ -280,7 +317,29 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 
 ![bg right:55% contain](images/metal-yard-photo.png)
 
-<!-- TODO: Add photos of metal yard dumps -->
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>State of VLMs</span>
+<span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
+<span class="sub active">1. Photos</span>
+<span class="sub">2. Program Tools</span>
+<span class="sub">3. Tech Stack</span>
+<span class="sub">4. Context Management</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Types of Context</span>
+<span>Thank You</span>
+</div>
+
+## Metal Yard Application
+
+![bg right:55% contain](images/metal-yard-dump.png)
 
 ---
 
@@ -288,6 +347,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -315,6 +375,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -342,6 +403,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -366,6 +428,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -395,6 +458,7 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -424,6 +488,7 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -454,6 +519,7 @@ Practical mitigations for the double-pressure problem:
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>
@@ -483,6 +549,7 @@ Practical mitigations for the double-pressure problem:
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
+<span>State of VLMs</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
 <span class="sub">1. Photos</span>

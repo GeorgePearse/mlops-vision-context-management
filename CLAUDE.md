@@ -23,6 +23,10 @@ python scripts/run.py --dataset-name municipals --num-images 50 --budgets 0,5,10
 - `--output-dir` - results directory (default: ./experiment_results)
 - `--verbose` - enable debug logging
 
+## Git Workflow
+
+- Always commit and push directly to `main`. No branches or PRs needed for this repo.
+
 ## Environment
 
 - Requires `.env` file with `PG_DATABASE_URL` for database mode
