@@ -456,7 +456,7 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 - **Turbopuffer** for the object memory and image memory
 - **DINOv3** for the embeddings for the Object and Image memory
 - **Gemini** to coordinate the system
-- **Qwen3.5** for the initial boxes and when to zoom
+- **Qwen3.5** for the initial boxes and when to zoom (recursive)
 - **SAM3** for masks when needed
 
 ---
