@@ -318,7 +318,6 @@ Practical mitigations for the double-pressure problem:
 - **Keep tool return values concise** — control retrieved passage counts and output verbosity
 - **Override `truncate_trajectory()`** for domain-aware truncation that preserves the most informative steps, not just the most recent
 
-**Proven architecture for GEPA+ReAct**: Individually optimized specialist ReAct subagents (each with domain-specific tools) combined under a lead routing agent, with GEPA applied to each component separately before optimizing the coordinator.
 
 ---
 
