@@ -290,6 +290,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 ## Metal Yard Application — 3. Context Management
 
 - When optimising this program with GEPA, we can't actually keep the image within the context of the reflection LM, because it almost instantly exceeds the token limit
+- GEPA keeps multiple instances of your dataset within the context of the reflection LLM, in order to work out how to optimise across them
 
 ---
 
