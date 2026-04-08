@@ -4,6 +4,13 @@ This is good https://www.youtube.com/watch?v=4GiqzUHD5AA
 
 https://blog.langchain.com/context-engineering-for-agents/
 
+<img width="710" height="295" alt="image" src="https://github.com/user-attachments/assets/c0bf2358-454f-4d9a-9c99-0d6650de2363" />
+
+- Context Poisoning: When a hallucination makes it into the context
+- Context Distraction: When the context overwhelms the training
+- Context Confusion: When superfluous context influences the response
+- Context Clash: When parts of the context disagree
+
 Standalone Python package for agentic vision context management, active-learning simulation, and instance-segmentation orchestration.
 
 This repo currently contains the `agentic_vision` package extracted from the larger Visia monorepo. The main surfaces are:
