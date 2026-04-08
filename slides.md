@@ -75,11 +75,12 @@ style: |
 <span class="active">About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -97,11 +98,12 @@ style: |
 <span>About Me</span>
 <span class="active">Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -120,11 +122,12 @@ style: |
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -142,11 +145,12 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -164,11 +168,12 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -186,20 +191,21 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span class="active">Our Agentic Usage</span>
+<span class="active">Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
-## Our Just-About Agentic Usage
+## Where do we use Agents
 
-- **Metals billing disagreements** — VLM-assisted review of load images to resolve cost disputes between buyers and sellers
-- **Few-shot annotation and active learning** — using VLMs to bootstrap labels, then iterating with human corrections in the loop
+- **Billing disagreements in metal yards**
+- **Active learning simulations**
 
 ---
 
@@ -207,11 +213,12 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span class="active">Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -234,11 +241,12 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -260,11 +268,12 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -288,11 +297,12 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span class="active">Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -316,11 +326,33 @@ Practical mitigations for the double-pressure problem:
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span class="active">Context Engineering</span>
+<span>Visual Validation</span>
+<span>Key Takeaways</span>
+<span>Thank You</span>
+</div>
+
+## Context Engineering
+
+![bg contain](images/context-engineering.png)
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>Where do we use Agents</span>
+<span>Types of Context</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Context Engineering</span>
 <span class="active">Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -346,11 +378,12 @@ Hard to catch in aggregate stats.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span class="active">Key Takeaways</span>
 <span>Thank You</span>
@@ -370,11 +403,12 @@ Hard to catch in aggregate stats.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>Our Agentic Usage</span>
+<span>Where do we use Agents</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
+<span>Context Engineering</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span class="active">Thank You</span>
