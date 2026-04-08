@@ -85,11 +85,9 @@ style: |
 <span>Thank You</span>
 </div>
 
-# George Pearse
+![bg right:35% contain](images/george_linked_in_pic.jpg)
 
-![w:150](images/george_linked_in_pic.jpg)
-
-### Data Engineering, MLOps, and ML 
+## About Me
 
 - Started as a Data Engineer
 - A few years in a medical imaging start-up working on lung cancer detection in x-rays, and brain tumours in CT scans
