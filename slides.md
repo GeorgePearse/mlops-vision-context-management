@@ -364,6 +364,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - It can use **SAM3** to get the area of an object
 - All in service of finding the right **material grade** and the **cost deduction** — the accuracy of these 2 outputs are the core of the metric, with just a little bit of reward for accurate descriptions because we think it improves the product UX. The output can be fed back into the start of the program
 
+- A single ticket can be approx 10 images of the dump, the system runs over each independently, that all gets saved to the database, and then this gets fed into a separate LLM call to come to a conclusion on the material code and any dedictions 
+
 ---
 
 <div class="nav">
