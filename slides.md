@@ -76,6 +76,7 @@ style: |
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -96,6 +97,7 @@ style: |
 <span class="active">Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -117,6 +119,7 @@ style: |
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -137,6 +140,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -157,6 +161,7 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>Visia</span>
 <span class="active">What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -177,6 +182,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Visia</span>
 <span>What we Do</span>
 <span class="active">Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -196,6 +202,30 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span class="active">Metal Yard Application</span>
+<span>Types of Context</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Thank You</span>
+</div>
+
+## Metal Yard Application
+
+- The agent can **zoom in** on an uncertain or dense region
+- The agent has both an **image-level** and **object-level** store
+- Some simple dumps only require image-level retrieval (all the same material), most are more complicated and have a huge mix of materials made of different materials
+- It can use **SAM3** to get the area of an object
+- All in service of finding the right **material grade** and the **cost deduction**
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span class="active">Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -220,6 +250,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -244,6 +275,7 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
@@ -268,6 +300,7 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -293,6 +326,7 @@ Practical mitigations for the double-pressure problem:
 <span>Visia</span>
 <span>What we Do</span>
 <span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
