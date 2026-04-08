@@ -367,7 +367,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - The agent can **zoom in** on an uncertain or dense region
 - The agent has both an **image-level** and **object-level** store
 - Some simple dumps only require image-level retrieval (all the same material), most are more complicated and have a huge mix of materials made of different materials
-- It can use **SAM3** to get the area of an object
+- It can use **SAM3** to check the area (and relative areas) of an object
 
 ---
 
