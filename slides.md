@@ -130,10 +130,33 @@ style: |
 
 ## Visia
 
-- Started off selling cameras to recycling facilities
-- Chucked x-rays in for good measure (and preventing fires from Lithium Ion Batteries)
-- Added Lidar into the mix for some applications
-- Now Multimsensor AI for Heavy Industry
+- **Multisensor AI for Heavy Industry** — cameras, x-rays, and lidar
+- Started selling cameras to recycling facilities, added x-rays for detecting Lithium Ion Batteries (fire prevention), then lidar
+- We help recyclers, metal yards, and waste-to-energy plants make faster, more accurate decisions
+- ~30 people, based in Dublin with customers across Europe
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span class="active">Visia</span>
+<span>What we Do</span>
+<span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
+<span class="sub">1. Photos</span>
+<span class="sub">2. Program Tools</span>
+<span class="sub">3. Tech Stack</span>
+<span class="sub">4. Context Management</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Context Pressure</span>
+<span>Types of Context</span>
+<span>Thank You</span>
+</div>
+
+## Visia
+
+![bg right:55% contain](images/office.jpeg)
 
 ---
 
