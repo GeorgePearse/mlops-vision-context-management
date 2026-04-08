@@ -81,8 +81,6 @@ style: |
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -104,8 +102,6 @@ style: |
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -128,8 +124,6 @@ style: |
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -151,8 +145,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -174,8 +166,6 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -197,8 +187,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -219,8 +207,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -247,8 +233,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -274,8 +258,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span class="active">GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -303,8 +285,6 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>GEPA Context</span>
 <span class="active">Context Pressure</span>
 <span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -331,8 +311,6 @@ Practical mitigations for the double-pressure problem:
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span class="active">Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
 
@@ -352,64 +330,6 @@ Practical mitigations for the double-pressure problem:
 <span>GEPA Context</span>
 <span>Context Pressure</span>
 <span>Context Engineering</span>
-<span class="active">Visual Validation</span>
-<span>Key Takeaways</span>
-<span>Thank You</span>
-</div>
-
-## Visual Validation
-
-### Segmentation vs Outline
-
-Crop a subset of an object. Compare the **mask** against the **outline**.
-
-This surfaces:
-- Masks bleeding outside the object boundary
-- Under-segmented regions
-- Annotation drift across annotators
-
-Hard to catch in aggregate stats.
-**Obvious** when rendered side-by-side.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Where do we use Agents</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>Context Pressure</span>
-<span>Context Engineering</span>
-<span>Visual Validation</span>
-<span class="active">Key Takeaways</span>
-<span>Thank You</span>
-</div>
-
-## Key Takeaways
-
-1. **Context management is the core challenge** for vision agents
-2. **Consolidate, don't accumulate** — compress context into retrievable signals
-3. **Visual context matters** — images preserve raw signal that text loses
-4. **Validate visually** — aggregate stats hide annotation bugs
-5. **Know your degrees of freedom** — be explicit about what the model can learn at test time
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Where do we use Agents</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>Context Pressure</span>
-<span>Context Engineering</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
 <span class="active">Thank You</span>
 </div>
 
