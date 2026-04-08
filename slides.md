@@ -102,8 +102,8 @@ style: |
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -126,8 +126,8 @@ style: |
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -149,8 +149,8 @@ style: |
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -171,8 +171,8 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -193,8 +193,8 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -215,8 +215,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -242,8 +242,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub active">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -262,8 +262,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub active">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -282,8 +282,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub active">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -302,8 +302,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">1. Photos</span>
 <span class="sub active">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -325,8 +325,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">1. Photos</span>
 <span class="sub active">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -347,8 +347,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub active">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
@@ -371,33 +371,12 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub active">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub active">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span>Thank You</span>
 </div>
 
-## Metal Yard Application — 4. Context Management
-
-- When optimising this program with GEPA, we can't actually keep the image within the context of the reflection LM, because it almost instantly exceeds the token limit
-- GEPA keeps multiple instances of your dataset within the context of the reflection LLM, in order to work out how to optimise across them
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Can we see yet</span>
-<span>Metal Yard Application</span>
-<span class="sub">1. Photos</span>
-<span class="sub">2. Program Tools</span>
-<span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span class="active">GEPA Algorithm</span>
-<span>Thank You</span>
-</div>
-
-## GEPA Algorithm
+## Metal Yard Application — 4. GEPA Algorithm
 
 GEPA's core algorithm iterates through three stages — **Executor**, **Reflector**, **Curator** — each with distinct context demands.
 
@@ -418,8 +397,29 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span class="sub">1. Photos</span>
 <span class="sub">2. Program Tools</span>
 <span class="sub">3. Tech Stack</span>
-<span class="sub">4. Context Management</span>
-<span>GEPA Algorithm</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub active">5. Context Management</span>
+<span>Thank You</span>
+</div>
+
+## Metal Yard Application — 5. Context Management
+
+- When optimising this program with GEPA, we can't actually keep the image within the context of the reflection LM, because it almost instantly exceeds the token limit
+- GEPA keeps multiple instances of your dataset within the context of the reflection LLM, in order to work out how to optimise across them
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>Can we see yet</span>
+<span>Metal Yard Application</span>
+<span class="sub">1. Photos</span>
+<span class="sub">2. Program Tools</span>
+<span class="sub">3. Tech Stack</span>
+<span class="sub">4. GEPA Algorithm</span>
+<span class="sub">5. Context Management</span>
 <span class="active">Thank You</span>
 </div>
 
