@@ -33,6 +33,11 @@ style: |
   pre {
     background: #2d2d2d !important;
     color: #f5f3ef !important;
+    font-size: 0.45em;
+  }
+  pre code {
+    background: #2d2d2d !important;
+    color: #f5f3ef !important;
   }
   blockquote {
     border-left: 4px solid #3a7d7e;
