@@ -269,9 +269,7 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 - **Reflective dataset** — captures execution traces for reflection-based prompt mutation
 - **Pareto frontiers** — tracks best programs per validation example or objective (compressed historical context)
 - **Batch sampling** — strategic minibatch selection balances coverage vs. cost
-- **State persistence** — `GEPAState` serializes candidate evolution, enabling resumable optimization
-
-The key insight: **consolidate context into retrievable signals** rather than passing full state forward. Only fetch richer context when confidence is low.
+- **State persistence** — `GEPAState` serializes candidate evolution.
 
 ---
 
