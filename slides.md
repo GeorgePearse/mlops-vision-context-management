@@ -87,6 +87,8 @@ style: |
 
 # George Pearse
 
+![w:150](assets/george_linked_in_pic.jpg)
+
 ### Data Engineering, MLOps, and ML 
 
 - Started as a Data Engineer
