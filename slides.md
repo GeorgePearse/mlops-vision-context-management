@@ -228,9 +228,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - **Gemini** — best for image-text descriptions / general image understanding. Gemini 3.1 pro
 - **Sam3** - best for instance-segmentations and has some textual understanding (grounded phrases)
 - **Moondream** - Some of all of the above and targeting smaller size ranges and higher inference speeds.
-  
-- VLMs are now (just about) good enough for **real industrial applications** — grading materials, reading gauges, identifying contaminants
-- We (and the ecosystem) are just crossing the line to systems that can defensibly be called 'agentic'.
 
 </div>
 
