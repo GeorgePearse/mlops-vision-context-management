@@ -355,7 +355,27 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - The agent has both an **image-level** and **object-level** store
 - Some simple dumps only require image-level retrieval (all the same material), most are more complicated and have a huge mix of materials made of different materials
 - It can use **SAM3** to get the area of an object
-  
+
+---
+
+<div class="nav">
+<span>About Me</span>
+<span>Visia</span>
+<span>What we Do</span>
+<span>Can we see yet</span>
+<span>Where do we use Agents</span>
+<span>Metal Yard Application</span>
+<span class="sub">1. Photos</span>
+<span class="sub active">2. Program Tools</span>
+<span class="sub">3. Tech Stack</span>
+<span class="sub">4. Context Management</span>
+<span>GEPA Algorithm</span>
+<span>GEPA Context</span>
+<span>Thank You</span>
+</div>
+
+## Metal Yard Application — 2. Program Tools
+
 - All in service of finding the right **material grade** and the **cost deduction** — the accuracy of these 2 outputs are the core the metric we optimise via the DSPy GEPA loops
 - A single ticket can be approx 10 images of the dump, the system runs over each independently, that all gets saved to the database, and then this gets fed into a separate LLM call to come to a conclusion on the material code and any dedictions 
 
