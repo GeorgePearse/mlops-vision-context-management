@@ -1,4 +1,6 @@
-# mlops-vision-context-management
+# vision-agents
+
+This is good https://www.youtube.com/watch?v=4GiqzUHD5AA
 
 Standalone Python package for agentic vision context management, active-learning simulation, and instance-segmentation orchestration.
 
