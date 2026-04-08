@@ -252,7 +252,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <div style="font-size: 0.75em;">
 
 - **Qwen 3.5** — best for object detection.
-- **Gemini** — best for image-text descriptions / general image understanding.
+- **Gemini** — best for image-text descriptions / general image understanding. Gemini 3.1 pro
 - **Sam3** - best for instance-segmentations and has some textual understanding (grounded phrases)
 - **Moondream** - Some of all of the above and targeting smaller size ranges and higher inference speeds.
   
