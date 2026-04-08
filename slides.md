@@ -75,7 +75,7 @@ style: |
 <span class="active">About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -84,8 +84,6 @@ style: |
 <span>Key Takeaways</span>
 <span>Thank You</span>
 </div>
-
-![bg right:35% contain](images/george_linked_in_pic.jpg)
 
 ## About Me
 
@@ -99,7 +97,7 @@ style: |
 <span>About Me</span>
 <span class="active">Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -122,7 +120,7 @@ style: |
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -144,7 +142,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -166,7 +164,7 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>About Me</span>
 <span>Visia</span>
 <span class="active">What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -188,7 +186,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span class="active">What is an Agent?</span>
+<span class="active">Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -198,23 +196,10 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>Thank You</span>
 </div>
 
-## What is an Agent?
+## Our Just-About Agentic Usage
 
-A working definition:
-
-- **Runs continuously** or for a non-predetermined amount of time
-- **Takes human input** at some point in its lifecycle
-
-A closed system with fixed inputs and deterministic termination is **not an agent** — it's a pipeline.
-
-| System | Human input? | Open-ended runtime? | Agent? |
-|--------|--------------|---------------------|--------|
-| Batch inference script | No | No | No |
-| GEPA optimization loop | Yes (seed, feedback) | Yes (until convergence) | Yes |
-| Active learning annotator | Yes (corrections) | Yes (ongoing) | Yes |
-| One-shot VLM call | No | No | No |
-
-The distinction matters: agents need **context management** across time. Pipelines just need correct wiring.
+- **Metals billing disagreements** — VLM-assisted review of load images to resolve cost disputes between buyers and sellers
+- **Few-shot annotation and active learning** — using VLMs to bootstrap labels, then iterating with human corrections in the loop
 
 ---
 
@@ -222,7 +207,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span class="active">Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -249,7 +234,7 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -275,7 +260,7 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
@@ -303,7 +288,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -331,7 +316,7 @@ Practical mitigations for the double-pressure problem:
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -361,7 +346,7 @@ Hard to catch in aggregate stats.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -385,7 +370,7 @@ Hard to catch in aggregate stats.
 <span>About Me</span>
 <span>Visia</span>
 <span>What we Do</span>
-<span>What is an Agent?</span>
+<span>Our Agentic Usage</span>
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
@@ -397,7 +382,7 @@ Hard to catch in aggregate stats.
 
 ## Thank You
 
-**github.com/GeorgePearse/vision-agents**
+Be kind to each other, AI's getting wild.
 
 ### We're Hiring
 
