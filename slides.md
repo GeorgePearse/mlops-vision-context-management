@@ -114,7 +114,7 @@ style: |
 
 - Started as a Data Engineer
 - A few years in a medical imaging start-up working on lung cancer detection in x-rays, and brain tumours in CT scans
-- Approaching 4 years at Visia, building Computer Vision applications for recyling and heavy industry.
+- Approaching 4 years at Visia, building Computer Vision applications for recycling and heavy industry.
 
 ---
 
@@ -138,7 +138,7 @@ style: |
 - Started off selling cameras to recycling facilities
 - Chucked x-rays in for good measure (and preventing fires from Lithium Ion Batteries)
 - Added Lidar into the mix for some applications
-- Now **Multimsensor AI for Heavy Industry**
+- Now **Multisensor AI for Heavy Industry**
 
 ---
 
@@ -388,8 +388,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 
 ## Metal Yard Application — 2. Program Tools
 
-- All in service of finding the right **material grade** and the **cost deduction** — the accuracy of these 2 outputs are the core the metric we optimise via the DSPy GEPA loops
-- A single ticket can be approx 10 images of the dump, the system runs over each independently, that all gets saved to the database, and then this gets fed into a separate LLM call to come to a conclusion on the material code and any dedictions
+- All in service of finding the right **material grade** and the **cost deduction** — the accuracy of these 2 outputs are the core metric we optimise via the DSPy GEPA loops
+- A single ticket can be approx 10 images of the dump, the system runs over each independently, that all gets saved to the database, and then this gets fed into a separate LLM call to come to a conclusion on the material code and any deductions
 - The customer reviews the output, writes a comment with any feedback, this is fed to another VLM which converts it to our Annotation format.
 
 ---
