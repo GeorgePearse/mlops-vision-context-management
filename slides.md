@@ -80,7 +80,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -101,7 +100,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -123,7 +121,6 @@ style: |
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -144,7 +141,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -165,7 +161,6 @@ Find batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -186,7 +181,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -206,7 +200,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -232,7 +225,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -257,7 +249,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
 <span>Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -282,7 +273,6 @@ GEPA (Generalized Evolutionary Prompt Adaptation) manages context through:
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span class="active">Context Pressure</span>
-<span>Context Engineering</span>
 <span>Thank You</span>
 </div>
 
@@ -308,26 +298,6 @@ Practical mitigations for the double-pressure problem:
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
 <span>Context Pressure</span>
-<span class="active">Context Engineering</span>
-<span>Thank You</span>
-</div>
-
-## Context Engineering
-
-![bg contain](images/context-engineering.png)
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>Where do we use Agents</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>Context Pressure</span>
-<span>Context Engineering</span>
 <span class="active">Thank You</span>
 </div>
 
