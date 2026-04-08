@@ -113,9 +113,10 @@ style: |
 
 ## Visia
 
-- Computer vision work makes label quality, review loops, and data iteration core product concerns
-- The hard part is often not training one more model but building confidence in the dataset
-- The rest of this deck frames that problem as infrastructure: compile, validate, version, and diff the data
+- Started off selling cameras to recycling facilities
+- Chucked x-rays in for good measure (and preventing fires from Lithium Ion Batteries)
+- Added Lidar into the mix for some applications
+- Now Multimsensor AI for Heavy Industry
 
 ---
 
