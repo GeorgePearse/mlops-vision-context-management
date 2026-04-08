@@ -160,7 +160,7 @@ Help with cost disagreements between buyers and sellers at metal yards.
 
 ![bg right:55% contain](images/xray-detection-demo.png)
 
-Finding batteries in e-waste and municipals recycling with x-rays and lasers.
+Find batteries in e-waste and municipals recycling with x-rays and lasers.
 
 ---
 
@@ -182,7 +182,7 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 
 ![bg right:55% contain](images/aerial-detection-demo.png)
 
-Detecting and sending notifications for 'bulkies' in waste to energy facilities.
+Detect and send notifications for 'bulkies' in waste to energy facilities.
 
 ---
 
