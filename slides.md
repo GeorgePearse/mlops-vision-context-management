@@ -84,7 +84,6 @@ style: |
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -111,7 +110,6 @@ style: |
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -136,7 +134,6 @@ style: |
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -161,7 +158,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -186,7 +182,6 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -211,7 +206,6 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -247,7 +241,6 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -277,7 +270,6 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -306,7 +298,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -337,7 +328,6 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -376,7 +366,6 @@ On structured document subsets, the frontier approached **~97% accuracy** — ne
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -415,7 +404,6 @@ Punishing complexity forces the system to *distill* what it learned, not just *a
 <span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -446,7 +434,6 @@ Practical mitigations for the double-pressure problem:
 <span>Context Pressure</span>
 <span class="active">Visual Validation</span>
 <span>Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -506,31 +493,6 @@ Hard to catch in aggregate stats.
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
-<span class="active">References</span>
-<span>Thank You</span>
-</div>
-
-## References
-
-- [Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) — Anthropic's approach to improving RAG with contextual embeddings and contextual BM25
-- [Late Interaction Overview](https://weaviate.io/blog/late-interaction-overview) — Weaviate's overview of late interaction models for retrieval
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
-<span>Context Pressure</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
-<span>References</span>
 <span class="active">Thank You</span>
 </div>
 
