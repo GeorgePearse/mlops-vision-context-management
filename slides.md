@@ -79,8 +79,6 @@ style: |
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -105,8 +103,6 @@ style: |
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -129,8 +125,6 @@ style: |
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -153,8 +147,6 @@ Help with cost disagreements between buyers and sellers at metal yards.
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -177,8 +169,6 @@ Finding batteries in e-waste and municipals recycling with x-rays and lasers.
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -201,8 +191,6 @@ Detecting and sending notifications for 'bulkies' in waste to energy facilities.
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -236,8 +224,6 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>What is an Agent?</span>
 <span class="active">Types of Context</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -265,8 +251,6 @@ The distinction matters: agents need **context management** across time. Pipelin
 <span>Types of Context</span>
 <span class="active">GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -293,8 +277,6 @@ GEPA's core algorithm iterates through three stages — **Executor**, **Reflecto
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span class="active">GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
@@ -323,85 +305,7 @@ The key insight: **consolidate context into retrievable signals** rather than pa
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span class="active">GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
-<span>Context Pressure</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
-<span>Thank You</span>
-</div>
-
-## GEPA Pareto Frontier
-
-GEPA optimizes prompts across **two competing objectives**:
-
-| Objective | Why it matters |
-|-----------|----------------|
-| **Accuracy** | Higher extraction quality on validation set |
-| **Prompt complexity** | Simpler prompts generalize better, cost less |
-
-The Pareto frontier tracks candidates where improving one objective requires sacrificing the other.
-
-**Selection flow**:
-1. Evaluate candidate prompts on validation slice
-2. Compare against current frontier
-3. Keep candidates that are non-dominated (better on at least one axis without being worse on the other)
-4. Iterate until convergence
-
-On structured document subsets, the frontier approached **~97% accuracy** — near the ceiling for OCR on clean scans.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span class="active">Pareto as Context Mgmt</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
-<span>Visual Validation</span>
-<span>Key Takeaways</span>
-<span>Thank You</span>
-</div>
-
-## Pareto Frontier as Context Management
-
-The complexity penalty in GEPA's Pareto frontier is **context management in disguise**.
-
-Without it, the optimizer would overfit: append more rules, more examples, more edge-case handling — until the prompt balloons and generalization collapses.
-
-| Uncontrolled growth | Pareto-controlled |
-|---------------------|-------------------|
-| Prompts accumulate every observed failure | Only rules that improve accuracy *per token* survive |
-| Context window fills with redundant policy | Compression is forced by the complexity axis |
-| New examples crowd out core instructions | Trade-offs are explicit and tracked |
-
-**The insight**: Pareto selection is a principled way to **consolidate context** — the same goal as RAG retrieval, memory pruning, or conversation summarization.
-
-Punishing complexity forces the system to *distill* what it learned, not just *append* it.
-
-**The mechanism**: Keep specialists alive, let them evolve independently, then breed a generalist from the best specialists at the end. The final output avoids regressions on hard cases because the frontier preserves what each specialist learned.
-
----
-
-<div class="nav">
-<span>About Me</span>
-<span>Visia</span>
-<span>What we Do</span>
-<span>What is an Agent?</span>
-<span>Types of Context</span>
-<span>GEPA Algorithm</span>
-<span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span class="active">Context Pressure</span>
-<span>Image vs Text</span>
-<span>Degrees of Freedom</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
 <span>Thank You</span>
@@ -429,8 +333,6 @@ Practical mitigations for the double-pressure problem:
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span class="active">Visual Validation</span>
 <span>Key Takeaways</span>
@@ -461,12 +363,9 @@ Hard to catch in aggregate stats.
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span class="active">Key Takeaways</span>
-<span>References</span>
 <span>Thank You</span>
 </div>
 
@@ -488,8 +387,6 @@ Hard to catch in aggregate stats.
 <span>Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
-<span>GEPA Pareto Frontier</span>
-<span>Pareto as Context Mgmt</span>
 <span>Context Pressure</span>
 <span>Visual Validation</span>
 <span>Key Takeaways</span>
