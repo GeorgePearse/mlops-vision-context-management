@@ -209,7 +209,6 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - **Retrieved context (RAG)** — information pulled from external stores at query time
 - **Conversational context** — the history of the current interaction
 - **Tool/observation context** — results from tool calls and API responses the agent generates for itself
-- **Visual context** — composite images encoding predictions, ground truth, or crops for a downstream model
 - **Persistent context** — memories and session state carried across conversations (the cookies of agents, but more like a cheatsheet intentionally kept small)
 
 <!-- The core tension: context management is compression and selection. Finite window, right information, right time. Too little → hallucination. Too much → noise. -->
