@@ -268,6 +268,8 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 <span>What we Do</span>
 <span>Where do we use Agents</span>
 <span>Metal Yard Application</span>
+<span class="sub">1. Program Tools</span>
+<span class="sub">2. Tech Stack</span>
 <span class="active">Types of Context</span>
 <span>GEPA Algorithm</span>
 <span>GEPA Context</span>
