@@ -454,7 +454,7 @@ class RadiusTicketMaterialCodeSignature(dspy.Signature):
 ## Metal Yard Application — 3. Tech Stack
 
 - **Turbopuffer** for the object memory and image memory
-- **DINOv3** for the Object and Image memory
+- **DINOv3** for the embeddings for the Object and Image memory
 - **Gemini** to coordinate the system
 - **Qwen3.5** for the initial boxes and when to zoom
 - **SAM3** for masks when needed
