@@ -259,6 +259,7 @@ Detect and send notifications for 'bulkies' in waste to energy facilities.
 - **DINOv3** for the embeddings
 - **Gemini** to coordinate the system
 - **Qwen3.5** for the initial boxes and when to zoom
+- **SAM3** for masks when needed
 
 ---
 
